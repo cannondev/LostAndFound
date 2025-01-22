@@ -1,0 +1,31 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Baskerville", sans-serif;
+  background: linear-gradient(to bottom, #87e0fd 0%, #cb98da 40%, #7a60d1 100%);
+  background-attachment: fixed;
+  font-size: large;
+  text-shadow: 1px 2px 8px rgb(236, 48, 242);
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.logo {
+  background-image: url('img/hello.gif');
+  width: 200px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 80px;
+  margin-left: 70px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+:root {
+  text-size-adjust: 100%;
+}
