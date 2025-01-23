@@ -23,5 +23,6 @@
         "no-extra-parens": 0,
         "no-restricted-syntax": [0, "DebuggerStatement"],
         "no-debugger": "warn",
-        "no-plusplus": "off"
+        "no-plusplus": "off",
+        "import/no-extraneous-dependencies": "off"
     }}
