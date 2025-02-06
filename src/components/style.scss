@@ -68,3 +68,27 @@ nav {
   padding: 10px;
   margin-top: 30px;
 }
+
+button {
+  background: linear-gradient(45deg, #ff77cd, #e44b88);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 4px 4px 10px rgba(222, 28, 167, 0.5);
+
+  &:hover {
+    background: linear-gradient(45deg, #ffaf7a, #ff77cd);
+    transform: scale(1.1);
+    box-shadow: 6px 6px 15px rgba(222, 28, 167, 0.7);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 2px 2px 8px rgba(222, 28, 167, 0.6);
+  }
+}

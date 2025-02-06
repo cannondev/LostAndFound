@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import './style.scss';
+import useStore from '../store';
 
 function About() {
   return (
@@ -20,13 +21,18 @@ function About() {
 }
 
 function Welcome() {
+  const { count, increment, decrement } = useStore();
+
   return (
     <div className="content">
-      <p>Hi Im Cinay! Welcome to my personal site 🌸</p>
+      <p>Hi, Im Cinay! Welcome to my personal site 🌸</p>
+      <p><strong>Current count: {count}</strong></p>
+      <button type="button" onClick={increment}>Increment</button>
+      <button type="button" onClick={decrement}>Decrement</button>
       <div className="mycutegiphy">
         <img
           src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTk3bnByOHAxMTk0bGI5M2xkc2EzcWM0MTZvMmZhdmE4NWo3eG9obCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/llm9DohTOuVh8Vl8oX/giphy.gif"
-          alt=""
+          alt="A cute gif"
         />
       </div>
     </div>
