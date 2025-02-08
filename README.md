@@ -1,14 +1,15 @@
 # Upgraded Starter Pack - Cinay D.
 
-Completed updating the starter pack! Added routing to my React app using React Router. Now, I can navigate between different pages like Welcome, About, and Test using URLs. :D
+Completed updgrading the starter pack to have Zustand state management! :D
 
 [deployed url](https://starterpack-cdilibal.onrender.com/)
 
-![welcome](images/welcome.png)
+![welcome](images/counter.png)
 
 ## What Worked Well
 
-The routing integration went pretty smoothly. I set up routes for different components, added fallback routes for unknown URLs, and everything’s working as expected. Also added styling so it looks cute!
+I successfully integrated Zustand into the frontend starter pack without breaking existing functionality.
+The store setup worked smoothly, allowing state management with minimal boilerplate. Also, the Counter and Controls components correctly accessed and modified the global state.
 
 ## What Didn't
 
@@ -25,8 +26,6 @@ also implemented a fallback route for unknown URLs to display a “URL Not Found
 
 ## Screenshots
 
-![welcome](images/about.png)
-
-![id](images/id.png)
+![welcome](images/states.png)
 
 I got a bit of help from ChatGPT for debugging and resolving issues during the process.
