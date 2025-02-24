@@ -6,7 +6,16 @@ export default function createThoughtSlice(set, get) {
 
   return {
     all: [], // Stores all fetched thoughts
+    userThoughts: [],
     current: {}, // Stores a single thought
+    fetchAllThoughts: async () => {
+      try {
+        const response = await axios.get(ROOT_URL);
+        set(({ thoughtSlice }) => { thoughtSlice.all = response.data; }, false, 'thought/fetchAllThoughts');
+      } catch (error) {
+        toast.error(`Failed to fetch thoughts: ${error.message}`);
+      }
+    },
 
     // Fetch a single thought by ID
     fetchThought: async (id) => {
@@ -15,6 +24,15 @@ export default function createThoughtSlice(set, get) {
         set(({ thoughtSlice }) => { thoughtSlice.current = response.data; }, false, 'thought/fetchThought');
       } catch (error) {
         toast.error(`Failed to fetch thought: ${error.message}`);
+      }
+    },
+
+    fetchThoughtsByUser: async (userId) => {
+      try {
+        const response = await axios.get(`${ROOT_URL}/user/${userId}`);
+        set(({ thoughtSlice }) => { thoughtSlice.userThoughts = response.data; }, false, 'thought/fetchThoughtsByUser');
+      } catch (error) {
+        toast.error(`Failed to fetch user thoughts: ${error.message}`);
       }
     },
 
