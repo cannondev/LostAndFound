@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './CountryInfo.css';
+import '../style.scss';
 
 function CountryInfo() {
   const { country } = useParams();

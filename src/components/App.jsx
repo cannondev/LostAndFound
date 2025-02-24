@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import WorldMap from 'react-svg-worldmap';
 import CountryInfo from './CountryInfo';
-import './App.css';
+import '../style.scss';
 import NewThought from './newThought';
 // import newThought from '../components/newThought';
 
