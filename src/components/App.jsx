@@ -3,6 +3,8 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import WorldMap from 'react-svg-worldmap';
 import CountryInfo from './CountryInfo';
 import './App.css';
+import NewThought from './newThought';
+// import newThought from '../components/newThought';
 
 function Home() {
   const [query, setQuery] = useState('');
@@ -13,6 +15,10 @@ function Home() {
   // Handle search bar change
   const handleSearchChange = (event) => {
     setQuery(event.target.value);
+  };
+
+  const handleNavigation = () => {
+    navigate('/thoughts/new');
   };
 
   // Fetch country data from a local JSON file located in the public folder
@@ -30,11 +36,11 @@ function Home() {
           const countryData = JSON.parse(text);
           setData(countryData);
         } catch (parseError) {
-          console.error("Failed to parse JSON. Response text:", text);
+          console.error('Failed to parse JSON. Response text:', text);
           throw parseError;
         }
       } catch (error) {
-        console.error("Error fetching country data:", error);
+        console.error('Error fetching country data:', error);
       }
     };
 
@@ -46,18 +52,16 @@ function Home() {
     if (countryData && countryData.countryName) {
       navigate(`/country/${countryData.countryName}`);
     } else {
-      console.error("Country data is missing or malformed:", countryData);
+      console.error('Country data is missing or malformed:', countryData);
     }
   };
 
   // Filter countries based on the search query using the countryName field
-  const filteredCountries = data.filter(country =>
-    country.countryName &&
-    country.countryName.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredCountries = data.filter((country) => country.countryName
+    && country.countryName.toLowerCase().includes(query.toLowerCase()));
 
   // Create highlighted countries array for the world map
-  const highlightedCountries = filteredCountries.map(country => ({
+  const highlightedCountries = filteredCountries.map((country) => ({
     country: country.countryName,
     value: 1, // This value is used by the map for coloring
   }));
@@ -66,14 +70,14 @@ function Home() {
     <div className="App">
       {/* User Settings Menu */}
       <div className="settings-container">
-        <button className="settings-button" onClick={() => setSettingsOpen(!settingsOpen)}>
+        <button className="settings-button" type="button" onClick={() => setSettingsOpen(!settingsOpen)}>
           ⚙️
         </button>
         {settingsOpen && (
           <div className="settings-menu">
-            <p onClick={() => alert("Profile clicked!")}>Profile</p>
-            <p onClick={() => alert("Settings clicked!")}>Settings</p>
-            <p onClick={() => alert("Logging out...")}>Logout</p>
+            <p onClick={() => alert('Profile clicked!')}>Profile</p>
+            <p onClick={() => alert('Settings clicked!')}>Settings</p>
+            <p onClick={() => alert('Logging out...')}>Logout</p>
           </div>
         )}
       </div>
@@ -99,8 +103,10 @@ function Home() {
 
       {/* Buttons at the bottom */}
       <div className="button-container">
-        <button className="custom-button">Button 1</button>
-        <button className="custom-button">Button 2</button>
+        <button className="custom-button" onClick={handleNavigation} type="button">
+          Create Thought
+        </button>
+        <button className="custom-button" type="button">Button 2</button>
       </div>
     </div>
   );
@@ -110,6 +116,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/thoughts/new" element={<NewThought />} />
       <Route path="/country/:country" element={<CountryInfo />} />
     </Routes>
   );

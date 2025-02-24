@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './CountryInfo.css';
@@ -21,7 +23,7 @@ function CountryInfo() {
         const data = await response.json();
         setCountryData(data[0]);
       } catch (error) {
-        console.error("Error fetching country info:", error);
+        console.error('Error fetching country info:', error);
       }
     };
 
