@@ -1,0 +1,41 @@
+.country-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  font-family: 'Comic Sans MS', sans-serif;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.go-home-btn {
+  background-color: #31409a;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: block;
+  text-align: center;
+}
+
+.go-home-btn:hover {
+  background-color: #31409a;
+}
