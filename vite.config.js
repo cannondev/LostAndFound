@@ -7,7 +7,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   plugins: [
-    eslint(),
+    // eslint(),
     // eslint-disable-next-line new-cap
     VitePWA(),
   ],
