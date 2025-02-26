@@ -6,6 +6,7 @@ import CountryInfo from './CountryInfo';
 
 import '../style.scss';
 import NewThought from './newThought';
+import Passport from './Passport';
 // import newThought from '../components/newThought';
 
 function Home() {
@@ -19,8 +20,12 @@ function Home() {
     setQuery(event.target.value);
   };
 
-  const handleNavigation = () => {
+  const handleThoughtNavigation = () => {
     navigate('/thoughts/new');
+  };
+
+  const handlePassportNavigation = () => {
+    navigate('/passport');
   };
 
   // Fetch country data from a local JSON file located in the public folder
@@ -105,10 +110,14 @@ function Home() {
 
       {/* Buttons at the bottom */}
       <div className="button-container">
-        <button className="custom-button" onClick={handleNavigation} type="button">
+        {/* thought button */}
+        <button className="custom-button" onClick={handleThoughtNavigation} type="button">
           Create Thought
         </button>
-        <button className="custom-button" type="button">Button 2</button>
+        {/* passport button */}
+        <button className="custom-button" onClick={handlePassportNavigation} type="button">
+          Open Passport
+        </button>
       </div>
     </div>
   );
@@ -120,6 +129,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/thoughts/new" element={<NewThought />} />
       <Route path="/country/:country" element={<CountryInfo />} />
+      <Route path="/passport" element={<Passport />} />
     </Routes>
   );
 }
