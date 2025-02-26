@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import WorldMap from 'react-svg-worldmap';
-import CountryInfo from './CountryInfo';
+// import countryShapes from 'world-map-country-shapes';
+import CountryDetail from './CountryDetail';
 import '../style.scss';
 import NewThought from './newThought';
-// import newThought from '../components/newThought';
+// import countries from '../data/countries.json';
 
 function Home() {
   const [query, setQuery] = useState('');
@@ -26,12 +27,10 @@ function Home() {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        // Build an absolute URL using PUBLIC_URL
         const response = await fetch(`${process.env.PUBLIC_URL}/countries_data.json`);
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
         }
-        // Read response as text and then parse as JSON
         const text = await response.text();
         try {
           const countryData = JSON.parse(text);
@@ -48,10 +47,10 @@ function Home() {
     fetchCountries();
   }, []);
 
-  // Handle country click using the 'countryName' property from your data
+  // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
-    if (countryData && countryData.countryName) {
-      navigate(`/country/${countryData.countryName}`);
+    if (countryData && countryData.countryCode) {
+      navigate(`/country/${countryData.countryCode}`);
     } else {
       console.error('Country data is missing or malformed:', countryData);
     }
@@ -63,7 +62,7 @@ function Home() {
 
   // Create highlighted countries array for the world map
   const highlightedCountries = filteredCountries.map((country) => ({
-    country: country.countryName,
+    country: country.isoCode,
     value: 1, // This value is used by the map for coloring
   }));
 
@@ -76,9 +75,9 @@ function Home() {
         </button>
         {settingsOpen && (
           <div className="settings-menu">
-            <p onClick={() => alert('Profile clicked!')}>Profile</p>
-            <p onClick={() => alert('Settings clicked!')}>Settings</p>
-            <p onClick={() => alert('Logging out...')}>Logout</p>
+            <p onClick={() => console.log('Profile clicked!')}>Profile</p>
+            <p onClick={() => console.log('Settings clicked!')}>Settings</p>
+            <p onClick={() => console.log('Logging out...')}>Logout</p>
           </div>
         )}
       </div>
@@ -118,7 +117,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/thoughts/new" element={<NewThought />} />
-      <Route path="/country/:country" element={<CountryInfo />} />
+      <Route path="/country/:countryId" element={<CountryDetail />} />
     </Routes>
   );
 }
