@@ -6,6 +6,7 @@ module.exports = {
         enforce: 'pre',
         loader: 'source-map-loader',
         exclude: /node_modules/,
+        devtool: false
       },
     ],
   },
