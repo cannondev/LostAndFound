@@ -1,8 +1,7 @@
 /* eslint-disable react/button-has-type */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import WorldMap from 'react-svg-worldmap';
-// import CountryInfo from './CountryInfo';
+import WorldMapComponent from './WorldMap';
 import '../style.scss';
 import NewThought from './newThought';
 import Passport from './Passport';
@@ -14,7 +13,6 @@ import SignUp from './Signup';
 
 function Home() {
   const [query, setQuery] = useState('');
-  const [data, setData] = useState([]);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
@@ -23,7 +21,6 @@ function Home() {
     loadUser();
   }, []);
 
-  // Handle search bar change
   const handleSearchChange = (event) => {
     setQuery(event.target.value);
   };
@@ -114,15 +111,8 @@ function Home() {
         />
       </div>
 
-      {/* World Map */}
-      <WorldMap
-        blankColor="#ffffff"
-        size="xxl"
-        data={highlightedCountries}
-        onClickFunction={handleCountryClick}
-      />
+      <WorldMapComponent />
 
-      {/* Buttons at the bottom */}
       <div className="button-container">
         <button className="custom-button" onClick={handleThoughtNavigation} type="button">
           Create Thought
