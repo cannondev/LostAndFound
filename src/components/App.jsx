@@ -6,11 +6,20 @@ import '../style.scss';
 import NewThought from './newThought';
 import Passport from './Passport';
 import CountryDetail from './CountryDetail';
+import useStore from '../store';
+import SignIn from './SignIn';
+import SignUp from './Signup';
+// import newThought from '../components/newThought';
 
 function Home() {
   const [query, setQuery] = useState('');
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
+  const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
+  // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   const handleSearchChange = (event) => {
     setQuery(event.target.value);
@@ -23,6 +32,57 @@ function Home() {
   const handlePassportNavigation = () => {
     navigate('/passport');
   };
+
+  const handleSignInNavigation = () => {
+    navigate('/signin');
+  };
+
+  const handleSignUpNavigation = () => {
+    navigate('/signup');
+  };
+
+  // Fetch country data from a local JSON file located in the public folder
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch(`${process.env.PUBLIC_URL}/countries_data.json`);
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+        }
+        const text = await response.text();
+        try {
+          const countryData = JSON.parse(text);
+          setData(countryData);
+        } catch (parseError) {
+          console.error('Failed to parse JSON. Response text:', text);
+          throw parseError;
+        }
+      } catch (error) {
+        console.error('Error fetching country data:', error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  // Handle country click using the 'id' property from world-map-country-shapes
+  const handleCountryClick = (countryData) => {
+    if (countryData && countryData.countryCode) {
+      navigate(`/country/${countryData.countryCode}`);
+    } else {
+      console.error('Country data is missing or malformed:', countryData);
+    }
+  };
+
+  // Filter countries based on the search query using the countryName field
+  const filteredCountries = data.filter((country) => country.countryName
+    && country.countryName.toLowerCase().includes(query.toLowerCase()));
+
+  // Create highlighted countries array for the world map
+  const highlightedCountries = filteredCountries.map((country) => ({
+    country: country.isoCode,
+    value: 1, // This value is used by the map for coloring
+  }));
 
   return (
     <div className="App">
@@ -60,6 +120,12 @@ function Home() {
         <button className="custom-button" onClick={handlePassportNavigation} type="button">
           Open Passport
         </button>
+        <button className="custom-button" onClick={handleSignInNavigation} type="button">
+          SignIn
+        </button>
+        <button className="custom-button" onClick={handleSignUpNavigation} type="button">
+          SignUp
+        </button>
       </div>
     </div>
   );
@@ -72,6 +138,8 @@ function App() {
       <Route path="/thoughts/new" element={<NewThought />} />
       <Route path="/country/:countryId" element={<CountryDetail />} />
       <Route path="/passport" element={<Passport />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
     </Routes>
   );
 }
