@@ -1,48 +1,35 @@
 // src/components/CountryDetail.jsx
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import countryShapes from 'world-map-country-shapes';
 import '../style.scss';
-// import countries from '../data/countries.json'; // Optional static data
 
 function CountryDetail() {
   const { countryId } = useParams();
   const navigate = useNavigate();
 
-  const shapeData = countryShapes.find((c) => c.id === countryId);
-  // const countryInfo = countries.find((c) => c.id === countryId); // If you add static data
+  // Convert country code to lowercase to match mapsicon format
+  const lowercaseCountryId = countryId.toLowerCase();
+
+  // Construct the URL for the country SVG from mapsicon repository
+  const countrySvgUrl = `https://raw.githubusercontent.com/djaiss/mapsicon/master/all/${lowercaseCountryId}/vector.svg`;
 
   return (
     <div className="country-detail">
       <button type="button" className="go-home-btn" onClick={() => navigate('/')}>
         Go Back to Home
       </button>
-      {/* {countryInfo ? (
-        <>
-          <h1>{countryInfo.name}</h1>
-          <p>Capital: {countryInfo.capital}</p>
-          <p>Population: {countryInfo.population.toLocaleString()}</p>
-          <p>Region: {countryInfo.region}</p>
-        </>
-      ) : (
-        <p>Country information not available.</p>
-      )} */}
-      <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 2000 1001">
-        {shapeData ? (
-          <path
-            d={shapeData.shape}
-            style={{
-              fill: '#FF5722',
-              stroke: '#FFFFFF',
-              strokeWidth: 1.5,
-            }}
-          />
-        ) : (
-          <text x="50%" y="50%" textAnchor="middle" fill="gray">
-            Country shape not available.
-          </text>
-        )}
-      </svg>
+      <div className="country-container">
+        <img
+          src={countrySvgUrl}
+          alt={countryId}
+          width="768"
+          height="768"
+          onError={(e) => {
+            e.target.style.display = 'none';
+          }}
+        />
+
+      </div>
     </div>
   );
 }

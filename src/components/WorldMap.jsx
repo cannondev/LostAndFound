@@ -1,37 +1,30 @@
 // src/components/WorldMap.jsx
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import countryShapes from 'world-map-country-shapes';
+import WorldMap from 'react-svg-worldmap';
 import '../style.scss';
 
-function WorldMap() {
+function WorldMapComponent() {
   const navigate = useNavigate();
-  const [selectedCountry, setSelectedCountry] = useState(null);
 
-  const handleCountryClick = (countryId) => {
-    setSelectedCountry(countryId);
-    navigate(`/country/${countryId}`);
+  const handleCountryClick = (countryData) => {
+    if (countryData && countryData.countryCode) {
+      navigate(`/country/${countryData.countryCode.toLowerCase()}`); // Ensure lowercase ISO code
+    } else {
+      console.error('Country data is missing or malformed:', countryData);
+    }
   };
 
   return (
     <div className="world-map-container">
-      <svg xmlns="http://www.w3.org/2000/svg" height="600" width="1200" viewBox="0 0 2000 1001">
-        {countryShapes.map((country) => (
-          <path
-            key={country.id}
-            d={country.shape}
-            style={{
-              fill: selectedCountry === country.id ? '#FF5722' : '#e0e0e0',
-              stroke: '#FFFFFF',
-              strokeWidth: 1,
-              cursor: 'pointer',
-            }}
-            onClick={() => handleCountryClick(country.id)}
-          />
-        ))}
-      </svg>
+      <WorldMap
+        blankColor="#ffffff"
+        size="xxl"
+        data={[]} // Adjust this if needed
+        onClickFunction={handleCountryClick}
+      />
     </div>
   );
 }
 
-export default WorldMap;
+export default WorldMapComponent;
