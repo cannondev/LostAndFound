@@ -7,6 +7,9 @@ import '../style.scss';
 import NewThought from './newThought';
 import Passport from './Passport';
 import CountryDetail from './CountryDetail';
+import useStore from '../store';
+import SignIn from './SignIn';
+import SignUp from './Signup';
 // import newThought from '../components/newThought';
 
 function Home() {
@@ -14,6 +17,11 @@ function Home() {
   const [data, setData] = useState([]);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
+  const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
+  // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   // Handle search bar change
   const handleSearchChange = (event) => {
@@ -26,6 +34,14 @@ function Home() {
 
   const handlePassportNavigation = () => {
     navigate('/passport');
+  };
+
+  const handleSignInNavigation = () => {
+    navigate('/signin');
+  };
+
+  const handleSignUpNavigation = () => {
+    navigate('/signup');
   };
 
   // Fetch country data from a local JSON file located in the public folder
@@ -108,13 +124,17 @@ function Home() {
 
       {/* Buttons at the bottom */}
       <div className="button-container">
-        {/* thought button */}
         <button className="custom-button" onClick={handleThoughtNavigation} type="button">
           Create Thought
         </button>
-        {/* passport button */}
         <button className="custom-button" onClick={handlePassportNavigation} type="button">
           Open Passport
+        </button>
+        <button className="custom-button" onClick={handleSignInNavigation} type="button">
+          SignIn
+        </button>
+        <button className="custom-button" onClick={handleSignUpNavigation} type="button">
+          SignUp
         </button>
       </div>
     </div>
@@ -128,6 +148,8 @@ function App() {
       <Route path="/thoughts/new" element={<NewThought />} />
       <Route path="/country/:countryId" element={<CountryDetail />} />
       <Route path="/passport" element={<Passport />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
     </Routes>
   );
 }
