@@ -1,11 +1,14 @@
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import {
+  Routes, Route, useNavigate, useLocation,
+} from 'react-router-dom';
 import WorldMapComponent from './WorldMap';
 import '../style.scss';
 import NewThought from './newThought';
 import Passport from './Passport';
 import CountryDetail from './CountryDetail';
+import CountryScratchOff from './CountryScratchOff';
 import useStore from '../store';
 import SignIn from './SignIn';
 import SignUp from './Signup';
@@ -21,7 +24,7 @@ function Home() {
   const [data, setData] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
-
+  const [showPopup, setShowPopup] = useState(false);
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
   // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
@@ -36,9 +39,9 @@ function Home() {
     setQuery(event.target.value);
   };
 
-  const handleThoughtNavigation = () => {
-    navigate('/thoughts/new');
-  };
+  // const handleThoughtNavigation = () => {
+  //   navigate('/thoughts/new');
+  // };
 
   const handlePassportNavigation = () => {
     navigate('/passport');
@@ -50,6 +53,10 @@ function Home() {
 
   const handleSignUpNavigation = () => {
     navigate('/signup');
+  };
+
+  const handlePopupToggle = () => {
+    setShowPopup(!showPopup);
   };
 
   // Fetch country data from a local JSON file located in the public folder
@@ -135,7 +142,7 @@ function Home() {
       <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} />
 
       <div className="button-container">
-        <button className="custom-button" onClick={handleThoughtNavigation} type="button">
+        <button className="custom-button" onClick={handlePopupToggle} type="button">
           Create Thought
         </button>
         <button className="custom-button" onClick={handlePassportNavigation} type="button">
@@ -155,21 +162,39 @@ function Home() {
         )}
       </div>
       {/* Show authentication status */}
+      <div className="auth-status">
+        {authenticated ? <p>You are logged in ✅</p> : <p>You are not logged in ❌</p>}
+      </div>
+      {/* Popup for new thought */}
+      {showPopup && (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <NewThought closePopup={handlePopupToggle} />
+        </div>
+      </div>
+      )}
+
     </div>
   );
 }
 
 function App() {
+  const currentLocation = useLocation();
   return (
-    <Routes>
-      <Route path="/input-country" element={<InputCountry />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/" element={<Home />} />
-      <Route path="/thoughts/new" element={<NewThought />} />
-      <Route path="/country/:countryId" element={<CountryDetail />} />
-      <Route path="/passport" element={<Passport />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/input-country" element={<InputCountry />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/thoughts/new" element={<NewThought />} />
+        <Route path="/country/:countryId" element={<CountryDetail />} />
+        <Route path="/passport" element={<Passport />} />
+      </Routes>
+      {currentLocation?.pathname.startsWith('/country/') && (
+        <CountryScratchOff />
+      )}
+    </>
   );
 }
 
