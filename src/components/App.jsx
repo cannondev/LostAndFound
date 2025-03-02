@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import WorldMapComponent from './WorldMap';
 import '../style.scss';
@@ -9,6 +9,8 @@ import CountryDetail from './CountryDetail';
 import useStore from '../store';
 import SignIn from './SignIn';
 import SignUp from './Signup';
+// import InputCountry from './inputCountry';
+
 // import newThought from '../components/newThought';
 
 function Home() {
@@ -16,6 +18,11 @@ function Home() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
+  const [data, setData] = useState([]);
+  const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
+  const [showPopup, setShowPopup] = useState(false);
+  // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
+
   // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
     loadUser();
@@ -25,9 +32,9 @@ function Home() {
     setQuery(event.target.value);
   };
 
-  const handleThoughtNavigation = () => {
-    navigate('/thoughts/new');
-  };
+  // const handleThoughtNavigation = () => {
+  //   navigate('/thoughts/new');
+  // };
 
   const handlePassportNavigation = () => {
     navigate('/passport');
@@ -39,6 +46,10 @@ function Home() {
 
   const handleSignUpNavigation = () => {
     navigate('/signup');
+  };
+
+  const handlePopupToggle = () => {
+    setShowPopup(!showPopup);
   };
 
   // Fetch country data from a local JSON file located in the public folder
@@ -84,6 +95,7 @@ function Home() {
     value: 1, // This value is used by the map for coloring
   }));
 
+  console.log('Authenticated:', authenticated);
   return (
     <div className="App">
       {/* User Settings Menu */}
@@ -95,7 +107,7 @@ function Home() {
           <div className="settings-menu">
             <p onClick={() => console.log('Profile clicked!')}>Profile</p>
             <p onClick={() => console.log('Settings clicked!')}>Settings</p>
-            <p onClick={() => console.log('Logging out...')}>Logout</p>
+            <p onClick={() => navigate('/input-country')}>Logout</p>
           </div>
         )}
       </div>
@@ -111,22 +123,40 @@ function Home() {
         />
       </div>
 
-      <WorldMapComponent />
+      <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} />
 
       <div className="button-container">
-        <button className="custom-button" onClick={handleThoughtNavigation} type="button">
+        <button className="custom-button" onClick={handlePopupToggle} type="button">
           Create Thought
         </button>
         <button className="custom-button" onClick={handlePassportNavigation} type="button">
           Open Passport
         </button>
-        <button className="custom-button" onClick={handleSignInNavigation} type="button">
-          SignIn
-        </button>
-        <button className="custom-button" onClick={handleSignUpNavigation} type="button">
-          SignUp
-        </button>
       </div>
+      <div>
+        {!authenticated && (
+        <>
+          <button className="custom-button" onClick={handleSignInNavigation} type="button">
+            SignIn
+          </button>
+          <button className="custom-button" onClick={handleSignUpNavigation} type="button">
+            SignUp
+          </button>
+        </>
+        )}
+      </div>
+      {/* Show authentication status */}
+      <div className="auth-status">
+        {authenticated ? <p>You are logged in ✅</p> : <p>You are not logged in ❌</p>}
+      </div>
+      {/* Popup for new thought */}
+      {showPopup && (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <NewThought closePopup={handlePopupToggle} />
+        </div>
+      </div>
+      )}
     </div>
   );
 }
@@ -134,12 +164,13 @@ function Home() {
 function App() {
   return (
     <Routes>
+      {/* <Route path="/input-country" element={<InputCountry />} /> */}
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
       <Route path="/" element={<Home />} />
       <Route path="/thoughts/new" element={<NewThought />} />
       <Route path="/country/:countryId" element={<CountryDetail />} />
       <Route path="/passport" element={<Passport />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
     </Routes>
   );
 }
