@@ -91,9 +91,24 @@ export default function createAuthSlice(set, get) {
     },
 
     signoutUser: (navigate) => {
+      console.log('Logging out...');
+
+      // Explicitly remove ALL relevant localStorage items
       localStorage.removeItem('token');
-      set({ authenticated: false });
-      navigate('/');
+      localStorage.removeItem('user');
+      localStorage.removeItem('homeCountry');
+
+      set((state) => ({
+        authSlice: {
+          ...state.authSlice,
+          authenticated: false,
+          user: null, // Reset user completely
+        },
+      }));
+
+      console.log('Storage after logout:', localStorage); // Debugging check
+      navigate('/input-country'); // Redirect to home
     },
+
   };
 }

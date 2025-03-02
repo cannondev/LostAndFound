@@ -1,17 +1,17 @@
-// import React from 'react';
-// import { Navigate } from 'react-router-dom';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 
-// import useStore from '../store';
+import useStore from '../store';
 
-// // Router Wrapper
-// function RequireAuth({ children }) {
-//   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
+// Router Wrapper
+function RequireAuth({ children }) {
+  const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
 
-//   if (!authenticated) {
-//     return <Navigate to="/signin" />;
-//   } else {
-//     return children;
-//   }
-// }
+  if (!authenticated) {
+    return <Navigate to="/input-country" />;
+  } else {
+    return children;
+  }
+}
 
-// export default RequireAuth;
+export default RequireAuth;
