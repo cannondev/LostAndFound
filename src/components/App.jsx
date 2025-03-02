@@ -23,6 +23,7 @@ function Home() {
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
   const [data, setData] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
+  const [showPopup, setShowPopup] = useState(false);
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
   // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
@@ -37,9 +38,9 @@ function Home() {
     setQuery(event.target.value);
   };
 
-  const handleThoughtNavigation = () => {
-    navigate('/thoughts/new');
-  };
+  // const handleThoughtNavigation = () => {
+  //   navigate('/thoughts/new');
+  // };
 
   const handlePassportNavigation = () => {
     navigate('/passport');
@@ -51,6 +52,10 @@ function Home() {
 
   const handleSignUpNavigation = () => {
     navigate('/signup');
+  };
+
+  const handlePopupToggle = () => {
+    setShowPopup(!showPopup);
   };
 
   // Fetch country data from a local JSON file located in the public folder
@@ -127,7 +132,7 @@ function Home() {
       <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} />
 
       <div className="button-container">
-        <button className="custom-button" onClick={handleThoughtNavigation} type="button">
+        <button className="custom-button" onClick={handlePopupToggle} type="button">
           Create Thought
         </button>
         <button className="custom-button" onClick={handlePassportNavigation} type="button">
@@ -136,20 +141,28 @@ function Home() {
       </div>
       <div>
         {!authenticated && (
-          <>
-            <button className="custom-button" onClick={handleSignInNavigation} type="button">
-              SignIn
-            </button>
-            <button className="custom-button" onClick={handleSignUpNavigation} type="button">
-              SignUp
-            </button>
-          </>
+        <>
+          <button className="custom-button" onClick={handleSignInNavigation} type="button">
+            SignIn
+          </button>
+          <button className="custom-button" onClick={handleSignUpNavigation} type="button">
+            SignUp
+          </button>
+        </>
         )}
       </div>
       {/* Show authentication status */}
       <div className="auth-status">
         {authenticated ? <p>You are logged in ✅</p> : <p>You are not logged in ❌</p>}
       </div>
+      {/* Popup for new thought */}
+      {showPopup && (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <NewThought closePopup={handlePopupToggle} />
+        </div>
+      </div>
+      )}
     </div>
   );
 }
