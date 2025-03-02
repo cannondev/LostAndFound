@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
 
 function SignUp() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [homeCountry, setHomeCountry] = useState('');
 
@@ -12,8 +12,13 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await signUpUser({ email: username, password, homeCountry });
+    const success = await signUpUser({
+      email, password, homeCountry,
+    });
     if (success) navigate('/');
+  };
+  const handleSignInNavigation = () => {
+    navigate('/signin');
   };
 
   return (
@@ -22,9 +27,9 @@ function SignUp() {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
@@ -43,6 +48,9 @@ function SignUp() {
         />
         <button type="submit">Sign Up</button>
       </form>
+      <button className="custom-button" onClick={handleSignInNavigation} type="button">
+        SignIn
+      </button>
     </div>
   );
 }

@@ -7,6 +7,7 @@ const ROOT_URL = 'http://localhost:9090/api';
 export default function createAuthSlice(set, get) {
   return {
     authenticated: false,
+    user: { homeCountry: null },
     loadUser: () => {
       const token = localStorage.getItem('token');
       if (token) {
@@ -16,6 +17,15 @@ export default function createAuthSlice(set, get) {
       }
     },
 
+    setUserHomeCountry: (country) => {
+      set((state) => ({
+        authSlice: {
+          ...state.authSlice,
+          user: { ...state.authSlice.user, homeCountry: country },
+        },
+      }));
+    },
+
     signinUser: async (fields) => {
       try {
         console.log('Sending sign-in request with:', fields);
@@ -23,6 +33,7 @@ export default function createAuthSlice(set, get) {
         console.log('Received response:', response.data);
         if (response.data.token) {
           set({ authenticated: true });
+          set({ user: { ...response.data, homeCountry: response.data.homeCountry } });
           localStorage.setItem('token', response.data.token);
           return true;
         } else {
