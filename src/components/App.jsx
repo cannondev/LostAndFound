@@ -24,7 +24,10 @@ function Home() {
 
   // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
-    loadUser();
+    setTimeout(() => {
+      console.log('Running loadUser after delay...');
+      loadUser();
+    }, 500); // Wait 500ms to let signinUser complete
   }, []);
 
   const handleSearchChange = (event) => {
