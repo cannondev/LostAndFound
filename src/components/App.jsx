@@ -1,15 +1,18 @@
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import {
+  Routes, Route, useNavigate, useLocation,
+} from 'react-router-dom';
 import WorldMapComponent from './WorldMap';
 import '../style.scss';
 import NewThought from './newThought';
 import Passport from './Passport';
 import CountryDetail from './CountryDetail';
+import CountryScratchOff from './CountryScratchOff';
 import useStore from '../store';
 import SignIn from './SignIn';
 import SignUp from './Signup';
-// import InputCountry from './inputCountry';
+import InputCountry from './inputCountry';
 
 // import newThought from '../components/newThought';
 
@@ -25,7 +28,10 @@ function Home() {
 
   // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
-    loadUser();
+    setTimeout(() => {
+      console.log('Running loadUser after delay...');
+      loadUser();
+    }, 500); // Wait 500ms to let signinUser complete
   }, []);
 
   const handleSearchChange = (event) => {
@@ -162,16 +168,22 @@ function Home() {
 }
 
 function App() {
+  const currentLocation = useLocation();
   return (
-    <Routes>
-      {/* <Route path="/input-country" element={<InputCountry />} /> */}
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/" element={<Home />} />
-      <Route path="/thoughts/new" element={<NewThought />} />
-      <Route path="/country/:countryId" element={<CountryDetail />} />
-      <Route path="/passport" element={<Passport />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/input-country" element={<InputCountry />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/thoughts/new" element={<NewThought />} />
+        <Route path="/country/:countryId" element={<CountryDetail />} />
+        <Route path="/passport" element={<Passport />} />
+      </Routes>
+      {currentLocation?.pathname.startsWith('/country/') && (
+        <CountryScratchOff />
+      )}
+    </>
   );
 }
 
