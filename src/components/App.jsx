@@ -23,6 +23,7 @@ function Home() {
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
   const [data, setData] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
+  const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
   const [showPopup, setShowPopup] = useState(false);
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
@@ -105,6 +106,15 @@ function Home() {
   return (
     <div className="App">
       {/* User Settings Menu */}
+      <h1>Welcome to Home</h1>
+
+      {authenticated ? (
+        <p>You are logged in ✅</p>
+      ) : (
+        <p>You are not logged in ❌</p>
+      )}
+
+      <p>Home Country: {homeCountry || 'Not set'}</p>
       <div className="settings-container">
         <button className="settings-button" type="button" onClick={() => setSettingsOpen(!settingsOpen)}>
           ⚙️
@@ -163,6 +173,7 @@ function Home() {
         </div>
       </div>
       )}
+
     </div>
   );
 }
