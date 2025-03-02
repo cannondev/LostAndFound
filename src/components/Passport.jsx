@@ -14,7 +14,7 @@ function DisplayPassport() {
   }, [fetchAllUnlockedCountries]);
 
   const handleClose = () => {
-    navigate('/');
+    navigate('/home');
   };
 
   return (

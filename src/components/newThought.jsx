@@ -16,7 +16,7 @@ function NewThought({ closePopup }) {
 
     createThought(thoughtData);
     closePopup();
-    navigate('/');
+    navigate('/home');
   };
 
   return (

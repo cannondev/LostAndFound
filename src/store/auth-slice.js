@@ -107,7 +107,7 @@ export default function createAuthSlice(set, get) {
       }));
 
       console.log('Storage after logout:', localStorage); // Debugging check
-      navigate('/input-country'); // Redirect to home
+      navigate('/');
     },
 
   };

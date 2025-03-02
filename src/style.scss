@@ -1,4 +1,11 @@
 // APP CSS
+.custom-button {
+  z-index: 9999 !important; /* Ensure it's on top */
+  pointer-events: all !important; /* Allow clicks */
+  opacity: 1 !important; /* Ensure it's visible */
+  visibility: visible !important;
+}
+
 
 .App {
   text-align: center;

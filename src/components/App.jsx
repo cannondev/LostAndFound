@@ -183,10 +183,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/input-country" element={<InputCountry />} />
+        <Route path="/" element={<InputCountry />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/thoughts/new" element={<NewThought />} />
         <Route path="/country/:countryId" element={<CountryDetail />} />
         <Route path="/passport" element={<Passport />} />

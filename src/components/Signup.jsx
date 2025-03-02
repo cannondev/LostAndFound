@@ -15,7 +15,7 @@ function SignUp() {
     const success = await signUpUser({
       email, password, homeCountry,
     });
-    if (success) navigate('/');
+    if (success) navigate('/home');
   };
   const handleSignInNavigation = () => {
     navigate('/signin');
