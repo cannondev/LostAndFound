@@ -6,14 +6,30 @@ const ROOT_URL = 'http://localhost:9090/api';
 
 export default function createAuthSlice(set, get) {
   return {
-    authenticated: false,
+    authSlice: {
+      authenticated: false,
+      user: null,
+    },
+
     loadUser: () => {
       const token = localStorage.getItem('token');
-      if (token) {
-        set({ authenticated: true });
-      } else {
-        set({ authenticated: false });
-      }
+      const user = localStorage.getItem('user');
+      set((state) => ({
+        authSlice: {
+          ...state.authSlice,
+          authenticated: !!token,
+          user: user ? JSON.parse(user) : null,
+        },
+      }));
+    },
+
+    setUserHomeCountry: (country) => {
+      set((state) => ({
+        authSlice: {
+          ...state.authSlice,
+          user: { ...state.authSlice.user, homeCountry: country },
+        },
+      }));
     },
 
     signinUser: async (fields) => {
@@ -21,9 +37,22 @@ export default function createAuthSlice(set, get) {
         console.log('Sending sign-in request with:', fields);
         const response = await axios.post(`${ROOT_URL}/signin`, fields);
         console.log('Received response:', response.data);
+
         if (response.data.token) {
-          set({ authenticated: true });
           localStorage.setItem('token', response.data.token);
+          localStorage.setItem('user', JSON.stringify(response.data));
+
+          set((state) => ({
+            authSlice: {
+              ...state.authSlice,
+              authenticated: true,
+              user: response.data,
+            },
+          }));
+
+          console.log('Stored token in localStorage:', localStorage.getItem('token'));
+          console.log('Updated Zustand state:', get().authSlice);
+
           return true;
         } else {
           console.error('No token received from API');
@@ -34,13 +63,21 @@ export default function createAuthSlice(set, get) {
         return false;
       }
     },
+
     signUpUser: async (fields) => {
       try {
         const response = await axios.post(`${ROOT_URL}/signup`, fields);
 
         if (response.data.token) {
-          set({ authenticated: true });
           localStorage.setItem('token', response.data.token);
+          localStorage.setItem('user', JSON.stringify(response.data));
+          set((state) => ({
+            authSlice: {
+              ...state.authSlice,
+              authenticated: true,
+              user: response.data,
+            },
+          }));
           return true;
         } else {
           console.error('No token received from API');
@@ -63,7 +100,13 @@ export default function createAuthSlice(set, get) {
 
     signoutUser: (navigate) => {
       localStorage.removeItem('token');
-      set({ authenticated: false });
+      localStorage.removeItem('user');
+      set((state) => ({
+        authSlice: {
+          authenticated: false,
+          user: null,
+        },
+      }));
       navigate('/');
     },
   };

@@ -3,16 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
 
 function SignIn() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const signinUser = useStore(({ authSlice }) => authSlice.signinUser);
 
+  const handleSignUpNavigation = () => {
+    navigate('/signup');
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Signing in with:', username, password);
+    console.log('Signing in with:', email, password);
     try {
-      const success = await signinUser({ email: username, password });
+      const success = await signinUser({ email, password });
       console.log('Sign-in success:', success);
       if (success) {
         console.log('Navigating to home...');
@@ -31,9 +34,9 @@ function SignIn() {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
@@ -45,6 +48,9 @@ function SignIn() {
         />
         <button type="submit">Sign In</button>
       </form>
+      <button className="custom-button" onClick={handleSignUpNavigation} type="button">
+        SignUp
+      </button>
     </div>
   );
 }
