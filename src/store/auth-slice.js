@@ -8,22 +8,38 @@ export default function createAuthSlice(set, get) {
   return {
     authSlice: {
       authenticated: false,
-      user: null,
+      user: { homeCountry: null },
     },
 
+    // loadUser: () => {
+    //   const token = localStorage.getItem('token');
+    //   const user = localStorage.getItem('user');
+    //   set((state) => ({
+    //     authSlice: {
+    //       ...state.authSlice,
+    //       authenticated: !!token,
+    //       user: user ? JSON.parse(user) : null,
+    //     },
+    //   }));
+    // },
     loadUser: () => {
       const token = localStorage.getItem('token');
-      const user = localStorage.getItem('user');
-      set((state) => ({
-        authSlice: {
-          ...state.authSlice,
-          authenticated: !!token,
-          user: user ? JSON.parse(user) : null,
-        },
-      }));
+      if (token) {
+        set({ authenticated: true });
+      } else {
+        set({ authenticated: false });
+      }
+
+      const homeCountry = localStorage.getItem('homeCountry');
+      if (homeCountry) {
+        set((state) => ({
+          authSlice: { ...state.authSlice, user: { ...state.authSlice.user, homeCountry } },
+        }));
+      }
     },
 
     setUserHomeCountry: (country) => {
+      localStorage.setItem('homeCountry', country);
       set((state) => ({
         authSlice: {
           ...state.authSlice,
@@ -34,9 +50,7 @@ export default function createAuthSlice(set, get) {
 
     signinUser: async (fields) => {
       try {
-        console.log('Sending sign-in request with:', fields);
         const response = await axios.post(`${ROOT_URL}/signin`, fields);
-        console.log('Received response:', response.data);
 
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
@@ -49,15 +63,9 @@ export default function createAuthSlice(set, get) {
               user: response.data,
             },
           }));
-
-          console.log('Stored token in localStorage:', localStorage.getItem('token'));
-          console.log('Updated Zustand state:', get().authSlice);
-
           return true;
-        } else {
-          console.error('No token received from API');
-          return false;
         }
+        return false;
       } catch (error) {
         console.error('Sign In Failed', error);
         return false;
@@ -71,28 +79,12 @@ export default function createAuthSlice(set, get) {
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('user', JSON.stringify(response.data));
-          set((state) => ({
-            authSlice: {
-              ...state.authSlice,
-              authenticated: true,
-              user: response.data,
-            },
-          }));
+
+          set({ authenticated: true });
           return true;
-        } else {
-          console.error('No token received from API');
-          return false;
         }
+        return false;
       } catch (error) {
-        if (error.response) {
-          if (error.response.status === 422) {
-            alert('This email is already in use or invalid data. Please try another email.');
-          } else {
-            alert(`Sign Up Failed: ${error.response.data.message}` || 'An error occurred.');
-          }
-        } else {
-          alert('Sign Up Failed: Unable to connect to server.');
-        }
         console.error('Sign Up Failed', error);
         return false;
       }
@@ -100,13 +92,7 @@ export default function createAuthSlice(set, get) {
 
     signoutUser: (navigate) => {
       localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      set((state) => ({
-        authSlice: {
-          authenticated: false,
-          user: null,
-        },
-      }));
+      set({ authenticated: false });
       navigate('/');
     },
   };
