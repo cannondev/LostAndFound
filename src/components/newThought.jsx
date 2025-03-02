@@ -10,8 +10,6 @@ function NewThought({ closePopup }) {
   const handleSubmit = () => {
     const thoughtData = {
       content,
-      user: 'Anonymous',
-      countryOriginated: 'USA',
     };
 
     createThought(thoughtData);
