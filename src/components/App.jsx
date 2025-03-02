@@ -1,11 +1,14 @@
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import {
+  Routes, Route, useNavigate, useLocation,
+} from 'react-router-dom';
 import WorldMapComponent from './WorldMap';
 import '../style.scss';
 import NewThought from './newThought';
 import Passport from './Passport';
 import CountryDetail from './CountryDetail';
+import CountryScratchOff from './CountryScratchOff';
 import useStore from '../store';
 import SignIn from './SignIn';
 import SignUp from './Signup';
@@ -130,14 +133,14 @@ function Home() {
       </div>
       <div>
         {!authenticated && (
-        <>
-          <button className="custom-button" onClick={handleSignInNavigation} type="button">
-            SignIn
-          </button>
-          <button className="custom-button" onClick={handleSignUpNavigation} type="button">
-            SignUp
-          </button>
-        </>
+          <>
+            <button className="custom-button" onClick={handleSignInNavigation} type="button">
+              SignIn
+            </button>
+            <button className="custom-button" onClick={handleSignUpNavigation} type="button">
+              SignUp
+            </button>
+          </>
         )}
       </div>
       {/* Show authentication status */}
@@ -149,16 +152,22 @@ function Home() {
 }
 
 function App() {
+  const currentLocation = useLocation();
   return (
-    <Routes>
-      <Route path="/input-country" element={<InputCountry />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/" element={<Home />} />
-      <Route path="/thoughts/new" element={<NewThought />} />
-      <Route path="/country/:countryId" element={<CountryDetail />} />
-      <Route path="/passport" element={<Passport />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/input-country" element={<InputCountry />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/thoughts/new" element={<NewThought />} />
+        <Route path="/country/:countryId" element={<CountryDetail />} />
+        <Route path="/passport" element={<Passport />} />
+      </Routes>
+      {currentLocation?.pathname.startsWith('/country/') && (
+        <CountryScratchOff />
+      )}
+    </>
   );
 }
 
