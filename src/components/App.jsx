@@ -4,7 +4,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import WorldMapComponent from './WorldMap';
 import '../style.scss';
 import NewThought from './newThought';
-import Passport from './Passport';
+import PassportModal from './Passport';
 import CountryDetail from './CountryDetail';
 import useStore from '../store';
 import SignIn from './SignIn';
@@ -20,6 +20,7 @@ function Home() {
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
   const [data, setData] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
+  const [isPassportOpen, setIsPassportOpen] = useState(false);
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
   // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
@@ -35,8 +36,12 @@ function Home() {
     navigate('/thoughts/new');
   };
 
-  const handlePassportNavigation = () => {
-    navigate('/passport');
+  const handlePassportOpen = () => {
+    setIsPassportOpen(true);
+  };
+
+  const handlePassportClose = () => {
+    setIsPassportOpen(false);
   };
 
   const handleSignInNavigation = () => {
@@ -124,9 +129,10 @@ function Home() {
         <button className="custom-button" onClick={handleThoughtNavigation} type="button">
           Create Thought
         </button>
-        <button className="custom-button" onClick={handlePassportNavigation} type="button">
+        <button className="custom-button" onClick={handlePassportOpen} type="button">
           Open Passport
         </button>
+        <PassportModal isOpen={isPassportOpen} on onClose={handlePassportClose} />
       </div>
       <div>
         {!authenticated && (
@@ -157,7 +163,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/thoughts/new" element={<NewThought />} />
       <Route path="/country/:countryId" element={<CountryDetail />} />
-      <Route path="/passport" element={<Passport />} />
+      <Route path="/Passport" element={<PassportModal />} />
     </Routes>
   );
 }
