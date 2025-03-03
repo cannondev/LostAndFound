@@ -80,7 +80,13 @@ export default function createAuthSlice(set, get) {
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('user', JSON.stringify(response.data));
 
-          set({ authenticated: true });
+          set((state) => ({
+            authSlice: {
+              ...state.authSlice,
+              authenticated: true,
+              user: response.data, // now includes id
+            },
+          }));
           return true;
         }
         return false;
