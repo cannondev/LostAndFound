@@ -1,4 +1,3 @@
-// CountryDetail.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../style.scss';
@@ -9,6 +8,9 @@ function CountryDetail() {
   const navigate = useNavigate();
   const [thoughts, setThoughts] = useState([]);
   const [svgError, setSvgError] = useState(false);
+
+  // Only render icons if maskCleared is true.
+  const maskCleared = localStorage.getItem('maskCleared') === 'true';
 
   const lowercaseCountryId = countryId.toLowerCase();
   const countrySvgUrl = `https://raw.githubusercontent.com/djaiss/mapsicon/master/all/${lowercaseCountryId}/vector.svg`;
@@ -60,13 +62,13 @@ function CountryDetail() {
           )}
         </svg>
 
-        {/* Render airplane icons outside the SVG using absolute positioning */}
-        {thoughts.map((thought) => (
+        {/* Render airplane icons only if the mask has been cleared */}
+        {maskCleared && thoughts.map((thought) => (
           <div
             key={thought._id}
             role="button"
             tabIndex={0}
-            aria-label="View thought details" // Accessible label added
+            aria-label="View thought details"
             style={{
               position: 'absolute',
               top: thought.yCoordinate,
@@ -77,12 +79,12 @@ function CountryDetail() {
             }}
             onClick={() => {
               console.log('Airplane icon clicked:', thought);
-              // Trigger your action here
+              // Add desired action here
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 console.log('Airplane icon activated via keyboard:', thought);
-                // Trigger the same action as onClick
+                // Add desired action here
               }
             }}
           >
@@ -109,7 +111,6 @@ function CountryDetail() {
               />
             </svg>
           </div>
-
         ))}
       </div>
     </div>

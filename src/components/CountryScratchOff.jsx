@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getName } from 'country-list';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -11,11 +11,16 @@ const getAuthHeaders = () => ({
 });
 
 function CountryScratchOff() {
-  // Extract countryId from URL and get country name.
   const location = useLocation();
+  const navigate = useNavigate();
   const pathParts = location.pathname.split('/');
   const countryId = pathParts[2];
   const countryName = getName(countryId) || countryId;
+
+  // Reset maskCleared flag on mount
+  useEffect(() => {
+    localStorage.setItem('maskCleared', 'false');
+  }, []);
 
   // State for scratch strokes, drawing state, and unlock/mask state.
   const [paths, setPaths] = useState([]);
@@ -50,13 +55,9 @@ function CountryScratchOff() {
     const canvas = canvasRef.current;
     if (!canvas) return 0;
     const ctx = canvas.getContext('2d');
-
-    // Fill with white.
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Draw each scratch stroke in black.
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 50;
     ctx.lineCap = 'round';
@@ -69,8 +70,6 @@ function CountryScratchOff() {
       }
       ctx.stroke();
     });
-
-    // Count nearly black pixels.
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const { data } = imageData;
     let blackCount = 0;
@@ -87,7 +86,6 @@ function CountryScratchOff() {
     const threshold = 0.7; // 70% scratched
     const completion = checkScratchCompletion();
     console.log('Scratch completion percentage:', completion);
-
     if (!unlocked && completion >= threshold) {
       setUnlocked(true);
       // Notify the backend that the country is unlocked.
@@ -100,7 +98,6 @@ function CountryScratchOff() {
           );
           console.log('Country unlocked:', response.data);
         } catch (error) {
-          // If the error indicates that the country is already unlocked, we can safely ignore it.
           if (
             error.response
             && error.response.data
@@ -114,12 +111,11 @@ function CountryScratchOff() {
           }
         }
       };
-
       unlockCountry();
     }
   }, [paths, unlocked, countryName]);
 
-  // Modify the mouse event handlers to disable scratching once unlocked.
+  // Mouse event handlers
   const handleMouseDown = (e) => {
     if (unlocked) return; // Disable scratching if unlocked.
     setIsScratching(true);
@@ -145,7 +141,6 @@ function CountryScratchOff() {
       const newPath = { id: uuidv4(), points: currentPath };
       setPaths((prevPaths) => [...prevPaths, newPath]);
       setCurrentPath([]);
-
       try {
         const response = await axios.post(
           `http://localhost:9090/api/countries/${countryName}/scratch`,
@@ -160,7 +155,6 @@ function CountryScratchOff() {
     }
   };
 
-  // Helper to generate the SVG path string from points.
   const generatePathString = (points) => {
     if (points.length < 2) return '';
     return points
@@ -228,7 +222,7 @@ function CountryScratchOff() {
           />
         )}
       </svg>
-      {/* Render the "Unlock" button if unlocked and mask still present */}
+      {/* Render the "Unlock" button if unlocked and mask is still present */}
       {unlocked && !maskCleared && (
         <button
           type="button"
@@ -241,7 +235,11 @@ function CountryScratchOff() {
             fontSize: '18px',
             zIndex: 2,
           }}
-          onClick={() => setMaskCleared(true)}
+          onClick={() => {
+            setMaskCleared(true);
+            localStorage.setItem('maskCleared', 'true');
+            navigate(`/country/${countryId}`);
+          }}
         >
           Unlock
         </button>
