@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
+import './SignIn.css';
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -30,11 +31,12 @@ function SignIn() {
 
   return (
     <div className="auth-container">
+      <div className="cloud-third" /> {/* Add this line */}
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
