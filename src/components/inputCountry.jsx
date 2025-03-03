@@ -19,7 +19,7 @@ function InputCountry() {
     e.preventDefault();
     if (homeCountry) {
       setUserHomeCountry(homeCountry);
-      navigate('/');
+      navigate('/home');
     }
   };
 

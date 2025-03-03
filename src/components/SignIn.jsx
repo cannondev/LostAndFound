@@ -20,7 +20,7 @@ function SignIn() {
       console.log('Sign-in success:', success);
       if (success) {
         console.log('Navigating to home...');
-        navigate('/');
+        navigate('/home');
       } else {
         alert('Email or password is incorrect.');
       }
