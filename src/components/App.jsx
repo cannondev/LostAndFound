@@ -13,6 +13,7 @@ import useStore from '../store';
 import SignIn from './SignIn';
 import SignUp from './Signup';
 import InputCountry from './inputCountry';
+import Loading from './Loading';
 
 // import newThought from '../components/newThought';
 
@@ -159,7 +160,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<InputCountry />} />
+        <Route path="/" element={<Loading />} />
+        <Route path="/input-country" element={<InputCountry />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/home" element={<Home />} />

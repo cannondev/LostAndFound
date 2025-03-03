@@ -79,7 +79,7 @@ function Loading() {
       <div className="plane-wrapper">
         <div className="plane-container">
           {/* Clicking the plane -> navigates to home page ("/") */}
-          <Link to="/wherefrom">
+          <Link to="/input-Country">
             <svg
               version="1.1"
               x="0px"
