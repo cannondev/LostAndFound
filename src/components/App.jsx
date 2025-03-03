@@ -1,11 +1,14 @@
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import {
+  Routes, Route, useNavigate, useLocation,
+} from 'react-router-dom';
 import WorldMapComponent from './WorldMap';
 import '../style.scss';
 import NewThought from './newThought';
 import PassportModal from './Passport';
 import CountryDetail from './CountryDetail';
+import CountryScratchOff from './CountryScratchOff';
 import useStore from '../store';
 import SignIn from './SignIn';
 import SignUp from './Signup';
@@ -18,23 +21,28 @@ function Home() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
-  const [data, setData] = useState([]);
+  const [data] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   const [isPassportOpen, setIsPassportOpen] = useState(false);
+  const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
+  const [showPopup, setShowPopup] = useState(false);
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
   // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
-    loadUser();
+    setTimeout(() => {
+      console.log('Running loadUser after delay...');
+      loadUser();
+    }, 500); // Wait 500ms to let signinUser complete
   }, []);
 
   const handleSearchChange = (event) => {
     setQuery(event.target.value);
   };
 
-  const handleThoughtNavigation = () => {
-    navigate('/thoughts/new');
-  };
+  // const handleThoughtNavigation = () => {
+  //   navigate('/thoughts/new');
+  // };
 
   const handlePassportOpen = () => {
     setIsPassportOpen(true);
@@ -52,29 +60,9 @@ function Home() {
     navigate('/signup');
   };
 
-  // Fetch country data from a local JSON file located in the public folder
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/countries_data.json`);
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-        }
-        const text = await response.text();
-        try {
-          const countryData = JSON.parse(text);
-          setData(countryData);
-        } catch (parseError) {
-          console.error('Failed to parse JSON. Response text:', text);
-          throw parseError;
-        }
-      } catch (error) {
-        console.error('Error fetching country data:', error);
-      }
-    };
-
-    fetchCountries();
-  }, []);
+  const handlePopupToggle = () => {
+    setShowPopup(!showPopup);
+  };
 
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
@@ -99,6 +87,15 @@ function Home() {
   return (
     <div className="App">
       {/* User Settings Menu */}
+      <h1>Welcome to Home</h1>
+
+      {authenticated ? (
+        <p>You are logged in ✅</p>
+      ) : (
+        <p>You are not logged in ❌</p>
+      )}
+
+      <p>Home Country: {homeCountry || 'Not set'}</p>
       <div className="settings-container">
         <button className="settings-button" type="button" onClick={() => setSettingsOpen(!settingsOpen)}>
           ⚙️
@@ -126,7 +123,7 @@ function Home() {
       <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} />
 
       <div className="button-container">
-        <button className="custom-button" onClick={handleThoughtNavigation} type="button">
+        <button className="custom-button" onClick={handlePopupToggle} type="button">
           Create Thought
         </button>
         <button className="custom-button" onClick={handlePassportOpen} type="button">
@@ -136,35 +133,50 @@ function Home() {
       </div>
       <div>
         {!authenticated && (
-        <>
-          <button className="custom-button" onClick={handleSignInNavigation} type="button">
-            SignIn
-          </button>
-          <button className="custom-button" onClick={handleSignUpNavigation} type="button">
-            SignUp
-          </button>
-        </>
+          <>
+            <button className="custom-button" onClick={handleSignInNavigation} type="button">
+              SignIn
+            </button>
+            <button className="custom-button" onClick={handleSignUpNavigation} type="button">
+              SignUp
+            </button>
+          </>
         )}
       </div>
       {/* Show authentication status */}
       <div className="auth-status">
         {authenticated ? <p>You are logged in ✅</p> : <p>You are not logged in ❌</p>}
       </div>
+      {/* Popup for new thought */}
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <NewThought closePopup={handlePopupToggle} />
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
 
 function App() {
+  const currentLocation = useLocation();
   return (
-    <Routes>
-      <Route path="/input-country" element={<InputCountry />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/" element={<Home />} />
-      <Route path="/thoughts/new" element={<NewThought />} />
-      <Route path="/country/:countryId" element={<CountryDetail />} />
-      <Route path="/Passport" element={<PassportModal />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/input-country" element={<InputCountry />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/thoughts/new" element={<NewThought />} />
+        <Route path="/country/:countryId" element={<CountryDetail />} />
+        <Route path="/Passport" element={<PassportModal />} />
+      </Routes>
+      {currentLocation?.pathname.startsWith('/country/') && (
+        <CountryScratchOff />
+      )}
+    </>
   );
 }
 
