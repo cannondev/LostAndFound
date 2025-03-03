@@ -84,7 +84,7 @@ export default function createAuthSlice(set, get) {
             authSlice: {
               ...state.authSlice,
               authenticated: true,
-              user: response.data, // now includes id
+              user: response.data,
             },
           }));
           return true;

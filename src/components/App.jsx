@@ -23,7 +23,7 @@ function Home() {
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
   const [data] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
-  const [isPassportOpen, setIsPassportOpen] = useState(false);
+  const [isPassportOpen, setIsPassportOpen] = useState(false); // state for passport visibility
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
   const [showPopup, setShowPopup] = useState(false);
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
@@ -44,6 +44,7 @@ function Home() {
   //   navigate('/thoughts/new');
   // };
 
+  // toggle visiibility
   const handlePassportOpen = () => {
     setIsPassportOpen(true);
   };
