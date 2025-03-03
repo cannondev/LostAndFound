@@ -8,7 +8,7 @@ export default function createAuthSlice(set, get) {
   return {
     authSlice: {
       authenticated: false,
-      user: { homeCountry: null },
+      user: { homeCountry: null, fullName: null },
     },
 
     // loadUser: () => {
@@ -50,7 +50,9 @@ export default function createAuthSlice(set, get) {
 
     signinUser: async (fields) => {
       try {
+        console.log('Sending sign-in request:', fields);
         const response = await axios.post(`${ROOT_URL}/signin`, fields);
+        console.log('Signin Response:', response);
 
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
@@ -74,18 +76,28 @@ export default function createAuthSlice(set, get) {
 
     signUpUser: async (fields) => {
       try {
+        console.log('Sending signup request:', fields);
+
         const response = await axios.post(`${ROOT_URL}/signup`, fields);
+        console.log('Signup Response:', response);
 
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('user', JSON.stringify(response.data));
 
-          set({ authenticated: true });
+          set((state) => ({
+            authSlice: {
+              ...state.authSlice,
+              authenticated: true,
+              user: response.data,
+            },
+          }));
           return true;
         }
         return false;
       } catch (error) {
         console.error('Sign Up Failed', error);
+        console.error('Signup Failed:', error.response ? error.response.data : error.message);
         return false;
       }
     },
@@ -93,20 +105,20 @@ export default function createAuthSlice(set, get) {
     signoutUser: (navigate) => {
       console.log('Logging out...');
 
-      // Explicitly remove ALL relevant localStorage items
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       localStorage.removeItem('homeCountry');
+      localStorage.removeItem('fullname');
 
       set((state) => ({
         authSlice: {
           ...state.authSlice,
           authenticated: false,
-          user: null, // Reset user completely
+          user: null,
         },
       }));
 
-      console.log('Storage after logout:', localStorage); // Debugging check
+      console.log('Storage after logout:', localStorage);
       navigate('/');
     },
 
