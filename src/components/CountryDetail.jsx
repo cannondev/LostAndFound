@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../style.scss';
-import { getName } from 'country-list';
+// import { getName } from 'country-list';
 
 function CountryDetail() {
   const { countryId } = useParams();
@@ -19,7 +19,7 @@ function CountryDetail() {
   useEffect(() => {
     const fetchThoughts = async () => {
       try {
-        const countryName = getName(countryId) || countryId;
+        const countryName = countryId;
         console.log('🛠 Fetching thoughts for country:', countryName);
         const response = await fetch(`http://localhost:9090/api/countries/${countryName}/thoughts`);
         if (!response.ok) throw new Error('Failed to fetch thoughts');
@@ -44,7 +44,7 @@ function CountryDetail() {
   return (
     <div className="country-detail">
       <div className="header">
-        <button type="button" className="go-home-btn" onClick={() => navigate('/')}>
+        <button type="button" className="go-home-btn" onClick={() => navigate('/home')}>
           Go Back to Home
         </button>
       </div>

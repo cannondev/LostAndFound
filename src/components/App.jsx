@@ -25,6 +25,8 @@ function Home() {
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
   const [showPopup, setShowPopup] = useState(false);
+  const signoutUser = useStore(({ authSlice }) => authSlice.signoutUser);
+
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
   // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
@@ -99,7 +101,7 @@ function Home() {
           <div className="settings-menu">
             <p onClick={() => console.log('Profile clicked!')}>Profile</p>
             <p onClick={() => console.log('Settings clicked!')}>Settings</p>
-            <p onClick={() => navigate('/input-country')}>Logout</p>
+            <button onClick={() => signoutUser(navigate)}>Logout</button>
           </div>
         )}
       </div>
@@ -138,9 +140,7 @@ function Home() {
         )}
       </div>
       {/* Show authentication status */}
-      <div className="auth-status">
-        {authenticated ? <p>You are logged in ✅</p> : <p>You are not logged in ❌</p>}
-      </div>
+      <div className="auth-status" />
       {/* Popup for new thought */}
       {showPopup && (
         <div className="popup-overlay">
@@ -159,10 +159,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/input-country" element={<InputCountry />} />
+        <Route path="/" element={<InputCountry />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/thoughts/new" element={<NewThought />} />
         <Route path="/country/:countryId" element={<CountryDetail />} />
         <Route path="/passport" element={<Passport />} />
