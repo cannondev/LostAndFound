@@ -213,7 +213,7 @@
   padding: 10px;
   display: flex;
   justify-content: start;
-  z-index: 2;
+  z-index: 1;
   height: 50px;
 }
 
@@ -225,6 +225,13 @@
   height: calc(100vh - 50px);
   /* Subtract header height */
   overflow: hidden
+}
+
+.scratch-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .world-map-container {

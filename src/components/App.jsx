@@ -21,7 +21,7 @@ function Home() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
-  const [data, setData] = useState([]);
+  const [data] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
   const [showPopup, setShowPopup] = useState(false);
@@ -58,30 +58,6 @@ function Home() {
   const handlePopupToggle = () => {
     setShowPopup(!showPopup);
   };
-
-  // Fetch country data from a local JSON file located in the public folder
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/countries_data.json`);
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-        }
-        const text = await response.text();
-        try {
-          const countryData = JSON.parse(text);
-          setData(countryData);
-        } catch (parseError) {
-          console.error('Failed to parse JSON. Response text:', text);
-          throw parseError;
-        }
-      } catch (error) {
-        console.error('Error fetching country data:', error);
-      }
-    };
-
-    fetchCountries();
-  }, []);
 
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
@@ -151,14 +127,14 @@ function Home() {
       </div>
       <div>
         {!authenticated && (
-        <>
-          <button className="custom-button" onClick={handleSignInNavigation} type="button">
-            SignIn
-          </button>
-          <button className="custom-button" onClick={handleSignUpNavigation} type="button">
-            SignUp
-          </button>
-        </>
+          <>
+            <button className="custom-button" onClick={handleSignInNavigation} type="button">
+              SignIn
+            </button>
+            <button className="custom-button" onClick={handleSignUpNavigation} type="button">
+              SignUp
+            </button>
+          </>
         )}
       </div>
       {/* Show authentication status */}
@@ -167,11 +143,11 @@ function Home() {
       </div>
       {/* Popup for new thought */}
       {showPopup && (
-      <div className="popup-overlay">
-        <div className="popup-content">
-          <NewThought closePopup={handlePopupToggle} />
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <NewThought closePopup={handlePopupToggle} />
+          </div>
         </div>
-      </div>
       )}
 
     </div>

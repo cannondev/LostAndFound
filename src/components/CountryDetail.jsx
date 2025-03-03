@@ -77,7 +77,7 @@ function CountryDetail() {
 
             console.log(`Placing thought at (${scaledX}, ${scaledY})`);
             return (
-              <g key={thought._id} transform={`translate(${scaledX}, ${scaledY}) scale(0.3)`}>
+              <g key={thought._id} transform={`translate(${scaledX}, ${scaledY}) scale(0.3)`} style={{ zIndex: 2, pointerEvents: 'auto,' }}>
                 <path d="
                 M 2.849 87.151 c -0.801 -0.801 -0.8 -2.099 0 -2.899 l 29.441 -29.441 c 0.8 -0.8 2.098 -0.801 2.899 0 s 0.8 2.099 0 2.899
                 L 5.748 87.151 C 4.947 87.952 3.649 87.952 2.849 87.151 z"
