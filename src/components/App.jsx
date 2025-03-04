@@ -62,6 +62,9 @@ function Home() {
     setShowPopup(!showPopup);
   };
 
+  const handleLogout = () => {
+    signoutUser(navigate);
+  };
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
     if (countryData && countryData.countryCode) {
@@ -85,7 +88,7 @@ function Home() {
   return (
     <div className="App">
       {/* User Settings Menu */}
-      <h1>Welcome to Home</h1>
+      <h1>Welcome to Lost&Found</h1>
 
       {authenticated ? (
         <p>You are logged in ✅</p>
@@ -102,7 +105,7 @@ function Home() {
           <div className="settings-menu">
             <p onClick={() => console.log('Profile clicked!')}>Profile</p>
             <p onClick={() => console.log('Settings clicked!')}>Settings</p>
-            <button onClick={() => signoutUser(navigate)}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
           </div>
         )}
       </div>
