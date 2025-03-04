@@ -13,6 +13,7 @@ import useStore from '../store';
 import SignIn from './SignIn';
 import SignUp from './Signup';
 import InputCountry from './inputCountry';
+import Loading from './Loading';
 
 // import newThought from '../components/newThought';
 
@@ -21,10 +22,12 @@ function Home() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
-  const [data, setData] = useState([]);
+  const [data] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
   const [showPopup, setShowPopup] = useState(false);
+  const signoutUser = useStore(({ authSlice }) => authSlice.signoutUser);
+
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
   // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
@@ -58,30 +61,6 @@ function Home() {
   const handlePopupToggle = () => {
     setShowPopup(!showPopup);
   };
-
-  // Fetch country data from a local JSON file located in the public folder
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/countries_data.json`);
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-        }
-        const text = await response.text();
-        try {
-          const countryData = JSON.parse(text);
-          setData(countryData);
-        } catch (parseError) {
-          console.error('Failed to parse JSON. Response text:', text);
-          throw parseError;
-        }
-      } catch (error) {
-        console.error('Error fetching country data:', error);
-      }
-    };
-
-    fetchCountries();
-  }, []);
 
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
@@ -123,8 +102,20 @@ function Home() {
           <div className="settings-menu">
             <p onClick={() => console.log('Profile clicked!')}>Profile</p>
             <p onClick={() => console.log('Settings clicked!')}>Settings</p>
-            <p onClick={() => navigate('/input-country')}>Logout</p>
+            <button onClick={() => signoutUser(navigate)}>Logout</button>
           </div>
+        )}
+      </div>
+      <div>
+        {!authenticated && (
+          <>
+            <button className="button" onClick={handleSignInNavigation} type="button">
+              SignIn
+            </button>
+            <button className="button" onClick={handleSignUpNavigation} type="button">
+              SignUp
+            </button>
+          </>
         )}
       </div>
 
@@ -149,29 +140,15 @@ function Home() {
           Open Passport
         </button>
       </div>
-      <div>
-        {!authenticated && (
-        <>
-          <button className="custom-button" onClick={handleSignInNavigation} type="button">
-            SignIn
-          </button>
-          <button className="custom-button" onClick={handleSignUpNavigation} type="button">
-            SignUp
-          </button>
-        </>
-        )}
-      </div>
       {/* Show authentication status */}
-      <div className="auth-status">
-        {authenticated ? <p>You are logged in ✅</p> : <p>You are not logged in ❌</p>}
-      </div>
+      <div className="auth-status" />
       {/* Popup for new thought */}
       {showPopup && (
-      <div className="popup-overlay">
-        <div className="popup-content">
-          <NewThought closePopup={handlePopupToggle} />
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <NewThought closePopup={handlePopupToggle} />
+          </div>
         </div>
-      </div>
       )}
 
     </div>
@@ -183,10 +160,11 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Loading />} />
         <Route path="/input-country" element={<InputCountry />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/thoughts/new" element={<NewThought />} />
         <Route path="/country/:countryId" element={<CountryDetail />} />
         <Route path="/passport" element={<Passport />} />
