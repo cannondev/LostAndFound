@@ -106,6 +106,18 @@ function Home() {
           </div>
         )}
       </div>
+      <div>
+        {!authenticated && (
+          <>
+            <button className="button" onClick={handleSignInNavigation} type="button">
+              SignIn
+            </button>
+            <button className="button" onClick={handleSignUpNavigation} type="button">
+              SignUp
+            </button>
+          </>
+        )}
+      </div>
 
       {/* Search Bar */}
       <div className="search-bar-container">
@@ -127,18 +139,6 @@ function Home() {
         <button className="custom-button" onClick={handlePassportNavigation} type="button">
           Open Passport
         </button>
-      </div>
-      <div>
-        {!authenticated && (
-          <>
-            <button className="custom-button" onClick={handleSignInNavigation} type="button">
-              SignIn
-            </button>
-            <button className="custom-button" onClick={handleSignUpNavigation} type="button">
-              SignUp
-            </button>
-          </>
-        )}
       </div>
       {/* Show authentication status */}
       <div className="auth-status" />

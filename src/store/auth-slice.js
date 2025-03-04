@@ -11,17 +11,6 @@ export default function createAuthSlice(set, get) {
       user: { homeCountry: null, fullName: null },
     },
 
-    // loadUser: () => {
-    //   const token = localStorage.getItem('token');
-    //   const user = localStorage.getItem('user');
-    //   set((state) => ({
-    //     authSlice: {
-    //       ...state.authSlice,
-    //       authenticated: !!token,
-    //       user: user ? JSON.parse(user) : null,
-    //     },
-    //   }));
-    // },
     loadUser: () => {
       const token = localStorage.getItem('token');
       if (token) {
