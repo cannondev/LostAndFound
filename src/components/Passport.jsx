@@ -61,32 +61,52 @@ function PassportModal({ isOpen, onClose }) {
   return (
     <div className="passport-modal-wrapper">
       <div className="passport-modal">
+        <div className="passport-header">
+          <h2>My Passport</h2>
+        </div>
         <button className="close-button" type="button" onClick={onClose}>
           X
         </button>
 
         {activeView === 'profile' ? (
           <div className="profile-page">
-            <h2>My Passport</h2>
-            <p>Email: {user?.email || 'Not provided'}</p>
-            <p>Home Country: {user?.homeCountry || 'Not set'}</p>
-            <p>Countries Visited: {countriesVisited.length}</p>
-            <ul>
-              {countriesVisited.length > 0 ? (
-                countriesVisited.map((country) => (
-                  <li
-                    key={country}
-                    data-country={country}
-                    onClick={onCountryClick}
-                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                  >
-                    {country}
-                  </li>
-                ))
-              ) : (
-                <li>Keep exploring to discover more countries!</li>
-              )}
-            </ul>
+
+            <div className="profile-left-page">
+              <h1 className="page-header">Profile</h1>
+              <div className="profile-email">
+                <p>Email: {user?.email || 'Not provided'}</p>
+              </div>
+              <div className="profile-home-country">
+                <p>Home Country: {user?.homeCountry || 'Not set'}</p>
+              </div>
+              <div className="countries-visited">
+                <p>Countries Visited: {countriesVisited.length}</p>
+              </div>
+            </div>
+
+            <div className="profile-right-page">
+              <div className="countries-unlocked-header">
+                <h3>Countries Unlocked!</h3>
+              </div>
+              <div className="countries-unlocked-list">
+                <ul>
+                  {countriesVisited.length > 0 ? (
+                    countriesVisited.map((country) => (
+                      <li
+                        key={country}
+                        data-country={country}
+                        onClick={onCountryClick}
+                        style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                      >
+                        {country}
+                      </li>
+                    ))
+                  ) : (
+                    <li>Keep exploring to discover more countries!</li>
+                  )}
+                </ul>
+              </div>
+            </div>
           </div>
         ) : (
           <div className="country-detail-page">
@@ -94,35 +114,43 @@ function PassportModal({ isOpen, onClose }) {
               ← Back to Passport
             </button>
             {countryDetails ? (
-              <div>
-                <h2>{countryDetails.countryName}</h2>
-                <h3>Fun Fact</h3>
-                {countryDetails.funFacts && countryDetails.funFacts.length > 0 ? (
-                  <p>{countryDetails.funFacts[0]}</p>
-                ) : (
-                  <p>No fun facts available.</p>
-                )}
-                <p>
-                  Date Explored:{' '}
-                  {countryDetails.unlockDate
-                    ? new Date(countryDetails.unlockDate).toLocaleDateString()
-                    : 'N/A'}
-                </p>
-                <h3>Thoughts Found in {countryDetails.countryName}</h3>
-                {countryDetails.thoughts && countryDetails.thoughts.length > 0 ? (
-                  <ul>
-                    {countryDetails.thoughts.map((thought) => (
-                      <li key={thought._id}>{thought.content}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>No thoughts found.</p>
-                )}
-                <div className="passport-badge">
+              <div className="detail-container">
+                <div className="detail-left-page">
+                  <h1 className="country-header">{countryDetails.countryName}</h1>
+                  <p className="country-description">
+                    {countryDetails.description || 'No description available.'}
+                  </p>
+                  <p className="discovered-date">
+                    Date Explored:{' '}
+                    {countryDetails.unlockDate
+                      ? new Date(countryDetails.unlockDate).toLocaleDateString()
+                      : 'N/A'}
+                  </p>
+                  <p className="capital">
+                    Capital: {countryDetails.capital || 'N/A'}
+                  </p>
+                  <h3>Fun Fact</h3>
+                  {countryDetails.funFacts && countryDetails.funFacts.length > 0 ? (
+                    <p>{countryDetails.funFacts[0]}</p>
+                  ) : (
+                    <p>No fun facts available.</p>
+                  )}
+                  <h3>Thoughts Found in {countryDetails.countryName}</h3>
+                  {countryDetails.thoughts && countryDetails.thoughts.length > 0 ? (
+                    <ul>
+                      {countryDetails.thoughts.map((thought) => (
+                        <li key={thought._id}>{thought.content}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No thoughts found.</p>
+                  )}
+                </div>
+                <div className="detail-right-page">
                   <img
-                    src={countryDetails.passportBadge || '/default-badge.png'}
-                    alt="Passport Badge"
-                    style={{ maxWidth: '200px' }}
+                    className="passport-stamp"
+                    src={countryDetails.passportStamp || '/default-stamp.png'}
+                    alt="Passport Stamp"
                   />
                 </div>
               </div>

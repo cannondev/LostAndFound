@@ -1,4 +1,11 @@
 // APP CSS
+.custom-button {
+  z-index: 9999 !important; /* Ensure it's on top */
+  pointer-events: all !important; /* Allow clicks */
+  opacity: 1 !important; /* Ensure it's visible */
+  visibility: visible !important;
+}
+
 
 .App {
   text-align: center;
@@ -243,27 +250,95 @@
 }
 
 /******* Passport Modal Styling **********/
+/******* Passport Modal Wrapper (Overlay) *******/
 .passport-modal-wrapper {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh; /* Cover entire viewport */
   background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 50px 0; /* Provides vertical space at top & bottom */
+  box-sizing: border-box;
 }
 
-.passport-modal.centered {
+/******* Passport Modal (Book Container) *******/
+.passport-modal {
   background: white;
   padding: 20px;
   border-radius: 10px;
   width: 50%;
   max-width: 500px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 600px;       /* Fixed height */
+  overflow-y: auto;    /* Scroll if content exceeds fixed height */
+  display: flex;
+  flex-direction: column;
 }
 
+/******* Book Layout for the Profile Page *******/
+.profile-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  height: calc(100% - 40px); /* Account for header/padding if needed */
+  margin: 20px 0;           /* Adds some vertical spacing inside modal */
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Left Page: Profile Information */
+.profile-left-page {
+  flex: 1;
+  padding: 20px;
+  border-right: 1px dashed #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.profile-left-page .page-header {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Right Page: Unlocked Countries List */
+.profile-right-page {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.profile-right-page .countries-unlocked-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-right-page .countries-unlocked-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-right-page .countries-unlocked-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-right-page .countries-unlocked-list li:last-child {
+  border-bottom: none;
+}
 
 // thoughts
 
