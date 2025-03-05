@@ -15,21 +15,8 @@
   z-index: 5;
 }
 
-/* Close Button */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #ffffff;
-  border: none;
-  color: rgb(0, 0, 0);
-  stroke: #222;
-  stroke-width: 2px;
-  padding: 5px 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 14px;
-  z-index: 10;
+.close-btn.hidden {
+  visibility: hidden;
 }
 
 .entireForm {
@@ -39,7 +26,6 @@
   position: relative;
 }
 
-/* Notebook Paper Style */
 textarea {
   width: 100%;
   height: 200px;
@@ -58,13 +44,11 @@ textarea {
   position: relative;
 }
 
-/* Placeholder Style */
 textarea::placeholder {
   color: rgba(34, 34, 34, 0.5);
   font-style: italic;
 }
 
-/* Signature */
 .signature {
   font-size: 16px;
   color: #451e97;
@@ -72,7 +56,6 @@ textarea::placeholder {
   font-family: 'Parisienne', cursive;
 }
 
-/* Purple Send Button */
 .submit {
   background: #8a2be2;
   color: white;
@@ -91,25 +74,34 @@ textarea::placeholder {
 }
 
 
-/* Flying GIF */
 .flying-gif {
-  width: 220px; /* Increased size */
-  height: 220px;
-  position: fixed; /* Fixed position for centering */
+  width: 200px; 
+  height: 200px;
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centered on screen */
-  animation: fadeOut 1.8s forwards; /* Fade-out animation */
-  filter: saturate(2); /* Make the gif more saturated */
+  transform: translate(-50%, -50%);
+  filter: saturate(3);
   z-index: 20;
 }
 
-/* Fade-out animation for GIF */
-@keyframes fadeOut {
-  0% {
-    opacity: 1; /* Fully visible */
-  }
-  100% {
-    opacity: 0; /* Fade out to transparent */
-  }
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ffffff;
+  border: none;
+  color: rgb(0, 0, 0);
+  stroke: #222;
+  stroke-width: 2px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  visibility: visible; 
+}
+
+.pop.fade-out .close-btn {
+  visibility: hidden;
 }

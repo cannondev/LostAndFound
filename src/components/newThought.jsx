@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
 import './Thought.css';
-import flyingGif from '../images/flying.gif'; // Add the GIF to your project and import it
+import flyingGif from '../images/FLY.gif';
 
 function NewThought({ closePopup }) {
   const [content, setContent] = useState('');
@@ -21,14 +21,12 @@ function NewThought({ closePopup }) {
     const thoughtData = { content, fullName: user.fullName };
     createThought(thoughtData);
 
-    // Show animation and hide UI
     setShowGif(true);
 
-    // Let the animation play for 1.5s before closing
     setTimeout(() => {
       closePopup();
       navigate('/home');
-    }, 1500);
+    }, 3600);
   };
 
   return (
