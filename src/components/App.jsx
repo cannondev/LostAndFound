@@ -22,7 +22,7 @@ import Loading from './Loading';
 function Home() {
   // const [query, setQuery] = useState('');
   const navigate = useNavigate();
-  const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
+  const loadUser = useStore((state) => state.authSlice?.loadUser);
   // const [data] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
@@ -32,16 +32,20 @@ function Home() {
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
   // const authenticated  useStore(({ authSlice }) => authSlice.authenticated);
+  // document.querySelector('.world-map-container figure').style.background = '#fdf9ff';
+  // document.querySelectorAll('.worldmap__figure-container path').forEach((path) => {
+  //   path.style.strokeWidth = '1.5';
+  //   path.style.cursor = 'pointer';
+  // });
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log('Running loadUser after delay...');
+  //     loadUser();
+  //   }, 500);
+  // }, []);
   useEffect(() => {
-    document.querySelector('.world-map-container figure').style.background = '#fdf9ff';
-    document.querySelectorAll('.worldmap__figure-container path').forEach((path) => {
-      path.style.strokeWidth = '1.5';
-      path.style.cursor = 'pointer';
-    });
-    setTimeout(() => {
-      console.log('Running loadUser after delay...');
-      loadUser();
-    }, 500);
+    console.log('Loading user on app start...');
+    loadUser();
   }, []);
 
   const handlePassportNavigation = () => {
