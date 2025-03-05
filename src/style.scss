@@ -1,5 +1,4 @@
-
-div.App{
+div.App {
   background: #fdf9ff;
 }
 
@@ -7,17 +6,18 @@ body {
   background-color: #fdf9ff;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-p{
+p {
   margin-bottom: 0px;
 }
 
-h1{
+h1 {
 
   font-family: "Fleur De Leah", cursive;
   font-size: 90px;
@@ -33,7 +33,7 @@ h1{
 }
 
 .custom-button {
-  z-index: 9999 !important; 
+  z-index: 9999 !important;
   pointer-events: all !important;
   opacity: 1 !important;
   visibility: visible !important;
@@ -137,6 +137,7 @@ h1{
   .search-bar {
     width: 80%;
   }
+
   .custom-button {
     width: 80px;
     height: 80px;
@@ -211,13 +212,24 @@ h1{
   height: 50px;
 }
 
+.country-detail-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 .country-container {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: calc(100vh - 50px);
-  overflow: hidden;
+
 }
 
 .scratch-container {
@@ -233,7 +245,8 @@ h1{
   display: flex;
   align-items: center;
   justify-content: center;
-  display: block; /* Ensures no extra space below the SVG */
+  display: block;
+  /* Ensures no extra space below the SVG */
   border-radius: 100%;
 }
 
@@ -244,7 +257,8 @@ h1{
 
 
 .world-map-container figure {
-  background-color: rgb(216, 185, 185); /* Change this to your desired color */
+  background-color: rgb(216, 185, 185);
+  /* Change this to your desired color */
 }
 
 /* Styles for Popup */
@@ -339,7 +353,7 @@ svg g[style*="pointer: pointer"]:hover {
   display: flex;
   flex: 1;
   flex-direction: column;
-  
+
   align-items: stretch;
   background: rgba(89, 64, 203, 1);
 }
@@ -457,6 +471,7 @@ svg g[style*="pointer: pointer"]:hover {
 
 .left-header {
   text-align: center;
+}
 
 .auth button:hover {
   background-color: #2c3a8c;
@@ -479,15 +494,16 @@ svg g[style*="pointer: pointer"]:hover {
 .country-description {
   text-align: center;
   margin-bottom: 16px;
+}
 
 button.passportButton {
   border-radius: 40%;
   height: 90px;
   width: 100px;
-  display: flex;               
-  justify-content: center;     
-  align-items: center;         
-  text-align: center;         
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 
 }
 
@@ -512,6 +528,7 @@ button.passportButton {
 
 .thoughts-section {
   flex: 1;
+}
 
 button.passportButton {
   border-radius: 40%;
@@ -576,15 +593,18 @@ button.passportButton {
 }
 
 .world-map-container {
-  width: 90vw; /* Adjust width as needed */
-  height: 80vh; /* Adjust height as needed */
+  width: 90vw;
+  /* Adjust width as needed */
+  height: 80vh;
+  /* Adjust height as needed */
   display: flex;
   justify-content: center;
-  align-items: center;}
+  align-items: center;
+}
 
 
 .worldmap__figure-container path {
-  fill: rgba(170, 0, 255, 0.5); 
+  fill: rgba(170, 0, 255, 0.5);
   stroke: black;
   stroke-width: 1;
   cursor: pointer;
@@ -607,7 +627,7 @@ button.passportButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #b980e472; 
+  background-color: #b980e472;
   border: none;
   border-radius: 100px;
   padding: 10px 20px;
@@ -648,10 +668,12 @@ button.passportButton {
 /* Thin, pink top bar */
 .top-bar {
   display: flex;
-  justify-content: space-between; /* Space elements evenly */
+  justify-content: space-between;
+  /* Space elements evenly */
   align-items: center;
   width: 100%;
-  height: 45px; /* Thin bar height */
+  height: 45px;
+  /* Thin bar height */
   position: fixed;
   top: 0;
   left: 0;

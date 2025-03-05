@@ -36,7 +36,7 @@ function CountryDetail() {
   }, [countrySvgUrl]);
 
   return (
-    <div className="country-detail">
+    <div className="country-detail-display">
       <div className="header">
         <button type="button" className="go-home-btn" onClick={() => navigate('/home')}>
           Go Back to Home
