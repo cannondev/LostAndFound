@@ -3,6 +3,7 @@ import axios from 'axios';
 import useStore from '../store';
 import '../style.scss';
 import FunFactsCarousel from './FunFactsCarousel';
+import ThoughtsCarousel from './ThoughtsCarousel';
 
 function PassportModal({ isOpen, onClose }) {
   // Toggle the active view: "profile" for the list, "countryDetail" for details
@@ -38,7 +39,6 @@ function PassportModal({ isOpen, onClose }) {
       setCountryDetails(res.data.country);
     } catch (err) {
       console.error('Error fetching country details:', err.response?.data?.error || err.message);
-      // Optionally, you can set a default fallback value or display a simple error message here.
       setCountryDetails(null);
     }
   };
@@ -70,6 +70,7 @@ function PassportModal({ isOpen, onClose }) {
             <div className="opening-page">
               <div className="profile-page">
 
+                {/* Left Page */}
                 <div className="profile-left-page">
                   <h1 className="page-header">Profile</h1>
                   <div className="profile-email">
@@ -83,8 +84,8 @@ function PassportModal({ isOpen, onClose }) {
                   </div>
                 </div>
 
+                {/* Right Page */}
                 <div className="profile-right-page">
-
                   <h1 className="page-header">Countries Unlocked!</h1>
                   <div className="countries-unlocked-list">
                     <ul>
@@ -105,62 +106,59 @@ function PassportModal({ isOpen, onClose }) {
                     </ul>
                   </div>
                 </div>
-
               </div>
-              <button className="close-button" type="button" onClick={onClose}>
-                Return to World Map
-              </button>
+              <div className="footer-button">
+                <button className="goBackButton" type="button" onClick={onClose}>
+                  Return to World Map
+                </button>
+              </div>
             </div>
           ) : (
-            <div className="secondary-page">
-              <div className="country-detail-page">
+            <div className="opening-page">
+              <div className="profile-page">
                 {countryDetails ? (
-                  <div className="detail-container">
-                    <div className="detail-left-page">
-                      <h1 className="country-header">{countryDetails.countryName}</h1>
-                      <p className="country-description">
-                        {countryDetails.description || 'No description available.'}
-                      </p>
-                      {/* <p className="discovered-date">
-                    Date Explored:{' '}
-                    {countryDetails.unlockDate
-                      ? new Date(countryDetails.unlockDate).toLocaleDateString()
-                      : 'N/A'}
-                  </p> */}
-                      {/* <p className="capital">
-                    Capital: {countryDetails.capital || 'N/A'}
-                  </p> */}
-                      <div className="fun-facts">
+                  <>
+                    {/* Left Page */}
+                    <div className="profile-left-page">
+                      <div className="left-header">
+                        <h1 className="country-header">{countryDetails.countryName}</h1>
+                      </div>
+                      <div className="flag-container">
+                        <img
+                          className="country-flag"
+                          src={countryDetails.flagUrl || '/default-flag.png'}
+                          alt={`${countryDetails.countryName} Flag`}
+                        />
+                      </div>
+                      <div className="fun-facts-section">
                         <h3>Fun Facts</h3>
                         <FunFactsCarousel countryDetails={countryDetails} />
                       </div>
-                      <h3>Thoughts Found in {countryDetails.countryName}</h3>
-                      {countryDetails.thoughts && countryDetails.thoughts.length > 0 ? (
-                        <ul>
-                          {countryDetails.thoughts.map((thought) => (
-                            <li key={thought._id}>{thought.content}</li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p>No thoughts found.</p>
-                      )}
                     </div>
-                    {/* <div className="detail-right-page">
-                      <img
-                        className="passport-stamp"
-                        src={countryDetails.passportStamp || '/default-stamp.png'}
-                        alt="Passport Stamp"
-                      />
-                    </div> */}
-                  </div>
+
+                    {/* Right Page */}
+                    <div className="profile-right-page">
+                      <div className="right-description">
+                        <p className="country-description">
+                          {countryDetails.description || 'No description available.'}
+                        </p>
+                      </div>
+                      <div className="thoughts-section">
+                        <h3>Thoughts Found in {countryDetails.countryName}</h3>
+                        <ThoughtsCarousel countryDetails={countryDetails} />
+                      </div>
+                    </div>
+                  </>
                 ) : (
-                  <p>Error loading country details. Please try again.</p>
+                  <p>Loading country details...</p>
                 )}
 
               </div>
-              <button onClick={onBackButtonClick} type="button" style={{ marginBottom: '10px' }}>
-                Go Back
-              </button>
+              <div className="footer-button">
+                <button className="goBackButton" onClick={onBackButtonClick} type="button" style={{ marginBottom: '10px' }}>
+                  Go Back
+                </button>
+              </div>
             </div>
           )}
         </div>

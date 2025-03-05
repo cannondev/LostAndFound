@@ -1,5 +1,44 @@
-// APP CSS
+/***************** Global & Base Styles *****************/
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 
+body {
+  background-color: rgb(255, 255, 255);
+}
+
+div.App {
+  background: rgb(255, 255, 255);
+}
+
+p {
+  margin-bottom: 0px;
+}
+
+h1 {
+  font-family: "Fleur De Leah", cursive;
+  font-size: 90px;
+  font-weight: 100;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.info {
+  font-family: "Poiret One", sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.App {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+/***************** Global Overlays (Commented Out) *****************/
 // body::before {
 //   content: '';
 //   position: fixed;
@@ -13,7 +52,6 @@
 // body {
 //   position: relative;
 // }
-
 // .overlay {
 //   top: 0;
 //   left: 0;
@@ -28,96 +66,13 @@
 //   background:none !important;
 // }
 
-
-div.App{
-  background: rgb(255, 255, 255);
-}
-
-body {
-  background-color: rgb(255, 255, 255);
-}
-
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  
-}
-
-
-
-p{
-  margin-bottom: 0px;
-}
-h1{
-  font-family: "Fleur De Leah", cursive;
-  font-size: 90px;
-  font-weight: 100;
-  margin-top: 10px;
-  margin-bottom: 0px;
-}
-
-.info {
-  font-family: "Poiret One", sans-serif;
-  font-size: 20px;
-  font-weight: 900;
-
-}
-
+/***************** Typography & Buttons *****************/
 .custom-button {
-  z-index: 9999 !important; /* Ensure it's on top */
-  pointer-events: all !important; /* Allow clicks */
-  opacity: 1 !important; /* Ensure it's visible */
+  z-index: 9999 !important;
+  pointer-events: all !important;
+  opacity: 1 !important;
   visibility: visible !important;
   border-radius: 50%;
-}
-
-
-.App {
-  text-align: center;
-  padding: 20px;
-  background-color: white;
-  /* Entire background set to white */
-  border-radius: 15px;
-}
-
-
-/* Map container styling */
-.custom-world-map {
-  margin-top: 50px;
-  width: 80%;
-  height: 400px;
-  margin: 0 auto;
-  background-color: transparent;
-  /* Ensures map background is white */
-  padding: 10px;
-  border-radius: 15px;
-}
-
-.auth {
-  margin-bottom: 100px;
-}
-
-.settings-container {
-  display: flex;
-  justify-content: space-between;
-  align-content: flex-start;
-}
-/* Button Container at the bottom */
-.button-container {
-  position: fixed;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  /* To spread buttons across the width */
-  padding: 0 20px;
-  margin-right: 10px;
-  margin-left: 10px;
-
-  /* Add padding to avoid buttons touching the edges */
 }
 
 .custom-button {
@@ -137,33 +92,31 @@ h1{
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Position the first button to the left corner */
-.custom-button:first-child {
-  margin-left: 10px;
-  /* Some margin to avoid touching the screen edge */
-}
-
-/* Position the second button to the right corner */
-.custom-button:last-child {
+/***************** Button Container *****************/
+.button-container {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
   margin-right: 10px;
-  /* Some margin to avoid touching the screen edge */
+  margin-left: 10px;
 }
 
-
-
-/* Optional - Add some spacing for mobile responsiveness */
+/***************** Responsive Styles *****************/
 @media (max-width: 600px) {
   .search-bar {
     width: 80%;
   }
-
   .custom-button {
     width: 80px;
     height: 80px;
   }
 }
 
-/* Settings Menu */
+/***************** Settings Menu & Auth *****************/
 .settings-container {
   position: absolute;
   top: 20px;
@@ -207,10 +160,88 @@ h1{
   background: #f0f0f0;
 }
 
+.auth {
+  margin-bottom: 100px;
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: 30px;
+  text-align: center;
+  height: 15px;
+  align-items: center;
+  justify-content: center;
+}
 
+.auth button:hover {
+  background-color: #2c3a8c;
+  transform: scale(1.05);
+}
 
+/***************** Top Bar *****************/
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 200px 0px 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
 
-// COUNTRY CSS
+/***************** Passport Button & Icons *****************/
+button.passportButton {
+  border-radius: 40%;
+  height: 90px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+}
+
+.ri-edit-box-fill {
+  font-size: 24px;
+  color: #000000;
+  z-index: 1000;
+}
+
+button.logout {
+  color: black;
+  background-color: transparent;
+  margin-top: 0px;
+}
+
+.button-image {
+  max-width: 80%;
+  max-height: 80%;
+}
+
+/***************** World Map Container *****************/
+.custom-world-map {
+  margin-top: 50px;
+  width: 80%;
+  height: 400px;
+  margin: 0 auto;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.world-map-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: block;
+  border-radius: 100%;
+}
+
+/***************** Country Info & Container *****************/
 .country-info {
   display: flex;
   flex-direction: column;
@@ -253,6 +284,7 @@ h1{
   background-color: #31409a;
 }
 
+/***************** Country Detail Page *****************/
 .country-detail-page {
   display: flex;
   flex-direction: column;
@@ -283,8 +315,7 @@ h1{
   justify-content: center;
   width: 100%;
   height: calc(100vh - 50px);
-  /* Subtract header height */
-  overflow: hidden
+  overflow: hidden;
 }
 
 .scratch-container {
@@ -294,185 +325,7 @@ h1{
   width: 100%;
 }
 
-.world-map-container {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: block; /* Ensures no extra space below the SVG */
-  border-radius: 100%;
-}
-
-/******* Passport Modal Styling **********/
-/******* Passport Modal Wrapper (Overlay) *******/
-.passport-modal-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  min-height: 100vh; /* Cover entire viewport */
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 50px 0; /* Provides vertical space at top & bottom */
-  box-sizing: border-box;
-}
-
-/******* Passport Modal (Book Container) *******/
-.passport-modal {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 50%;
-  max-width: 500px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 600px;       /* Fixed height */
-  overflow-y: auto;    /* Scroll if content exceeds fixed height */
-  display: flex;
-  flex-direction: column;
-}
-
-.passport-header h2 {
-  margin: auto;
-  color: rgba(89, 64, 203, 1);
-}
-
-/******* Passport Modal Styling **********/
-/******* Passport Modal Wrapper (Overlay) *******/
-.passport-modal-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  min-height: 100vh; /* Cover entire viewport */
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0; /* Provides vertical space at top & bottom */
-  box-sizing: border-box;
-}
-
-/******* Passport Modal (Book Container) *******/
-.passport-modal {
-  background: white;
-  padding: 0;
-  border-radius: 10px;
-  width: 50%;
-  max-width: 500px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 600px;       /* Fixed height */
-  overflow-y: auto;    /* Scroll if content exceeds fixed height */
-  display: flex;
-  flex-direction: column;
-}
-
-.my-passport-header {
-  position: sticky;
-  top: 0;
-  background:rgba(89, 64, 203, 1); /* or the background color of your modal */
-  z-index: 10;       /* ensures it stays above scrolling content */
-  padding: 10px 0;   /* adjust as needed */
-}
-
-.my-passport-header h2 {
-  font-size: 3rem;
-  margin: auto;
-  color: white;
-  text-align: center;
-}
-
-/******* Book Layout for the Profile Page *******/
-.opening-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  height: auto;
-}
-
-.opening-page .close-button {
-  width: 50%;
-  align-self: center;
-}
-
-.profile-page {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
-  height: 400px; /* Account for header/padding if needed */
-  margin-bottom: 20px;           /* Adds some vertical spacing inside modal */
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-/* Left Page: Profile Information */
-.profile-left-page {
-  flex: 1;
-  padding: 20px;
-  border-right: 1px dashed #ccc;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.profile-left-page .page-header {
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* Right Page: Unlocked Countries List */
-.profile-right-page {
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow-y: auto;
-}
-
-.profile-right-page .page-header {
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.profile-right-page .countries-unlocked-list ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.profile-right-page .countries-unlocked-list li {
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.profile-right-page .countries-unlocked-list li:last-child {
-  border-bottom: none;
-}
-
-// figure.worldmap__figure-container {
-//   background-color: red;
-// }
-
-// thoughts
-
-
-.world-map-container figure {
-  background-color: rgb(216, 185, 185); /* Change this to your desired color */
-}
-
-/* Styles for Popup */
+/***************** Popup Styles *****************/
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -536,6 +389,7 @@ h1{
   background-color: #a67925;
 }
 
+/***************** Thought Popup *****************/
 .country-container {
   position: relative;
   width: 768px;
@@ -543,7 +397,6 @@ h1{
   margin: 0 auto;
 }
 
-/* Thought popup styling */
 .thought-popup {
   position: fixed;
   top: 0;
@@ -601,7 +454,7 @@ h1{
   margin-top: 15px;
 }
 
-/* Paper airplane icon hover effect for unlocked thoughts */
+/* Paper airplane icon hover effect */
 svg g[style*="pointer: pointer"] {
   transition: transform 0.2s ease;
 }
@@ -610,109 +463,238 @@ svg g[style*="pointer: pointer"]:hover {
   transform: scale(1.1);
 }
 
-
-/* Auth container (Right side) */
-
-
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 10px 200px 0px 10px;
+/***************** Passport Modal & Book Layout *****************/
+/******* Passport Modal Wrapper (Overlay) *******/
+.passport-modal-wrapper {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
-.auth {
+  width: 100vw;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  gap: 10px;
-  margin-left: auto; /* Pushes the auth buttons to the right */
-  margin-right: 30px;
-  text-align: center;
-  height: 15px;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-
-// .auth button {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   height: 40px; /* Adjust as needed */
-//   width: 100px; /* Adjust based on design */
-//   font-size: 16px;
-//   text-align: center;
-//   padding: 10px;
-//   border: none;
-//   border-radius: 5px;
-//   background-color: #3f51b5;
-//   color: white;
-//   cursor: pointer;
-//   transition: background 0.2s ease, transform 0.2s ease;
-// }
-
-.auth button:hover {
-  background-color: #2c3a8c;
-  transform: scale(1.05);
-}
-
-.settings-container {
-  display: flex;
-  align-items: center;
-}
-
-// .info {
-//   text-align: center;
-//   margin-bottom: 0px; /* Ensure spacing below the top-bar */
-// }
-
-button.passportButton {
-  border-radius: 40%;
-  height: 90px;
-  width: 100px;
-  display: flex;               
-  justify-content: center;     
-  align-items: center;         
-  text-align: center;         
-}
-
-.ri-edit-box-fill{
-  font-size: 24px; /* Adjust icon size */
-  color: #000000; /* Adjust color */
-  z-index: 1000;
-}
-
-button.logout{
-  color: black;
-  background-color: transparent;
-  margin-top: 0px;
-}
-
-button.passportButton {
-  border-radius: 40%;
-  height: 90px;
-  width: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 0;
-
+  box-sizing: border-box;
 }
 
-.button-image {
-  max-width: 80%; 
-  max-height: 80%; 
+/******* Passport Modal (Book Container) *******/
+.passport-modal {
+  background: white;
+  padding: 0;
+  border-radius: 10px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 600px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
+/******* Sticky Header *******/
+.my-passport-header {
+  position: sticky;
+  flex: 0;
+  top: 0;
+  background: rgba(89, 64, 203, 1);
+  z-index: 10;
+  padding-top: 10px;
+}
 
-/** ------- Fun Facts Carousel -------- */
-// Styling largely adapted from ChatGPT
-.fun-facts-carousel {
+.my-passport-header h2 {
+  font-size: 3rem;
+  margin: auto;
+  color: white;
+  text-align: center;
+}
+
+/******* Passport Body *******/
+.passport-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+/******* Opening Page (Profile view) *******/
+.opening-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  
+  align-items: stretch;
+  background: rgba(89, 64, 203, 1);
+}
+
+.opening-page .close-button {
+  display: block;
+  margin: 20px auto;
+}
+
+.footer-button {
+  position: sticky;
+  flex: 0;
+  bottom: 0;
+  z-index: 10;
+  padding: 5px 0;
+  background: rgba(89, 64, 203, 1);
+}
+
+/******* Profile Page (within Opening Page) *******/
+.profile-page {
+  display: flex;
+  background: #ffffff;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  height: 400px;
+  margin: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Left Page: Profile Information */
+.profile-left-page {
+  flex: 1;
+  padding: 20px;
+  border-right: 1px dashed #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+
+.profile-left-page .page-header {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Right Page: Unlocked Countries List */
+.profile-right-page {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+
+.profile-right-page .page-header {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-right-page .countries-unlocked-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-right-page .countries-unlocked-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-right-page .countries-unlocked-list li:last-child {
+  border-bottom: none;
+}
+
+/******* Secondary Page (Book Layout for Country Details) *******/
+.secondary-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.book-layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+}
+
+/* Left Page Styles (Country Details) */
+.left-page {
+  flex: 0 0 50%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-sizing: border-box;
+}
+
+.country-header {
+  margin: 0;
+}
+
+.left-header {
+  text-align: center;
+}
+
+.flag-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.country-flag {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.country-description {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* Right Page Styles (Fun Facts & Thoughts) */
+.right-page {
+  flex: 1 1 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.fun-facts-section {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.flag-spacer {
+  height: 200px;
+}
+
+.thoughts-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: center;
+}
+
+.goBackButton {
+  color: rgba(89, 64, 203, 1);
+  background: #ffffff;
+  align-self: center;
+  width: 33%;
+}
+
+/***************** Fun Facts Carousel *****************/
+.carousel {
   text-align: center;
   font-family: sans-serif;
   margin: 20px auto;
@@ -728,14 +710,14 @@ button.passportButton {
 }
 
 .carousel-slide {
-  width: 100%;         
-  height: 250px;        
+  width: 100%;
+  height: 250px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   margin: 0 10px;
   background: #f9f9f9;
-  overflow: auto;       /* add scrollbars if content exceeds the container */
+  overflow: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -753,5 +735,5 @@ button.passportButton {
 }
 
 .arrow:hover {
-  color: #000;
+  color: #ffffff;
 }
