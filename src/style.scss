@@ -28,7 +28,7 @@
 // }
 
 
-div.App{
+div.App {
   background: #fdf9ff;
 }
 
@@ -37,19 +37,21 @@ body {
 }
 
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
-  
+
 }
 
 
 
-p{
+p {
   margin-bottom: 0px;
 }
-h1{
+
+h1 {
   font-family: "Fleur De Leah", cursive;
   font-size: 90px;
   font-weight: 100;
@@ -63,6 +65,7 @@ h1{
   font-weight: 900;
 
 }
+
 .custom-button {
   z-index: 9999 !important;
   /* Ensure it's on top */
@@ -267,7 +270,8 @@ h1{
   display: flex;
   align-items: center;
   justify-content: center;
-  display: block; /* Ensures no extra space below the SVG */
+  display: block;
+  /* Ensures no extra space below the SVG */
   border-radius: 100%;
 }
 
@@ -278,7 +282,8 @@ h1{
 
 
 .world-map-container figure {
-  background-color: rgb(216, 185, 185); /* Change this to your desired color */
+  background-color: rgb(216, 185, 185);
+  /* Change this to your desired color */
 }
 
 /* Styles for Popup */
@@ -311,98 +316,105 @@ svg g[style*="pointer: pointer"] {
 
 svg g[style*="pointer: pointer"]:hover {
   transform: scale(1.1);
-/* Auth container (Right side) */
+  /* Auth container (Right side) */
 
 
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 10px 200px 0px 10px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 200px 0px 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
 
-.auth {
-  display: flex;
-  gap: 10px;
-  margin-left: auto; /* Pushes the auth buttons to the right */
-  margin-right: 30px;
-  text-align: center;
-  height: 15px;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.auth button:hover {
-  background-color: #2c3a8c;
-  transform: scale(1.05);
-}
-
-.settings-container {
-  display: flex;
-  align-items: center;
-}
-
-button.passportButton {
-  border-radius: 40%;
-  height: 90px;
-  width: 100px;
-  display: flex;               
-  justify-content: center;     
-  align-items: center;         
-  text-align: center;         
-}
-
-.ri-edit-box-fill{
-  font-size: 24px; /* Adjust icon size */
-  color: #000000; /* Adjust color */
-  z-index: 1000;
-}
-
-button.logout{
-  color: black;
-  background-color: transparent;
-  margin-top: 0px;
-}
-
-button.passportButton {
-  border-radius: 40%;
-  height: 90px;
-  width: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-
-}
-
-.button-image {
-  max-width: 80%; 
-  max-height: 80%; 
-}
-
-.world-map-container {
-  width: 90vw; /* Adjust width as needed */
-  height: 80vh; /* Adjust height as needed */
-  display: flex;
-  justify-content: center;
-  align-items: center;}
+  .auth {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+    /* Pushes the auth buttons to the right */
+    margin-right: 30px;
+    text-align: center;
+    height: 15px;
+    align-items: center;
+    justify-content: center;
+  }
 
 
-.worldmap__figure-container path {
-  fill: rgba(170, 0, 255, 0.5); 
-  stroke: black;
-  stroke-width: 1;
-  cursor: pointer;
-  transition: fill 0.3s ease-in-out;
-}
+  .auth button:hover {
+    background-color: #2c3a8c;
+    transform: scale(1.05);
+  }
 
-.worldmap__figure-container path:hover {
-  fill: rgba(220, 155, 255, 0.7);
+  .settings-container {
+    display: flex;
+    align-items: center;
+  }
+
+  button.passportButton {
+    border-radius: 40%;
+    height: 90px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ri-edit-box-fill {
+    font-size: 24px;
+    /* Adjust icon size */
+    color: #000000;
+    /* Adjust color */
+    z-index: 1000;
+  }
+
+  button.logout {
+    color: black;
+    background-color: transparent;
+    margin-top: 0px;
+  }
+
+  button.passportButton {
+    border-radius: 40%;
+    height: 90px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+
+  }
+
+  .button-image {
+    max-width: 80%;
+    max-height: 80%;
+  }
+
+  .world-map-container {
+    width: 90vw;
+    /* Adjust width as needed */
+    height: 80vh;
+    /* Adjust height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .worldmap__figure-container path {
+    fill: rgba(170, 0, 255, 0.5);
+    stroke: black;
+    stroke-width: 1;
+    cursor: pointer;
+    transition: fill 0.3s ease-in-out;
+  }
+
+  .worldmap__figure-container path:hover {
+    fill: rgba(220, 155, 255, 0.7);
+  }
 }
