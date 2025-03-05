@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
 import {
@@ -18,11 +20,10 @@ import Loading from './Loading';
 // import newThought from '../components/newThought';
 
 function Home() {
-  const [query, setQuery] = useState('');
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  // const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const loadUser = useStore(({ authSlice }) => authSlice.loadUser);
-  const [data] = useState([]);
+  // const [data] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
   const [showPopup, setShowPopup] = useState(false);
@@ -30,17 +31,13 @@ function Home() {
 
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
-  // const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
+  // const authenticated  useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
     setTimeout(() => {
       console.log('Running loadUser after delay...');
       loadUser();
     }, 500); // Wait 500ms to let signinUser complete
   }, []);
-
-  const handleSearchChange = (event) => {
-    setQuery(event.target.value);
-  };
 
   // const handleThoughtNavigation = () => {
   //   navigate('/thoughts/new');
@@ -74,86 +71,68 @@ function Home() {
     }
   };
 
-  // Filter countries based on the search query using the countryName field
-  const filteredCountries = data.filter((country) => country.countryName
-    && country.countryName.toLowerCase().includes(query.toLowerCase()));
+  // // Filter countries based on the search query using the countryName field
+  // const filteredCountries = data.filter((country) => country.countryName
+  //   && country.countryName.toLowerCase().includes(query.toLowerCase()));
 
-  // Create highlighted countries array for the world map
-  const highlightedCountries = filteredCountries.map((country) => ({
-    country: country.isoCode,
-    value: 1, // This value is used by the map for coloring
-  }));
+  // // Create highlighted countries array for the world map
+  // const highlightedCountries = filteredCountries.map((country) => ({
+  //   country: country.isoCode,
+  //   value: 1, // This value is used by the map for coloring
+  // }));
 
   console.log('Authenticated:', authenticated);
   return (
-    <div className="App">
-      {/* User Settings Menu */}
-      <h1>Welcome to Lost&Found</h1>
-
-      {authenticated ? (
-        <p>You are logged in ✅</p>
-      ) : (
-        <p>You are not logged in ❌</p>
-      )}
-
-      <p>Home Country: {homeCountry || 'Not set'}</p>
-      <div className="settings-container">
-        <button className="settings-button" type="button" onClick={() => setSettingsOpen(!settingsOpen)}>
-          ⚙️
-        </button>
-        {settingsOpen && (
-          <div className="settings-menu">
-            <p onClick={() => console.log('Profile clicked!')}>Profile</p>
-            <p onClick={() => console.log('Settings clicked!')}>Settings</p>
-            <button onClick={handleLogout}>Logout</button>
+    <div className="overlay">
+      <div className="App">
+        <div className="top-bar">
+          <button className="logout" onClick={() => signoutUser(navigate)}> X </button>
+          {/* Auth Buttons */}
+          <div className="auth">
+            {!authenticated && (
+            <>
+              <button className="button" onClick={handleSignInNavigation} type="button">
+                SignIn
+              </button>
+              <button className="button" onClick={handleSignUpNavigation} type="button">
+                SignUp
+              </button>
+            </>
+            )}
           </div>
-        )}
-      </div>
-      <div>
-        {!authenticated && (
-          <>
-            <button className="button" onClick={handleSignInNavigation} type="button">
-              SignIn
-            </button>
-            <button className="button" onClick={handleSignUpNavigation} type="button">
-              SignUp
-            </button>
-          </>
-        )}
-      </div>
+        </div>
 
-      {/* Search Bar */}
-      <div className="search-bar-container">
-        <input
-          type="text"
-          value={query}
-          onChange={handleSearchChange}
-          placeholder="Search..."
-          className="search-bar"
-        />
-      </div>
+        {/* Info Section (Centered) */}
+        <div className="info">
+          <h1>Lost & Found</h1>
+          {authenticated ? <p className="cta">Click a country to get started!</p> : <p>Signin to access all countries!</p>}
+          <p>Home Country: {homeCountry || 'Not set'}</p>
+        </div>
 
-      <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} />
+        <WorldMapComponent onCountryClick={handleCountryClick} />
 
-      <div className="button-container">
-        <button className="custom-button" onClick={handlePopupToggle} type="button">
-          Create Thought
-        </button>
-        <button className="custom-button" onClick={handlePassportNavigation} type="button">
-          Open Passport
-        </button>
-      </div>
-      {/* Show authentication status */}
-      <div className="auth-status" />
-      {/* Popup for new thought */}
-      {showPopup && (
+        {/* <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} /> */}
+
+        <div className="button-container">
+          <button className="passportButton" onClick={handlePopupToggle} type="button">
+            Create Thought
+          </button>
+          <button className="passportButton" onClick={handlePassportNavigation} type="button">
+            Open Passport
+          </button>
+        </div>
+        {/* Show authentication status */}
+        <div className="auth-status" />
+        {/* Popup for new thought */}
+        {showPopup && (
         <div className="popup-overlay">
           <div className="popup-content">
             <NewThought closePopup={handlePopupToggle} />
           </div>
         </div>
-      )}
+        )}
 
+      </div>
     </div>
   );
 }
