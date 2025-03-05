@@ -307,6 +307,7 @@ h1{
   min-height: 100vh; /* Cover entire viewport */
   background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 50px 0; /* Provides vertical space at top & bottom */
@@ -325,6 +326,11 @@ h1{
   overflow-y: auto;    /* Scroll if content exceeds fixed height */
   display: flex;
   flex-direction: column;
+}
+
+.passport-header h2 {
+  margin: auto;
+  color: rgba(89, 64, 203, 1);
 }
 
 /******* Book Layout for the Profile Page *******/
@@ -625,4 +631,52 @@ button.passportButton {
 .button-image {
   max-width: 80%; 
   max-height: 80%; 
+}
+
+
+/** ------- Fun Facts Carousel -------- */
+// Styling largely adapted from ChatGPT
+.fun-facts-carousel {
+  text-align: center;
+  font-family: sans-serif;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 500px;
+}
+
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-slide {
+  width: 400px;         /* fixed width */
+  height: 300px;        /* fixed height */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 0 10px;
+  background: #f9f9f9;
+  overflow: auto;       /* add scrollbars if content exceeds the container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+
+.arrow {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #333;
+  outline: none;
+}
+
+.arrow:hover {
+  color: #000;
 }

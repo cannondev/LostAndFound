@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useStore from '../store';
 import '../style.scss';
+import FunFactsCarousel from './FunFactsCarousel';
 
 function PassportModal({ isOpen, onClose }) {
   // Toggle the active view: "profile" for the list, "countryDetail" for details
@@ -60,13 +61,11 @@ function PassportModal({ isOpen, onClose }) {
 
   return (
     <div className="passport-modal-wrapper">
+
       <div className="passport-modal">
         <div className="passport-header">
           <h2>My Passport</h2>
         </div>
-        <button className="close-button" type="button" onClick={onClose}>
-          X
-        </button>
 
         {activeView === 'profile' ? (
           <div className="profile-page">
@@ -120,21 +119,19 @@ function PassportModal({ isOpen, onClose }) {
                   <p className="country-description">
                     {countryDetails.description || 'No description available.'}
                   </p>
-                  <p className="discovered-date">
+                  {/* <p className="discovered-date">
                     Date Explored:{' '}
                     {countryDetails.unlockDate
                       ? new Date(countryDetails.unlockDate).toLocaleDateString()
                       : 'N/A'}
-                  </p>
-                  <p className="capital">
+                  </p> */}
+                  {/* <p className="capital">
                     Capital: {countryDetails.capital || 'N/A'}
-                  </p>
-                  <h3>Fun Fact</h3>
-                  {countryDetails.funFacts && countryDetails.funFacts.length > 0 ? (
-                    <p>{countryDetails.funFacts[0]}</p>
-                  ) : (
-                    <p>No fun facts available.</p>
-                  )}
+                  </p> */}
+                  <div className="fun-facts">
+                    <h3>Fun Facts</h3>
+                    <FunFactsCarousel countryDetails={countryDetails} />
+                  </div>
                   <h3>Thoughts Found in {countryDetails.countryName}</h3>
                   {countryDetails.thoughts && countryDetails.thoughts.length > 0 ? (
                     <ul>
@@ -159,6 +156,9 @@ function PassportModal({ isOpen, onClose }) {
             )}
           </div>
         )}
+        <button className="close-button" type="button" onClick={onClose}>
+          Return to World Map
+        </button>
       </div>
     </div>
   );

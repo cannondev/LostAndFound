@@ -65,9 +65,9 @@ function Home() {
     setShowPopup(!showPopup);
   };
 
-  const handleLogout = () => {
-    signoutUser(navigate);
-  };
+  // const handleLogout = () => {
+  //   signoutUser(navigate);
+  // };
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
     if (countryData && countryData.countryCode) {
@@ -119,19 +119,19 @@ function Home() {
 
         {/* <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} /> */}
 
-      <div className="button-container">
-        <button className="custom-button" onClick={handlePopupToggle} type="button">
-          Create Thought
-        </button>
-        <button className="custom-button" onClick={handlePassportOpen} type="button">
-          Open Passport
-        </button>
-        <PassportModal isOpen={isPassportOpen} on onClose={handlePassportClose} />
-      </div>
-      {/* Show authentication status */}
-      <div className="auth-status" />
-      {/* Popup for new thought */}
-      {showPopup && (
+        <div className="button-container">
+          <button className="custom-button" onClick={handlePopupToggle} type="button">
+            Create Thought
+          </button>
+          <button className="custom-button" onClick={handlePassportOpen} type="button">
+            Open Passport
+          </button>
+          <PassportModal isOpen={isPassportOpen} on onClose={handlePassportClose} />
+        </div>
+        {/* Show authentication status */}
+        <div className="auth-status" />
+        {/* Popup for new thought */}
+        {showPopup && (
         <div className="popup-overlay">
           <div className="popup-content">
             <NewThought closePopup={handlePopupToggle} />
