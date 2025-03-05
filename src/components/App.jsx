@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Routes, Route, useNavigate, useLocation,
 } from 'react-router-dom';
+import pass from '../images/pass.png';
+import plane from '../images/plane.png';
 import WorldMapComponent from './WorldMap';
 import '../style.scss';
 import NewThought from './newThought';
@@ -34,17 +36,16 @@ function Home() {
 
   // const authenticated  useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
-    document.querySelector('.world-map-container figure').style.backgroundColor = 'white';
-
+    document.querySelector('.world-map-container figure').style.background = '#fdf9ff';
+    document.querySelectorAll('.worldmap__figure-container path').forEach((path) => {
+      path.style.strokeWidth = '1.5';
+      path.style.cursor = 'pointer';
+    });
     setTimeout(() => {
       console.log('Running loadUser after delay...');
       loadUser();
-    }, 500); // Wait 500ms to let signinUser complete
+    }, 500);
   }, []);
-
-  // const handleThoughtNavigation = () => {
-  //   navigate('/thoughts/new');
-  // };
 
   // toggle visiibility
   const handlePassportOpen = () => {
@@ -98,14 +99,14 @@ function Home() {
           {/* Auth Buttons */}
           <div className="auth">
             {!authenticated && (
-            <>
-              <button className="button" onClick={handleSignInNavigation} type="button">
-                SignIn
-              </button>
-              <button className="button" onClick={handleSignUpNavigation} type="button">
-                SignUp
-              </button>
-            </>
+              <>
+                <button className="button" onClick={handleSignInNavigation} type="button">
+                  SignIn
+                </button>
+                <button className="button" onClick={handleSignUpNavigation} type="button">
+                  SignUp
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -113,7 +114,7 @@ function Home() {
         {/* Info Section (Centered) */}
         <div className="info">
           <h1>Lost & Found</h1>
-          {authenticated ? <p className="cta">Click a country to get started!</p> : <p>Signin to access all countries!</p>}
+          {authenticated ? <p className="cta">Click a country to get started!</p> : <p>Sign in to access all countries!</p>}
           <p>Home Country: {homeCountry || 'Not set'}</p>
         </div>
 
@@ -122,11 +123,12 @@ function Home() {
         {/* <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} /> */}
 
         <div className="button-container">
-          <button className="custom-button" onClick={handlePopupToggle} type="button">
-            Create Thought
+          <button className="thought-button" onClick={handlePopupToggle} type="button">
+            <img src={plane} className="icon" />
           </button>
-          <button className="custom-button" onClick={handlePassportOpen} type="button">
-            Open Passport
+
+          <button className="passport-button" onClick={handlePassportOpen} type="button">
+            <img src={pass} className="icon" />
           </button>
           <PassportModal isOpen={isPassportOpen} on onClose={handlePassportClose} />
         </div>
@@ -134,11 +136,11 @@ function Home() {
         <div className="auth-status" />
         {/* Popup for new thought */}
         {showPopup && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <NewThought closePopup={handlePopupToggle} />
+          <div className="popup-overlay">
+            <div className="popup-content">
+              <NewThought closePopup={handlePopupToggle} />
+            </div>
           </div>
-        </div>
         )}
 
       </div>
