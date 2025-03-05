@@ -17,6 +17,7 @@
     "font-awesome": "^4.7.0",
     "framer-motion": "^12.4.7",
     "leaflet": "^1.9.4",
+    "openai": "^4.86.1",
     "react": "^19.0.0",
     "react-d3-map": "^0.8.3",
     "react-dom": "^19.0.0",
