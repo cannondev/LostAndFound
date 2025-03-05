@@ -33,6 +33,8 @@ function Home() {
 
   // const authenticated  useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
+    document.querySelector('.world-map-container figure').style.backgroundColor = 'white';
+
     setTimeout(() => {
       console.log('Running loadUser after delay...');
       loadUser();
@@ -59,9 +61,9 @@ function Home() {
     setShowPopup(!showPopup);
   };
 
-  const handleLogout = () => {
-    signoutUser(navigate);
-  };
+  // const handleLogout = () => {
+  //   signoutUser(navigate);
+  // };
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
     if (countryData && countryData.countryCode) {
