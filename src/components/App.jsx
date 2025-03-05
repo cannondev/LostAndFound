@@ -34,6 +34,8 @@ function Home() {
 
   // const authenticated  useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
+    document.querySelector('.world-map-container figure').style.backgroundColor = 'white';
+
     setTimeout(() => {
       console.log('Running loadUser after delay...');
       loadUser();

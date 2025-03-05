@@ -61,104 +61,109 @@ function PassportModal({ isOpen, onClose }) {
 
   return (
     <div className="passport-modal-wrapper">
-
       <div className="passport-modal">
-        <div className="passport-header">
+        <div className="my-passport-header">
           <h2>My Passport</h2>
         </div>
+        <div className="passport-body">
+          {activeView === 'profile' ? (
+            <div className="opening-page">
+              <div className="profile-page">
 
-        {activeView === 'profile' ? (
-          <div className="profile-page">
+                <div className="profile-left-page">
+                  <h1 className="page-header">Profile</h1>
+                  <div className="profile-email">
+                    <p>Email: {user?.email || 'Not provided'}</p>
+                  </div>
+                  <div className="profile-home-country">
+                    <p>Home Country: {user?.homeCountry || 'Not set'}</p>
+                  </div>
+                  <div className="countries-visited">
+                    <p>Countries Visited: {countriesVisited.length}</p>
+                  </div>
+                </div>
 
-            <div className="profile-left-page">
-              <h1 className="page-header">Profile</h1>
-              <div className="profile-email">
-                <p>Email: {user?.email || 'Not provided'}</p>
+                <div className="profile-right-page">
+
+                  <h1 className="page-header">Countries Unlocked!</h1>
+                  <div className="countries-unlocked-list">
+                    <ul>
+                      {countriesVisited.length > 0 ? (
+                        countriesVisited.map((country) => (
+                          <li
+                            key={country}
+                            data-country={country}
+                            onClick={onCountryClick}
+                            style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                          >
+                            {country}
+                          </li>
+                        ))
+                      ) : (
+                        <li>Keep exploring to discover more countries!</li>
+                      )}
+                    </ul>
+                  </div>
+                </div>
+
               </div>
-              <div className="profile-home-country">
-                <p>Home Country: {user?.homeCountry || 'Not set'}</p>
-              </div>
-              <div className="countries-visited">
-                <p>Countries Visited: {countriesVisited.length}</p>
-              </div>
+              <button className="close-button" type="button" onClick={onClose}>
+                Return to World Map
+              </button>
             </div>
-
-            <div className="profile-right-page">
-              <div className="countries-unlocked-header">
-                <h3>Countries Unlocked!</h3>
-              </div>
-              <div className="countries-unlocked-list">
-                <ul>
-                  {countriesVisited.length > 0 ? (
-                    countriesVisited.map((country) => (
-                      <li
-                        key={country}
-                        data-country={country}
-                        onClick={onCountryClick}
-                        style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                      >
-                        {country}
-                      </li>
-                    ))
-                  ) : (
-                    <li>Keep exploring to discover more countries!</li>
-                  )}
-                </ul>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="country-detail-page">
-            <button onClick={onBackButtonClick} type="button" style={{ marginBottom: '10px' }}>
-              ← Back to Passport
-            </button>
-            {countryDetails ? (
-              <div className="detail-container">
-                <div className="detail-left-page">
-                  <h1 className="country-header">{countryDetails.countryName}</h1>
-                  <p className="country-description">
-                    {countryDetails.description || 'No description available.'}
-                  </p>
-                  {/* <p className="discovered-date">
+          ) : (
+            <div className="secondary-page">
+              <div className="country-detail-page">
+                {countryDetails ? (
+                  <div className="detail-container">
+                    <div className="detail-left-page">
+                      <h1 className="country-header">{countryDetails.countryName}</h1>
+                      <p className="country-description">
+                        {countryDetails.description || 'No description available.'}
+                      </p>
+                      {/* <p className="discovered-date">
                     Date Explored:{' '}
                     {countryDetails.unlockDate
                       ? new Date(countryDetails.unlockDate).toLocaleDateString()
                       : 'N/A'}
                   </p> */}
-                  {/* <p className="capital">
+                      {/* <p className="capital">
                     Capital: {countryDetails.capital || 'N/A'}
                   </p> */}
-                  <div className="fun-facts">
-                    <h3>Fun Facts</h3>
-                    <FunFactsCarousel countryDetails={countryDetails} />
+                      <div className="fun-facts">
+                        <h3>Fun Facts</h3>
+                        <FunFactsCarousel countryDetails={countryDetails} />
+                      </div>
+                      <h3>Thoughts Found in {countryDetails.countryName}</h3>
+                      {countryDetails.thoughts && countryDetails.thoughts.length > 0 ? (
+                        <ul>
+                          {countryDetails.thoughts.map((thought) => (
+                            <li key={thought._id}>{thought.content}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>No thoughts found.</p>
+                      )}
+                    </div>
+                    {/* <div className="detail-right-page">
+                      <img
+                        className="passport-stamp"
+                        src={countryDetails.passportStamp || '/default-stamp.png'}
+                        alt="Passport Stamp"
+                      />
+                    </div> */}
                   </div>
-                  <h3>Thoughts Found in {countryDetails.countryName}</h3>
-                  {countryDetails.thoughts && countryDetails.thoughts.length > 0 ? (
-                    <ul>
-                      {countryDetails.thoughts.map((thought) => (
-                        <li key={thought._id}>{thought.content}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>No thoughts found.</p>
-                  )}
-                </div>
-                <div className="detail-right-page">
-                  <img
-                    className="passport-stamp"
-                    src={countryDetails.passportStamp || '/default-stamp.png'}
-                    alt="Passport Stamp"
-                  />
-                </div>
+                ) : (
+                  <p>Error loading country details. Please try again.</p>
+                )}
+
               </div>
-            ) : (
-              <p>Error loading country details. Please try again.</p>
-            )}
-          </div>
-        )}
-        <button className="close-button" type="button" onClick={onClose}>
-          Return to World Map
-        </button>
+              <button onClick={onBackButtonClick} type="button" style={{ marginBottom: '10px' }}>
+                Go Back
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
