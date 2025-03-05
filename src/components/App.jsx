@@ -33,15 +33,16 @@ function Home() {
 
   // const authenticated  useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
+    document.querySelector('.world-map-container figure').style.background = '#fdf9ff';
+    document.querySelectorAll('.worldmap__figure-container path').forEach((path) => {
+      path.style.strokeWidth = '1.5';
+      path.style.cursor = 'pointer';
+    });
     setTimeout(() => {
       console.log('Running loadUser after delay...');
       loadUser();
-    }, 500); // Wait 500ms to let signinUser complete
+    }, 500);
   }, []);
-
-  // const handleThoughtNavigation = () => {
-  //   navigate('/thoughts/new');
-  // };
 
   const handlePassportNavigation = () => {
     navigate('/passport');
@@ -59,9 +60,9 @@ function Home() {
     setShowPopup(!showPopup);
   };
 
-  const handleLogout = () => {
-    signoutUser(navigate);
-  };
+  // const handleLogout = () => {
+  //   signoutUser(navigate);
+  // };
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
     if (countryData && countryData.countryCode) {
