@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Routes, Route, useNavigate, useLocation,
 } from 'react-router-dom';
+import pass from '../images/pass.png';
+import plane from '../images/plane.png';
 import WorldMapComponent from './WorldMap';
 import '../style.scss';
 import NewThought from './newThought';
@@ -106,7 +108,7 @@ function Home() {
         {/* Info Section (Centered) */}
         <div className="info">
           <h1>Lost & Found</h1>
-          {authenticated ? <p className="cta">Click a country to get started!</p> : <p>Signin to access all countries!</p>}
+          {authenticated ? <p className="cta">Click a country to get started!</p> : <p>Sign in to access all countries!</p>}
           <p>Home Country: {homeCountry || 'Not set'}</p>
         </div>
 
@@ -115,11 +117,12 @@ function Home() {
         {/* <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} /> */}
 
         <div className="button-container">
-          <button className="passportButton" onClick={handlePopupToggle} type="button">
-            Create Thought
+          <button className="thought-button" onClick={handlePopupToggle} type="button">
+            <img src={plane} className="icon" />
           </button>
-          <button className="passportButton" onClick={handlePassportNavigation} type="button">
-            Open Passport
+
+          <button className="passport-button" onClick={handlePassportNavigation} type="button">
+            <img src={pass} className="icon" />
           </button>
         </div>
         {/* Show authentication status */}
