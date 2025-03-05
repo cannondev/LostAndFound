@@ -59,6 +59,9 @@ function Home() {
     setShowPopup(!showPopup);
   };
 
+  const handleLogout = () => {
+    signoutUser(navigate);
+  };
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
     if (countryData && countryData.countryCode) {

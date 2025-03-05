@@ -7,9 +7,10 @@ function NewThought({ closePopup }) {
   const createThought = useStore((state) => state.thoughtSlice.createThought);
   const navigate = useNavigate();
   const user = useStore((state) => state.authSlice.user); // ✅ Get user from store
+  const authenticated = useStore((state) => state.authSlice.authenticated);
 
   const handleSubmit = () => {
-    if (!user) {
+    if (!authenticated) {
       alert('You must be signed in to send a thought.');
       return;
     }
