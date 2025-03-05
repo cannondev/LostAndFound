@@ -1,5 +1,4 @@
 // APP CSS
-
 // body::before {
 //   content: '';
 //   position: fixed;
@@ -64,13 +63,14 @@ h1{
   font-weight: 900;
 
 }
-
 .custom-button {
-  z-index: 9999 !important; /* Ensure it's on top */
-  pointer-events: all !important; /* Allow clicks */
-  opacity: 1 !important; /* Ensure it's visible */
+  z-index: 9999 !important;
+  /* Ensure it's on top */
+  pointer-events: all !important;
+  /* Allow clicks */
+  opacity: 1 !important;
+  /* Ensure it's visible */
   visibility: visible !important;
-  border-radius: 50%;
 }
 
 
@@ -82,28 +82,45 @@ h1{
   border-radius: 15px;
 }
 
+/* Search Bar Styling */
+.search-bar-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar {
+  width: 250px;
+  padding: 12px 15px;
+  font-size: 18px;
+  border: 2px solid #325dac;
+  /* Soft border color */
+  border-radius: 30px;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: white;
+  /* Input background set to white */
+}
+
+.search-bar:focus {
+  border-color: #0b2658;
+  /* Pinkish-red color on focus */
+  box-shadow: 0 0 8px rgba(92, 194, 242, 0.5);
+  /* Focus glow effect */
+}
 
 /* Map container styling */
 .custom-world-map {
-  margin-top: 50px;
   width: 80%;
   height: 400px;
   margin: 0 auto;
-  background-color: transparent;
+  background-color: white;
   /* Ensures map background is white */
   padding: 10px;
   border-radius: 15px;
 }
 
-.auth {
-  margin-bottom: 100px;
-}
 
-.settings-container {
-  display: flex;
-  justify-content: space-between;
-  align-content: flex-start;
-}
 /* Button Container at the bottom */
 .button-container {
   position: fixed;
@@ -114,9 +131,6 @@ h1{
   justify-content: space-between;
   /* To spread buttons across the width */
   padding: 0 20px;
-  margin-right: 10px;
-  margin-left: 10px;
-
   /* Add padding to avoid buttons touching the edges */
 }
 
@@ -297,9 +311,6 @@ svg g[style*="pointer: pointer"] {
 
 svg g[style*="pointer: pointer"]:hover {
   transform: scale(1.1);
-}
-
-
 /* Auth container (Right side) */
 
 
@@ -395,4 +406,3 @@ button.passportButton {
 .worldmap__figure-container path:hover {
   fill: rgba(220, 155, 255, 0.7);
 }
-
