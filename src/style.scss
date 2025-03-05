@@ -301,7 +301,7 @@ svg g[style*="pointer: pointer"]:hover {
   background: white;
   padding: 0;
   border-radius: 10px;
-  width: 90%;
+  width: 60%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   height: 600px;
   overflow-y: auto;
@@ -457,11 +457,11 @@ svg g[style*="pointer: pointer"]:hover {
 
 .left-header {
   text-align: center;
+}
 
 .auth button:hover {
   background-color: #2c3a8c;
   transform: scale(1.05);
-
 }
 
 .flag-container {
@@ -479,6 +479,7 @@ svg g[style*="pointer: pointer"]:hover {
 .country-description {
   text-align: center;
   margin-bottom: 16px;
+}
 
 button.passportButton {
   border-radius: 40%;
@@ -488,7 +489,6 @@ button.passportButton {
   justify-content: center;     
   align-items: center;         
   text-align: center;         
-
 }
 
 /* Right Page Styles (Fun Facts & Thoughts) */
@@ -512,6 +512,7 @@ button.passportButton {
 
 .thoughts-section {
   flex: 1;
+}
 
 button.passportButton {
   border-radius: 40%;
