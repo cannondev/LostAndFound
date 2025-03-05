@@ -10,7 +10,7 @@ import plane from '../images/plane.png';
 import WorldMapComponent from './WorldMap';
 import '../style.scss';
 import NewThought from './newThought';
-import Passport from './Passport';
+import PassportModal from './Passport';
 import CountryDetail from './CountryDetail';
 import CountryScratchOff from './CountryScratchOff';
 import useStore from '../store';
@@ -27,6 +27,7 @@ function Home() {
   const loadUser = useStore((state) => state.authSlice?.loadUser);
   // const [data] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
+  const [isPassportOpen, setIsPassportOpen] = useState(false); // state for passport visibility
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
   const [showPopup, setShowPopup] = useState(false);
   const signoutUser = useStore(({ authSlice }) => authSlice.signoutUser);
@@ -50,8 +51,13 @@ function Home() {
     loadUser();
   }, []);
 
-  const handlePassportNavigation = () => {
-    navigate('/passport');
+  // toggle visiibility
+  const handlePassportOpen = () => {
+    setIsPassportOpen(true);
+  };
+
+  const handlePassportClose = () => {
+    setIsPassportOpen(false);
   };
 
   const handleSignInNavigation = () => {
@@ -125,9 +131,10 @@ function Home() {
             <img src={plane} className="icon" />
           </button>
 
-          <button className="passport-button" onClick={handlePassportNavigation} type="button">
+          <button className="passport-button" onClick={handlePassportOpen} type="button">
             <img src={pass} className="icon" />
           </button>
+          <PassportModal isOpen={isPassportOpen} on onClose={handlePassportClose} />
         </div>
         {/* Show authentication status */}
         <div className="auth-status" />
@@ -157,7 +164,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/thoughts/new" element={<NewThought />} />
         <Route path="/country/:countryId" element={<CountryDetail />} />
-        <Route path="/passport" element={<Passport />} />
+        <Route path="/Passport" element={<PassportModal />} />
       </Routes>
       {currentLocation?.pathname.startsWith('/country/') && (
         <CountryScratchOff />
