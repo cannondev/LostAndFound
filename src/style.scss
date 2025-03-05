@@ -163,53 +163,6 @@ h1{
   }
 }
 
-/* Settings Menu */
-.settings-container {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
-
-.settings-button {
-  font-size: 24px;
-  background: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 50%;
-  padding: 8px;
-  transition: transform 0.2s ease;
-}
-
-.settings-button:hover {
-  transform: scale(1.1);
-}
-
-.settings-menu {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  text-align: left;
-}
-
-.settings-menu p {
-  margin: 10px 0;
-  cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: background 0.2s ease;
-}
-
-.settings-menu p:hover {
-  background: #f0f0f0;
-}
-
-
-
-
 // COUNTRY CSS
 .country-info {
   display: flex;
@@ -315,99 +268,6 @@ h1{
 }
 
 /* Styles for Popup */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  max-width: 90%;
-}
-
-.entireForm textarea {
-  width: 100%;
-  height: 200px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.entireForm .submit {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.entireForm .submit:hover {
-  background-color: #45a049;
-}
-
-.popup-content .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #bc8a2e;
-  color: white;
-  font-size: 20px;
-  border: none;
-  border-radius: 50%;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.popup-content .close-btn:hover {
-  background-color: #a67925;
-}
-
-.country-container {
-  position: relative;
-  width: 768px;
-  height: 768px;
-  margin: 0 auto;
-}
-
-/* Thought popup styling */
-.thought-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-}
-
-.thought-popup-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
-  width: 80%;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
 
 .close-popup-btn {
   position: absolute;
@@ -427,20 +287,7 @@ h1{
 }
 
 .close-popup-btn:hover {
-  background-color: #f0f0f0;
-}
-
-.thought-content {
-  margin: 15px 0;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.thought-metadata {
-  font-size: 12px;
-  color: #666;
-  text-align: right;
-  margin-top: 15px;
+  background-color: #4c3196;
 }
 
 /* Paper airplane icon hover effect for unlocked thoughts */
@@ -481,23 +328,6 @@ svg g[style*="pointer: pointer"]:hover {
 }
 
 
-// .auth button {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   height: 40px; /* Adjust as needed */
-//   width: 100px; /* Adjust based on design */
-//   font-size: 16px;
-//   text-align: center;
-//   padding: 10px;
-//   border: none;
-//   border-radius: 5px;
-//   background-color: #3f51b5;
-//   color: white;
-//   cursor: pointer;
-//   transition: background 0.2s ease, transform 0.2s ease;
-// }
-
 .auth button:hover {
   background-color: #2c3a8c;
   transform: scale(1.05);
@@ -507,11 +337,6 @@ svg g[style*="pointer: pointer"]:hover {
   display: flex;
   align-items: center;
 }
-
-// .info {
-//   text-align: center;
-//   margin-bottom: 0px; /* Ensure spacing below the top-bar */
-// }
 
 button.passportButton {
   border-radius: 40%;
@@ -550,6 +375,14 @@ button.passportButton {
   max-width: 80%; 
   max-height: 80%; 
 }
+
+.world-map-container {
+  width: 90vw; /* Adjust width as needed */
+  height: 80vh; /* Adjust height as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;}
+
 
 .worldmap__figure-container path {
   fill: rgba(170, 0, 255, 0.5); 
