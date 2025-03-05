@@ -59,9 +59,9 @@ function Home() {
     setShowPopup(!showPopup);
   };
 
-  const handleLogout = () => {
-    signoutUser(navigate);
-  };
+  // const handleLogout = () => {
+  //   signoutUser(navigate);
+  // };
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
     if (countryData && countryData.countryCode) {
@@ -90,14 +90,14 @@ function Home() {
           {/* Auth Buttons */}
           <div className="auth">
             {!authenticated && (
-            <>
-              <button className="button" onClick={handleSignInNavigation} type="button">
-                SignIn
-              </button>
-              <button className="button" onClick={handleSignUpNavigation} type="button">
-                SignUp
-              </button>
-            </>
+              <>
+                <button className="button" onClick={handleSignInNavigation} type="button">
+                  SignIn
+                </button>
+                <button className="button" onClick={handleSignUpNavigation} type="button">
+                  SignUp
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -125,11 +125,11 @@ function Home() {
         <div className="auth-status" />
         {/* Popup for new thought */}
         {showPopup && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <NewThought closePopup={handlePopupToggle} />
+          <div className="popup-overlay">
+            <div className="popup-content">
+              <NewThought closePopup={handlePopupToggle} />
+            </div>
           </div>
-        </div>
         )}
 
       </div>
