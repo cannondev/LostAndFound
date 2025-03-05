@@ -33,13 +33,27 @@ function Home() {
 
   // const authenticated  useStore(({ authSlice }) => authSlice.authenticated);
   useEffect(() => {
-    document.querySelector('.world-map-container figure').style.backgroundColor = 'white';
-
+    document.querySelector('.world-map-container figure').style.background = '#fdf9ff';
+    document.querySelectorAll('.worldmap__figure-container path').forEach((path) => {
+      path.style.fill = 'rgba(255, 0, 21, 0.5)';
+      path.style.stroke = 'black';
+      path.style.strokeWidth = '1.5';
+      path.style.cursor = 'pointer';
+    });
     setTimeout(() => {
       console.log('Running loadUser after delay...');
       loadUser();
-    }, 500); // Wait 500ms to let signinUser complete
+    }, 500);
   }, []);
+
+  // useEffect(() => {
+  //   document.querySelectorAll('.worldmap__figure-container path').forEach((path) => {
+  //     path.style.fill = 'rgba(185, 49, 254, 0.5)';
+  //     path.style.stroke = 'black';
+  //     path.style.strokeWidth = '1';
+  //     path.style.cursor = 'pointer';
+  //   });
+  // }, []);
 
   // const handleThoughtNavigation = () => {
   //   navigate('/thoughts/new');

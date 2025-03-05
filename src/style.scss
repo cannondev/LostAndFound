@@ -30,11 +30,11 @@
 
 
 div.App{
-  background: rgb(255, 255, 255);
+  background: #fdf9ff;
 }
 
 body {
-  background-color: rgb(255, 255, 255);
+  background-color: #fdf9ff;
 }
 
 
@@ -550,3 +550,16 @@ button.passportButton {
   max-width: 80%; 
   max-height: 80%; 
 }
+
+.worldmap__figure-container path {
+  fill: rgba(170, 0, 255, 0.5); 
+  stroke: black;
+  stroke-width: 1;
+  cursor: pointer;
+  transition: fill 0.3s ease-in-out;
+}
+
+.worldmap__figure-container path:hover {
+  fill: rgba(220, 155, 255, 0.7);
+}
+
