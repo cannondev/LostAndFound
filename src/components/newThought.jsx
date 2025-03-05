@@ -6,7 +6,7 @@ function NewThought({ closePopup }) {
   const [content, setContent] = useState('');
   const createThought = useStore((state) => state.thoughtSlice.createThought);
   const navigate = useNavigate();
-  const user = useStore((state) => state.authSlice.user); // ✅ Get user from store
+  const user = useStore((state) => state.authSlice.user);
 
   const handleSubmit = () => {
     if (!user) {
@@ -35,7 +35,7 @@ function NewThought({ closePopup }) {
           onChange={(e) => setContent(e.target.value)}
           placeholder="Write your thought..."
         />
-        {user && <p><strong>from: {user.fullName}</strong></p>} {/* ✅ Display fullname correctly */}
+        {user && <p><strong>from: {user.fullName}</strong></p>}
         <button className="submit" type="button" onClick={handleSubmit}>
           Send Thought
         </button>
