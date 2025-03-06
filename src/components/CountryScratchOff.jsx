@@ -5,6 +5,7 @@ import { getName } from 'country-list';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import useStore from '../store';
+import Scratch from '../images/Scratch.jpeg';
 
 // Helper for auth headers.
 const getAuthHeaders = () => ({
@@ -250,13 +251,14 @@ function CountryScratchOff() {
         </defs>
         {/* Render mask only if not cleared */}
         {!maskCleared && (
-          <rect
+          <image
+            href={Scratch}
             x="0"
             y="0"
             width="768"
             height="768"
-            fill="red"
             mask="url(#scratchMask)"
+            preserveAspectRatio="xMidYMid slice"
           />
         )}
       </svg>
