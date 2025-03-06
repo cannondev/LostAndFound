@@ -1,3 +1,4 @@
+
 div.App {
   background: #fdf9ff;
 }
@@ -13,6 +14,7 @@ body {
   height: 100%;
 }
 
+
 p {
   margin-bottom: 0px;
 }
@@ -25,11 +27,51 @@ h1 {
   margin-bottom: 0px;
 }
 
+// .info {
+//   font-family: "Poiret One", sans-serif;
+//   font-size: 20px;
+//   font-weight: 900;
+//   margin-bottom: 50px;
+//   position: fixed;
+//   z-index: 1000;
+
+// }
+// .info {
+//   font-family: "Poiret One", sans-serif;
+//   font-size: 20px;
+//   font-weight: 900;
+//   margin-bottom: 50px;
+//   position: fixed;
+//   top: 10px; /* Adjust distance from top */
+//   left: 50%;
+//   transform: translateX(-50%); /* Centers the element */
+//   z-index: 1000;
+//   // background: white; /* Optional: adds contrast */
+//   padding: 10px; /* Optional: makes it look better */
+// }
 .info {
   font-family: "Poiret One", sans-serif;
   font-size: 20px;
   font-weight: 900;
+  position: relative;
+  top: 0;
+  z-index: 1000;
+  text-align: center;
+  width: 100%; 
+  margin-bottom: 100px;
+  margin-top: 100px;
 }
+
+
+
+// .fixed-text {
+//   position: fixed;
+//   top: 20px;  /* Distance from the top */
+//   left: 20px; /* Distance from the left */
+//   background: white;
+//   padding: 10px;
+//   z-index: 1000; /* Ensures it stays above other elements */
+// }
 
 .custom-button {
   z-index: 9999 !important;
@@ -239,27 +281,29 @@ h1 {
   height: calc(100vh - 50px);
 }
 
-.world-map-container {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: block;
-  /* Ensures no extra space below the SVG */
-  border-radius: 100%;
-}
-
-// figure.worldmap__figure-container {
-//   background-color: red;
+// .world-map-container {
+//   width: 100%;
+//   height: 100vh;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   display: block;
+//   /* Ensures no extra space below the SVG */
+//   border-radius: 100%;
 // }
-// thoughts
+
+// // figure.worldmap__figure-container {
+// //   background-color: red;
+// // }
+// // thoughts
 
 
-.world-map-container figure {
-  background-color: rgb(216, 185, 185);
-  /* Change this to your desired color */
-}
+// .world-map-container figure {
+//   background-color: rgb(216, 185, 185);
+//   /* Change this to your desired color */
+// }
+
+
 
 /* Styles for Popup */
 
@@ -591,13 +635,13 @@ button.passportButton {
 }
 
 .world-map-container {
-  width: 90vw;
-  /* Adjust width as needed */
-  height: 80vh;
-  /* Adjust height as needed */
+  margin-top: 400px;
+  width: 100vw;
+  max-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  // overflow: hidden; 
 }
 
 
@@ -666,12 +710,10 @@ button.passportButton {
 /* Thin, pink top bar */
 .top-bar {
   display: flex;
-  justify-content: space-between;
-  /* Space elements evenly */
-  align-items: center;
+  justify-content: space-between; /* Space elements evenly */
+  align-items: center; /* Center the buttons vertically */
   width: 100%;
-  height: 45px;
-  /* Thin bar height */
+  height: 60px; /* Thin bar height */
   position: fixed;
   top: 0;
   left: 0;
@@ -679,6 +721,7 @@ button.passportButton {
   z-index: 1000;
   background-color: #b980e472;
   padding: 0 25px;
+  overflow: hidden; 
 }
 
 button.logout {
@@ -703,7 +746,7 @@ button.logout:hover {
   margin-left: auto;
   margin-right: 30px;
   position: fixed;
-  top: 10px;
+  top: 5px;
   right: 0;
   z-index: 1001;
 }
