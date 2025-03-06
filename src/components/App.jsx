@@ -54,12 +54,7 @@ function Home() {
   // }, []);
 
   useEffect(() => {
-    const mapContainer = document.querySelector('.world-map-container figure');
-    if (mapContainer) {
-      mapContainer.style.background = '#fdf9ff';
-      mapContainer.style.transform = 'scale(2)';
-      mapContainer.style.display = 'block';
-    }
+    console.log('Loading user on app start...');
     loadUser();
   }, []);
 
@@ -127,14 +122,14 @@ function Home() {
           {/* Auth Buttons */}
           <div className="auth">
             {!authenticated && (
-            <>
-              <button className="button" onClick={handleSignInNavigation} type="button">
-                SignIn
-              </button>
-              <button className="button" onClick={handleSignUpNavigation} type="button">
-                SignUp
-              </button>
-            </>
+              <>
+                <button className="button" onClick={handleSignInNavigation} type="button">
+                  SignIn
+                </button>
+                <button className="button" onClick={handleSignUpNavigation} type="button">
+                  SignUp
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -165,11 +160,11 @@ function Home() {
         <div className="auth-status" />
         {/* Popup for new thought */}
         {showPopup && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <NewThought closePopup={handlePopupToggle} />
+          <div className="popup-overlay">
+            <div className="popup-content">
+              <NewThought closePopup={handlePopupToggle} />
+            </div>
           </div>
-        </div>
         )}
 
       </div>
@@ -192,7 +187,7 @@ function App() {
         <Route path="/Passport" element={<PassportModal />} />
       </Routes>
       {currentLocation?.pathname.startsWith('/country/') && (
-      <CountryScratchOff />
+        <CountryScratchOff />
       )}
     </>
   );
