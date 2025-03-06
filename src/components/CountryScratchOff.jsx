@@ -264,7 +264,7 @@ function CountryScratchOff() {
       </svg>
       {/* Show unlock button if unlocked (70% reached) but mask not cleared */}
       {unlocked && !maskCleared && (
-        <button
+        <button className="unlock-btn"
           type="button"
           style={{
             position: 'absolute',

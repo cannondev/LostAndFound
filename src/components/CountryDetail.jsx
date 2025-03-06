@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import '../style.scss';
 import { getName } from 'country-list';
@@ -9,44 +9,39 @@ import politicsIcon from '../images/politics.png';
 import languageIcon from '../images/languages.png';
 import landmarkIcon from '../images/landmark.png';
 import historyIcon from '../images/history.png';
-import plane from '../images/paper-airplane.png';
+import AnimatedIcons from './AnimatedIcons';
 
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
-const MIN_DISTANCE = 60; // Minimum distance between icons
-const existingCoordinates = []; // Store both fun fact and paper airplane coordinates
+const MIN_DISTANCE = 80;
+const existingCoordinates = [];
 
-// Helper function: returns a valid coordinate inside the country shape.
 function getValidCoordinate() {
   return new Promise((resolve) => {
     let attempts = 0;
-    const MAX_ATTEMPTS = 100; // Avoid infinite loops
-
+    const MAX_ATTEMPTS = 100;
     function attempt() {
       if (attempts >= MAX_ATTEMPTS) {
-        console.warn('Max attempts reached, could not find non-overlapping coordinate.');
-        resolve({ x: 0, y: 0 }); // Fallback to top-left corner
+        console.warn('Max attempts reached.');
+        resolve({ x: 0, y: 0 });
         return;
       }
       attempts++;
-
       const randomX = Math.floor(Math.random() * 768);
       const randomY = Math.floor(Math.random() * 768);
       const pixelData = ctx.getImageData(randomX, randomY, 1, 1).data;
-
-      if (pixelData[3] > 0) { // Check if inside the country shape
+      if (pixelData[3] > 0) {
         const isTooClose = existingCoordinates.some(({ x, y }) => {
           const distance = Math.sqrt((randomX - x) ** 2 + (randomY - y) ** 2);
           return distance < MIN_DISTANCE;
         });
-
         if (!isTooClose) {
           existingCoordinates.push({ x: randomX, y: randomY });
           resolve({ x: randomX, y: randomY });
           return;
         }
       }
-      attempt(); // Retry if too close or outside shape
+      attempt();
     }
     attempt();
   });
@@ -63,7 +58,9 @@ function CountryDetail() {
   const countrySvgUrl = `https://raw.githubusercontent.com/djaiss/mapsicon/master/all/${lowercaseCountryId}/vector.svg`;
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedThought, setSelectedThought] = useState(null);
-  const [funFactCoords, setFunFactCoords] = useState([]); // New state for fun fact icons
+  const [funFactCoords, setFunFactCoords] = useState([]);
+  // New state: forces AnimatedIcons to remount and reanimate
+  const [animationKey, setAnimationKey] = useState(Date.now());
 
   const openModal = (thought) => {
     setSelectedThought(thought);
@@ -83,7 +80,6 @@ function CountryDetail() {
     return () => window.removeEventListener('unlockStateChanged', handleUnlockChange);
   }, []);
 
-  // Fetch user's unlocked countries from the backend
   useEffect(() => {
     const fetchUnlockedCountries = async () => {
       try {
@@ -99,7 +95,6 @@ function CountryDetail() {
         console.error('Error fetching unlocked countries:', error);
       }
     };
-
     fetchUnlockedCountries();
   }, [countryId]);
 
@@ -115,7 +110,6 @@ function CountryDetail() {
         console.error('Error fetching thoughts:', error);
       }
     };
-
     fetchThoughts();
   }, [countryId]);
 
@@ -126,7 +120,6 @@ function CountryDetail() {
     img.onerror = () => setSvgError(true);
   }, [countrySvgUrl]);
 
-  // New useEffect: generate 6 fun fact coordinates once the country is unlocked and the SVG is loaded
   useEffect(() => {
     async function generateFunFactCoords() {
       try {
@@ -140,13 +133,11 @@ function CountryDetail() {
         canvas.width = 768;
         canvas.height = 768;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
         const categories = ['food', 'culture', 'politics', 'language', 'landmark', 'history'];
         existingCoordinates.length = 0;
         thoughts.forEach(({ xCoordinate, yCoordinate }) => {
           existingCoordinates.push({ x: xCoordinate, y: yCoordinate });
         });
-        // Generate a valid coordinate for each category.
         const coordinatePromises = categories.map(() => getValidCoordinate());
         const coords = await Promise.all(coordinatePromises);
         const funFacts = categories.map((category, index) => ({
@@ -155,17 +146,18 @@ function CountryDetail() {
           yCoordinate: coords[index].y,
         }));
         setFunFactCoords(funFacts);
+        // Update key to force AnimatedIcons to remount and reanimate
+        setAnimationKey(Date.now());
       } catch (error) {
         console.error('Error generating fun fact coordinates:', error);
       }
     }
-
     if (unlockMaskCleared && !svgError) {
       generateFunFactCoords();
     }
-  }, [unlockMaskCleared, svgError, countrySvgUrl]);
+  }, [unlockMaskCleared, svgError, countrySvgUrl, thoughts]);
 
-  function getFunFactSVG(category) {
+  const getFunFactSVG = useCallback((category) => {
     switch (category) {
       case 'food':
         return <img src={foodIcon} alt="Food Icon" width="50" height="50" />;
@@ -182,115 +174,87 @@ function CountryDetail() {
       default:
         return null;
     }
-  }
+  }, []);
 
   return (
-    <div className="country-detail-display">
-      <div className="header">
+    <>
+      {/* Header with the Back to Home button */}
+      <div className="header"
+        style={{
+          position: 'absolute', top: 10, left: 10, zIndex: 10,
+        }}
+      >
         <button type="button" className="go-home-btn" onClick={() => navigate('/home')}>
           Go Back to Home
         </button>
       </div>
-
-      <div className="country-container" style={{ position: 'relative', width: 768, height: 768 }}>
-        <svg width="768" height="768" viewBox="0 0 768 768">
-          {!svgError ? (
-            <image
-              href={countrySvgUrl}
-              width="100%"
-              height="100%"
-              style={{ objectFit: 'contain' }}
+      {/* Flex container to center the SVG */}
+      <div
+        className="country-detail-display"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <div style={{ position: 'relative', width: '768px', height: '768px' }}>
+          <svg
+            width="768"
+            height="768"
+            viewBox="0 0 768 768"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              display: 'block',
+            }}
+            preserveAspectRatio="none"
+          >
+            {!svgError ? (
+              <image href={countrySvgUrl} width="768" height="768" />
+            ) : (
+              <text x="50%" y="50%" textAnchor="middle" fill="gray">
+                Country shape not available.
+              </text>
+            )}
+          </svg>
+          {unlockMaskCleared && (
+            <AnimatedIcons
+              key={animationKey} // forces remount & reanimation each time the key changes
+              thoughts={thoughts}
+              funFactCoords={funFactCoords}
+              unlockMaskCleared={unlockMaskCleared}
+              getFunFactSVG={getFunFactSVG}
+              onIconClick={openModal}
             />
-          ) : (
-            <text x="50%" y="50%" textAnchor="middle" fill="gray">
-              Country shape not available.
-            </text>
           )}
-        </svg>
-
-        {/* Render thought icons with backend-provided coordinates */}
-        {unlockMaskCleared && thoughts.map((thought) => (
+        </div>
+        {modalOpen && (
           <div
-            key={thought._id}
+            className="modal-overlay"
             role="button"
             tabIndex={0}
-            aria-label="View thought details"
-            style={{
-              position: 'absolute',
-              top: thought.yCoordinate,
-              left: thought.xCoordinate,
-              transform: 'translate(-50%, -50%)',
-              zIndex: 5,
-              cursor: 'pointer',
-            }}
-            onClick={() => openModal(thought)}
+            onClick={closeModal}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                openModal(thought);
-              }
+              if (e.key === 'Enter' || e.key === ' ') closeModal();
             }}
           >
-            <img
-              src={plane}
-              alt="Paper Airplane Icon"
-              width="50"
-              height="50"
-              style={{ pointerEvents: 'none' }}
-            />
-          </div>
-        ))}
-
-        {/* Render the 6 fun fact icons with randomly generated coordinates */}
-        {unlockMaskCleared && funFactCoords.map((fact) => (
-          <div
-            key={fact.category}
-            role="button"
-            tabIndex="0" // Make the element focusable
-            style={{
-              position: 'absolute',
-              top: fact.yCoordinate,
-              left: fact.xCoordinate,
-              transform: 'translate(-50%, -50%)',
-              zIndex: 3,
-              cursor: 'pointer',
-            }}
-            onClick={() => console.log(`Clicked on ${fact.category} icon`)}
-          >
-            {getFunFactSVG(fact.category)}
-          </div>
-
-        ))}
-      </div>
-
-      {modalOpen && (
-        <div
-          className="modal-overlay"
-          role="button"
-          tabIndex={0}
-          onClick={closeModal}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') closeModal();
-          }}
-        >
-          <div
-            className="modal-content"
-            role="dialog"
-            aria-modal="true"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <p>{selectedThought?.content || 'No details available.'}</p>
-            <button
-              type="button"
-              onClick={closeModal}
-              className="close-btn"
+            <div
+              className="modal-content"
+              role="dialog"
+              aria-modal="true"
+              onClick={(e) => e.stopPropagation()}
             >
-              Close
-            </button>
+              <p>{selectedThought?.content || 'No details available.'}</p>
+              <button type="button" onClick={closeModal} className="close-btn">
+                Close
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 
