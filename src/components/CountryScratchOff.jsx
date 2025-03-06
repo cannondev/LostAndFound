@@ -156,23 +156,30 @@ function CountryScratchOff() {
       return;
     }
     try {
-      const response = await axios.post(
+      const unlockResponse = await axios.post(
         `http://localhost:9090/api/countries/${countryName}/unlock`,
         {},
         getAuthHeaders(),
       );
-      console.log('Country unlocked response:', response.data);
+      console.log('Country unlocked response:', unlockResponse.data);
+
+      const generateResponse = await axios.post(
+        `http://localhost:9090/api/countries/${countryName}/generate-data`,
+        {},
+        getAuthHeaders(),
+      );
+      console.log('Country generated response:', generateResponse);
+
       setMaskCleared(true);
       useStore.setState((state) => ({
         authSlice: {
           ...state.authSlice,
           user: {
             ...state.authSlice.user,
-            unlockedCountries: response.data.unlockedCountries,
+            unlockedCountries: unlockResponse.data.unlockedCountries,
           },
         },
       }));
-      navigate(`/country/${countryId}`);
       window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlockMaskCleared: true } }));
       navigate(`/country/${countryId}`, { state: { unlockMaskCleared: true } });
     } catch (error) {
