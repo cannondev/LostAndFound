@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getName } from 'country-list';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-// import useStore from '../store';
+import useStore from '../store';
 
 // Helper for auth headers.
 const getAuthHeaders = () => ({
@@ -26,6 +26,7 @@ function CountryScratchOff() {
   const [maskCleared, setMaskCleared] = useState(false);
   const svgRef = useRef(null);
   const canvasRef = useRef(null);
+  const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
 
   // Create an offscreen canvas.
   useEffect(() => {
@@ -150,6 +151,10 @@ function CountryScratchOff() {
   // Unlock button click handler.
   const handleUnlockClick = async () => {
     console.log('Unlocking country with name:', countryName);
+    if (!authenticated) {
+      alert('You must sign in to unlock countries!');
+      return;
+    }
     try {
       const response = await axios.post(
         `http://localhost:9090/api/countries/${countryName}/unlock`,
@@ -158,10 +163,15 @@ function CountryScratchOff() {
       );
       console.log('Country unlocked response:', response.data);
       setMaskCleared(true);
-      // useStore.getState().authSlice.setUser((prevUser) => ({
-      //   ...prevUser,
-      //   unlockedCountries: response.data.unlockedCountries,
-      // }));
+      useStore.setState((state) => ({
+        authSlice: {
+          ...state.authSlice,
+          user: {
+            ...state.authSlice.user,
+            unlockedCountries: response.data.unlockedCountries,
+          },
+        },
+      }));
       window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlockMaskCleared: true } }));
       navigate(`/country/${countryId}`, { state: { unlockMaskCleared: true } });
     } catch (error) {
