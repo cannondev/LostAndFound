@@ -8,22 +8,30 @@ export default function createAuthSlice(set, get) {
   return {
     authSlice: {
       authenticated: false,
-      user: { homeCountry: null, fullName: null },
+      user: { homeCountry: null, fullName: null, unlockedCountries: ['United States of America'] },
     },
 
     loadUser: () => {
       const token = localStorage.getItem('token');
       const user = localStorage.getItem('user');
-      const homeCountry = localStorage.getItem('homeCountry'); // Get stored home country
+      const homeCountry = localStorage.getItem('homeCountry');
 
       if (token && user) {
+        const parsedUser = JSON.parse(user);
+
+        // Ensure unlockedCountries is an array
+        const unlockedCountries = Array.isArray(parsedUser.unlockedCountries)
+          ? parsedUser.unlockedCountries
+          : ['United States of America'];
+
         set((state) => ({
           authSlice: {
             ...state.authSlice,
             authenticated: true,
             user: {
-              ...JSON.parse(user), // Load user data from localStorage
-              homeCountry: homeCountry || JSON.parse(user).homeCountry, // Prioritize stored home country
+              ...parsedUser,
+              unlockedCountries,
+              homeCountry: homeCountry || JSON.parse(user).homeCountry,
             },
           },
         }));
@@ -48,22 +56,6 @@ export default function createAuthSlice(set, get) {
       localStorage.setItem('user', JSON.stringify({ ...get().authSlice.user, unlockedCountries: countries }));
     },
 
-    // loadUser: () => {
-    //   const token = localStorage.getItem('token');
-    //   if (token) {
-    //     set({ authenticated: true });
-    //   } else {
-    //     set({ authenticated: false });
-    //   }
-
-    //   const homeCountry = localStorage.getItem('homeCountry');
-    //   if (homeCountry) {
-    //     set((state) => ({
-    //       authSlice: { ...state.authSlice, user: { ...state.authSlice.user, homeCountry } },
-    //     }));
-    //   }
-    // },
-
     setUserHomeCountry: (country) => {
       localStorage.setItem('homeCountry', country);
       set((state) => ({
@@ -82,7 +74,7 @@ export default function createAuthSlice(set, get) {
 
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
-          localStorage.setItem('user', JSON.stringify(response.data)); // Store user info
+          localStorage.setItem('user', JSON.stringify(response.data));
 
           set((state) => ({
             authSlice: {

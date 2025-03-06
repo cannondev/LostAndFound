@@ -54,7 +54,17 @@ function Home() {
   // }, []);
 
   useEffect(() => {
-    console.log('Loading user on app start...');
+    if (user && user.unlockedCountries) {
+      console.log('unlocked', user.unlockedCountries);
+    } else {
+      console.log('User or unlockedCountries not found');
+    }
+    const mapContainer = document.querySelector('.world-map-container figure');
+    if (mapContainer) {
+      mapContainer.style.background = '#fdf9ff';
+      mapContainer.style.transform = 'scale(2)';
+      mapContainer.style.display = 'block';
+    }
     loadUser();
   }, []);
 
