@@ -29,7 +29,7 @@ function WorldMapComponent() {
         color="purple"
         borderColor="black"
         size="xxl"
-        data={data}
+        data={data} // Correctly updates when user data changes
         onClickFunction={({ countryCode }) => navigate(`/country/${countryCode.toLowerCase()}`)}
       />
     </div>
