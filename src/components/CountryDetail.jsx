@@ -220,7 +220,7 @@ function CountryDetail() {
               top: thought.yCoordinate,
               left: thought.xCoordinate,
               transform: 'translate(-50%, -50%)',
-              zIndex: 3,
+              zIndex: 5,
               cursor: 'pointer',
             }}
             onClick={() => openModal(thought)}
