@@ -13,6 +13,18 @@ function CountryDetail() {
   const [unlockMaskCleared, setUnlockMaskCleared] = useState(routerLocation.state?.unlockMaskCleared || false);
   const lowercaseCountryId = countryId.toLowerCase();
   const countrySvgUrl = `https://raw.githubusercontent.com/djaiss/mapsicon/master/all/${lowercaseCountryId}/vector.svg`;
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedThought, setSelectedThought] = useState(null);
+
+  const openModal = (thought) => {
+    setSelectedThought(thought);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedThought(null);
+  };
 
   useEffect(() => {
     const handleUnlockChange = (e) => {
@@ -104,16 +116,7 @@ function CountryDetail() {
               zIndex: 3,
               cursor: 'pointer',
             }}
-            onClick={() => {
-              console.log('Airplane icon clicked:', thought);
-              // Insert desired action.
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                console.log('Airplane icon activated via keyboard:', thought);
-                // Insert desired action.
-              }
-            }}
+            onClick={() => openModal(thought)}
           >
             <svg width="30" height="30" viewBox="0 0 100 100">
               <path
@@ -140,6 +143,34 @@ function CountryDetail() {
           </div>
         ))}
       </div>
+      {modalOpen && (
+        <div
+          className="modal-overlay"
+          role="button"
+          tabIndex={0}
+          onClick={closeModal}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') closeModal();
+          }}
+        >
+          <div
+            className="modal-content"
+            role="dialog"
+            aria-modal="true"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p>{selectedThought?.content || 'No details available.'}</p>
+            <button
+              type="button" // Add the explicit button type
+              onClick={closeModal}
+              className="close-btn"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
