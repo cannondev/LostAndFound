@@ -1,16 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import '../style.scss';
 import { getName } from 'country-list';
+import axios from 'axios';
 
 function CountryDetail() {
   const { countryId } = useParams();
   const navigate = useNavigate();
   const [thoughts, setThoughts] = useState([]);
   const [svgError, setSvgError] = useState(false);
-
+  const routerLocation = useLocation();
+  const [unlockMaskCleared, setUnlockMaskCleared] = useState(routerLocation.state?.unlockMaskCleared || false);
   const lowercaseCountryId = countryId.toLowerCase();
   const countrySvgUrl = `https://raw.githubusercontent.com/djaiss/mapsicon/master/all/${lowercaseCountryId}/vector.svg`;
+
+  useEffect(() => {
+    const handleUnlockChange = (e) => {
+      setUnlockMaskCleared(e.detail.unlockMaskCleared);
+    };
+    window.addEventListener('unlockStateChanged', handleUnlockChange);
+    return () => window.removeEventListener('unlockStateChanged', handleUnlockChange);
+  }, []);
+
+  // Fetch user's unlocked countries from the backend
+  useEffect(() => {
+    const fetchUnlockedCountries = async () => {
+      try {
+        const countryName = getName(countryId) || countryId;
+        const response = await axios.get('http://localhost:9090/api/countries/unlocked/all', {
+          headers: { authorization: localStorage.getItem('token') },
+        });
+        const unlockedCountries = response.data.unlockedCountries || [];
+        if (unlockedCountries.includes(countryName)) {
+          setUnlockMaskCleared(true);
+        }
+      } catch (error) {
+        console.error('Error fetching unlocked countries:', error);
+      }
+    };
+
+    fetchUnlockedCountries();
+  }, [countryId]);
 
   useEffect(() => {
     const fetchThoughts = async () => {
@@ -60,7 +90,7 @@ function CountryDetail() {
         </svg>
 
         {/* Render airplane icons with backend-provided coordinates */}
-        {thoughts.map((thought) => (
+        {unlockMaskCleared && thoughts.map((thought) => (
           <div
             key={thought._id}
             role="button"
