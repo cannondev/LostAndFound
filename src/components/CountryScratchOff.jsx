@@ -157,7 +157,8 @@ function CountryScratchOff() {
       );
       console.log('Country unlocked response:', response.data);
       setMaskCleared(true);
-      navigate(`/country/${countryId}`);
+      window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlockMaskCleared: true } }));
+      navigate(`/country/${countryId}`, { state: { unlockMaskCleared: true } });
     } catch (error) {
       if (
         error.response
@@ -167,7 +168,8 @@ function CountryScratchOff() {
       ) {
         console.log('Country is already unlocked.');
         setMaskCleared(true);
-        navigate(`/country/${countryId}`);
+        window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlockMaskCleared: true } }));
+        navigate(`/country/${countryId}`, { state: { unlockMaskCleared: true } });
       } else {
         toast.error(`Failed to unlock country: ${error.response?.data?.error || error.message}`);
         console.error('Unlock error:', error);
