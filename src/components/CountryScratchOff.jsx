@@ -172,7 +172,6 @@ function CountryScratchOff() {
           },
         },
       }));
-      navigate(`/country/${countryId}`);
       window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlockMaskCleared: true } }));
       navigate(`/country/${countryId}`, { state: { unlockMaskCleared: true } });
     } catch (error) {
