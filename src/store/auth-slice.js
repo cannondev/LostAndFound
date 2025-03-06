@@ -38,6 +38,16 @@ export default function createAuthSlice(set, get) {
       }
     },
 
+    setUnlockedCountries: (countries) => {
+      set((state) => ({
+        authSlice: {
+          ...state.authSlice,
+          user: { ...state.authSlice.user, unlockedCountries: countries },
+        },
+      }));
+      localStorage.setItem('user', JSON.stringify({ ...get().authSlice.user, unlockedCountries: countries }));
+    },
+
     // loadUser: () => {
     //   const token = localStorage.getItem('token');
     //   if (token) {

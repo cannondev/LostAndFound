@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getName } from 'country-list';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+// import useStore from '../store';
 
 // Helper for auth headers.
 const getAuthHeaders = () => ({
@@ -157,6 +158,10 @@ function CountryScratchOff() {
       );
       console.log('Country unlocked response:', response.data);
       setMaskCleared(true);
+      // useStore.getState().authSlice.setUser((prevUser) => ({
+      //   ...prevUser,
+      //   unlockedCountries: response.data.unlockedCountries,
+      // }));
       window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlockMaskCleared: true } }));
       navigate(`/country/${countryId}`, { state: { unlockMaskCleared: true } });
     } catch (error) {

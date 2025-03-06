@@ -31,6 +31,7 @@ function Home() {
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
   const [showPopup, setShowPopup] = useState(false);
   const signoutUser = useStore(({ authSlice }) => authSlice.signoutUser);
+  const user = useStore(({ authSlice }) => authSlice.user);
 
   // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
 
@@ -46,10 +47,23 @@ function Home() {
   //     loadUser();
   //   }, 500);
   // }, []);
+  // useEffect(() => {
+  //   document.querySelector('.world-map-container figure').style.background = '#fdf9ff';
+  //   console.log('Loading user on app start...');
+  //   loadUser();
+  // }, []);
+
   useEffect(() => {
     console.log('Loading user on app start...');
     loadUser();
   }, []);
+
+  // useEffect(() => {
+  //   if (authenticated) {
+  //     console.log('User authenticated, reloading user data...');
+  //     loadUser(); // Ensure user data is fetched again after login
+  //   }
+  // }, [authenticated]); // Reload user when authentication state changes
 
   // toggle visiibility
   const handlePassportOpen = () => {
@@ -84,15 +98,12 @@ function Home() {
     }
   };
 
-  // // Filter countries based on the search query using the countryName field
-  // const filteredCountries = data.filter((country) => country.countryName
-  //   && country.countryName.toLowerCase().includes(query.toLowerCase()));
+  const unlockedCountries = user?.unlockedCountries || [];
 
-  // // Create highlighted countries array for the world map
-  // const highlightedCountries = filteredCountries.map((country) => ({
-  //   country: country.isoCode,
-  //   value: 1, // This value is used by the map for coloring
-  // }));
+  const highlightedCountries = unlockedCountries.map((countryCode) => ({
+    country: countryCode,
+    value: 1,
+  }));
 
   console.log('Authenticated:', authenticated);
   return (
@@ -103,14 +114,14 @@ function Home() {
           {/* Auth Buttons */}
           <div className="auth">
             {!authenticated && (
-              <>
-                <button className="button" onClick={handleSignInNavigation} type="button">
-                  SignIn
-                </button>
-                <button className="button" onClick={handleSignUpNavigation} type="button">
-                  SignUp
-                </button>
-              </>
+            <>
+              <button className="button" onClick={handleSignInNavigation} type="button">
+                SignIn
+              </button>
+              <button className="button" onClick={handleSignUpNavigation} type="button">
+                SignUp
+              </button>
+            </>
             )}
           </div>
         </div>
@@ -121,10 +132,11 @@ function Home() {
           {authenticated ? <p className="cta">Click a country to get started!</p> : <p>Sign in to access all countries!</p>}
           <p>Home Country: {homeCountry || 'Not set'}</p>
         </div>
+        {/* <WorldMapComponent highlightedCountries={highlightedCountries} /> */}
 
-        <WorldMapComponent onCountryClick={handleCountryClick} />
+        {/* <WorldMapComponent onCountryClick={handleCountryClick} /> */}
 
-        {/* <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} /> */}
+        <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} />
 
         <div className="button-container">
           <button className="thought-button" onClick={handlePopupToggle} type="button">
@@ -140,11 +152,11 @@ function Home() {
         <div className="auth-status" />
         {/* Popup for new thought */}
         {showPopup && (
-          <div className="popup-overlay">
-            <div className="popup-content">
-              <NewThought closePopup={handlePopupToggle} />
-            </div>
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <NewThought closePopup={handlePopupToggle} />
           </div>
+        </div>
         )}
 
       </div>
@@ -167,7 +179,7 @@ function App() {
         <Route path="/Passport" element={<PassportModal />} />
       </Routes>
       {currentLocation?.pathname.startsWith('/country/') && (
-        <CountryScratchOff />
+      <CountryScratchOff />
       )}
     </>
   );

@@ -1,32 +1,25 @@
-// src/components/WorldMap.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import WorldMap from 'react-svg-worldmap';
-import '../style.scss';
+import useStore from '../store';
+import countryNameToISO from '../utils/countryNameToISO';
 
 function WorldMapComponent() {
   const navigate = useNavigate();
+  const user = useStore(({ authSlice }) => authSlice.user);
+  const [data, setData] = useState([]);
 
-  const handleCountryClick = (countryData) => {
-    if (countryData && countryData.countryCode) {
-      navigate(`/country/${countryData.countryCode.toLowerCase()}`); // Ensure lowercase ISO code
-    } else {
-      console.error('Country data is missing or malformed:', countryData);
+  useEffect(() => {
+    if (user?.unlockedCountries) {
+      const newData = user.unlockedCountries
+        .map((countryName) => {
+          const isoCode = countryNameToISO(countryName);
+          return isoCode ? { country: isoCode, value: 1 } : null;
+        })
+        .filter(Boolean);
+      setData(newData);
     }
-  };
-
-  const data = [
-    { country: 'cn' }, // china
-    { country: 'in' }, // india
-    { country: 'us' }, // united states
-    { country: 'id' }, // indonesia
-    { country: 'pk', value: 210797836 }, // pakistan
-    { country: 'br', value: 210301591 }, // brazil
-    { country: 'ng', value: 208679114 }, // nigeria
-    { country: 'bd', value: 161062905 }, // bangladesh
-    { country: 'ru', value: 141944641 }, // russia
-    { country: 'mx', value: 127318112 }, // mexico
-  ];
+  }, [user]);
 
   return (
     <div className="world-map-container">
@@ -37,7 +30,7 @@ function WorldMapComponent() {
         borderColor="black"
         size="xxl"
         data={data}
-        onClickFunction={handleCountryClick}
+        onClickFunction={({ countryCode }) => navigate(`/country/${countryCode.toLowerCase()}`)}
       />
     </div>
   );
