@@ -164,13 +164,6 @@ function CountryScratchOff() {
       );
       console.log('Country unlocked response:', unlockResponse.data);
 
-      const generateResponse = await axios.post(
-        `http://localhost:9090/api/countries/${countryName}/generate-data`,
-        {},
-        getAuthHeaders(),
-      );
-      console.log('Country generated response:', generateResponse);
-
       setMaskCleared(true);
       useStore.setState((state) => ({
         authSlice: {
