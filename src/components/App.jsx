@@ -54,6 +54,11 @@ function Home() {
   // }, []);
 
   useEffect(() => {
+    if (user && user.unlockedCountries) {
+      console.log('unlocked', user.unlockedCountries);
+    } else {
+      console.log('User or unlockedCountries not found');
+    }
     const mapContainer = document.querySelector('.world-map-container figure');
     if (mapContainer) {
       mapContainer.style.background = '#fdf9ff';
