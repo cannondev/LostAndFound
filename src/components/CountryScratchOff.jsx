@@ -26,6 +26,7 @@ function CountryScratchOff() {
   const [maskCleared, setMaskCleared] = useState(false);
   const svgRef = useRef(null);
   const canvasRef = useRef(null);
+  const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
 
   // Create an offscreen canvas.
   useEffect(() => {
@@ -150,6 +151,10 @@ function CountryScratchOff() {
   // Unlock button click handler.
   const handleUnlockClick = async () => {
     console.log('Unlocking country with name:', countryName);
+    if (!authenticated) {
+      alert('You must sign in to unlock countries!');
+      return;
+    }
     try {
       const response = await axios.post(
         `http://localhost:9090/api/countries/${countryName}/unlock`,
@@ -158,16 +163,18 @@ function CountryScratchOff() {
       );
       console.log('Country unlocked response:', response.data);
       setMaskCleared(true);
-
-      window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlockMaskCleared: true } }));
-      navigate(`/country/${countryId}`, { state: { unlockMaskCleared: true } });
-
-      useStore.getState().authSlice.setUser((prevUser) => ({
-        ...prevUser,
-        unlockedCountries: response.data.unlockedCountries,
+      useStore.setState((state) => ({
+        authSlice: {
+          ...state.authSlice,
+          user: {
+            ...state.authSlice.user,
+            unlockedCountries: response.data.unlockedCountries,
+          },
+        },
       }));
       navigate(`/country/${countryId}`);
-
+      window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlockMaskCleared: true } }));
+      navigate(`/country/${countryId}`, { state: { unlockMaskCleared: true } });
     } catch (error) {
       if (
         error.response
