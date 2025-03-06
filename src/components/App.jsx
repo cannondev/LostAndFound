@@ -67,6 +67,10 @@ function Home() {
 
   // toggle visiibility
   const handlePassportOpen = () => {
+    if (!authenticated) {
+      alert('You must sign in to open the passport!');
+      return;
+    }
     setIsPassportOpen(true);
   };
 
@@ -83,6 +87,10 @@ function Home() {
   };
 
   const handlePopupToggle = () => {
+    if (!authenticated) {
+      alert('You must sign in to send a thought!');
+      return;
+    }
     setShowPopup(!showPopup);
   };
 
