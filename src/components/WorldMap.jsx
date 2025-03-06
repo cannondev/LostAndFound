@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import WorldMap from 'react-svg-worldmap';
+import { getName } from 'country-list';
 import useStore from '../store';
 import countryNameToISO from '../utils/countryNameToISO';
 
@@ -27,6 +29,11 @@ function WorldMapComponent() {
   const fetchAllUnlockedCountries = useStore((state) => state.passportSlice.fetchAllUnlockedCountries);
   const unlockedCountries = useStore((state) => state.passportSlice.countriesVisited);
 
+  // Helper to get auth headers
+  const getAuthHeaders = () => ({
+    headers: { authorization: localStorage.getItem('token') },
+  });
+
   useEffect(() => {
     if (fetchAllUnlockedCountries) {
       fetchAllUnlockedCountries();
@@ -45,6 +52,24 @@ function WorldMapComponent() {
     }
   }, [unlockedCountries]);
 
+  // New async handler for when a country is clicked
+  const handleCountryClick = async ({ countryCode }) => {
+    // Convert the ISO code to a full country name using getName (if needed by the API)
+    const countryName = getName(countryCode.toUpperCase());
+    try {
+      // Navigate to the country detail page (using the lowercase iso code)
+      navigate(`/country/${countryCode.toLowerCase()}`);
+      const generateResponse = await axios.post(
+        `http://localhost:9090/api/countries/${countryName}/generate-data`,
+        {},
+        getAuthHeaders(),
+      );
+      console.log('Country generated response:', generateResponse);
+    } catch (error) {
+      console.error('Error generating country data:', error.response?.data || error.message);
+    }
+  };
+
   return (
     <div className="world-map-container">
       <WorldMap
@@ -54,7 +79,7 @@ function WorldMapComponent() {
         borderColor="black"
         size="xxl"
         data={data}
-        onClickFunction={({ countryCode }) => navigate(`/country/${countryCode.toLowerCase()}`)}
+        onClickFunction={handleCountryClick}
         styleFunction={({ countryValue, countryCode }) => ({
           fill: data.find((c) => c.country === countryCode)?.color || 'white',
           stroke: 'black',
