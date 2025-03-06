@@ -54,7 +54,12 @@ function Home() {
   // }, []);
 
   useEffect(() => {
-    console.log('Loading user on app start...');
+    const mapContainer = document.querySelector('.world-map-container figure');
+    if (mapContainer) {
+      mapContainer.style.background = '#fdf9ff';
+      mapContainer.style.transform = 'scale(2)';
+      mapContainer.style.display = 'block';
+    }
     loadUser();
   }, []);
 
