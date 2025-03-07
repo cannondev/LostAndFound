@@ -40,49 +40,40 @@ function AnimatedIcons({
       initial="hidden"
       animate="show"
     >
-      {unlockMaskCleared
-        && allIcons.map((icon) => (
-          <motion.div
-            key={icon._id || icon.category}
-            role="button"
-            tabIndex="0"
-            style={{
-              position: 'absolute',
-              top: icon.yCoordinate,
-              left: icon.xCoordinate,
-              transform: 'translate(-50%, -50%)',
-              zIndex: 3,
-              cursor: 'pointer',
-            }}
-            variants={item}
-            onAnimationComplete={() => {
-              // Create a new audio instance and play the pop sound when the animation completes
-              const audio = new Audio(popSound);
-              audio.play();
-            }}
-            onClick={() => {
-              if (icon.type === 'thought') {
-                if (onIconClick) {
-                  onIconClick(icon);
-                }
-              } else {
-                console.log(`Clicked on ${icon.category} icon`);
-              }
-            }}
-          >
-            {icon.type === 'thought' ? (
-              <img
-                src={plane}
-                alt="Paper Airplane Icon"
-                width="50"
-                height="50"
-                style={{ pointerEvents: 'none' }}
-              />
-            ) : (
-              getFunFactSVG(icon.category)
-            )}
-          </motion.div>
-        ))}
+      {unlockMaskCleared && allIcons.map((icon) => (
+        <motion.div
+          key={icon._id || icon.category}
+          role="button"
+          tabIndex="0"
+          style={{
+            position: 'absolute',
+            top: icon.yCoordinate,
+            left: icon.xCoordinate,
+            transform: 'translate(-50%, -50%)',
+            zIndex: 3,
+            cursor: 'pointer',
+          }}
+          variants={item}
+          onAnimationComplete={() => {
+            // Create a new audio instance and play the pop sound when the animation completes
+            const audio = new Audio(popSound);
+            audio.play();
+          }}
+          onClick={() => onIconClick && onIconClick(icon)}
+        >
+          {icon.type === 'thought' ? (
+            <img
+              src={plane}
+              alt="Paper Airplane Icon"
+              width="50"
+              height="50"
+              style={{ pointerEvents: 'none' }}
+            />
+          ) : (
+            getFunFactSVG(icon.category)
+          )}
+        </motion.div>
+      ))}
     </motion.div>
   );
 }
