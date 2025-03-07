@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
-import countryNameToISO from '../utils/countryNameToISO'; // Adjust the path as needed
+import countryNameToISO from '../utils/countryNameToISO';
 import showToast from '../utils/toastUtils';
 
 function InputCountry() {
