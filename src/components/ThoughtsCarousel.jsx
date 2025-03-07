@@ -1,16 +1,60 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function ThoughtsCarousel({ countryDetails }) {
-  // Build an array of formatted thought strings from the thoughts array only.
-  const formattedThoughts = Array.isArray(countryDetails.thoughts) && countryDetails.thoughts.length > 0
-    ? countryDetails.thoughts.map((thought) => {
-      const userFullName = thought.user && thought.user.fullName ? thought.user.fullName : 'Unknown User';
-      const userHomeCountry = thought.user && thought.user.homeCountry ? thought.user.homeCountry : 'Unknown Country';
+  // Convert the countryId into a proper country name if possible.
+  const countryName = countryDetails?.countryName;
+
+  const [thoughtsWithUser, setThoughtsWithUser] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Fetch thoughts from the dedicated endpoint
+  useEffect(() => {
+    async function fetchThoughts() {
+      try {
+        const response = await axios.get(
+          `http://localhost:9090/api/countries/${countryName}/thoughts`,
+          { headers: { authorization: localStorage.getItem('token') } },
+        );
+        console.log('Fetched thoughts:', response.data);
+        return response.data; // Expecting an array of thought objects
+      } catch (error) {
+        console.error('Error fetching thoughts:', error);
+        return [];
+      }
+    }
+
+    async function fetchThoughtsWithUser() {
+      const thoughts = await fetchThoughts();
+      const updatedThoughts = await Promise.all(
+        thoughts.map(async (thought) => {
+          try {
+            // Always fetch complete user info for each thought.
+            const userResponse = await axios.get(
+              `http://localhost:9090/api/users/${thought.user}/info`,
+              { headers: { authorization: localStorage.getItem('token') } },
+            );
+            return { ...thought, user: userResponse.data.user };
+          } catch (error) {
+            console.error(`Error fetching user info for thought ${thought._id}:`, error);
+            return thought;
+          }
+        }),
+      );
+      console.log('Updated thoughts with user data:', updatedThoughts);
+      setThoughtsWithUser(updatedThoughts);
+    }
+    fetchThoughtsWithUser();
+  }, [countryName]);
+
+  // Format each thought string to include content, fullName, and homeCountry.
+  const formattedThoughts = thoughtsWithUser.length > 0
+    ? thoughtsWithUser.map((thought) => {
+      const userFullName = thought.user?.fullName || 'Unknown User';
+      const userHomeCountry = thought.user?.homeCountry || 'Unknown Country';
       return `${thought.content}\n\n${userFullName}, ${userHomeCountry}`;
     })
     : ['No thoughts found.'];
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? formattedThoughts.length - 1 : prevIndex - 1));
@@ -20,6 +64,11 @@ function ThoughtsCarousel({ countryDetails }) {
     setCurrentIndex((prevIndex) => (prevIndex === formattedThoughts.length - 1 ? 0 : prevIndex + 1));
   };
 
+  // Debug: log the formatted thoughts when they update.
+  useEffect(() => {
+    console.log('Formatted Thoughts:', formattedThoughts);
+  }, [formattedThoughts]);
+
   return (
     <div className="thoughts-carousel">
       <div className="carousel-container">
@@ -27,10 +76,9 @@ function ThoughtsCarousel({ countryDetails }) {
           &#9664;
         </button>
         <div className="carousel-slide">
-          {/* Using <pre> to preserve line breaks */}
-          <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>
+          <p style={{ whiteSpace: 'pre-wrap', margin: 0 }}>
             {formattedThoughts[currentIndex]}
-          </pre>
+          </p>
         </div>
         <button type="button" className="arrow right-arrow" onClick={nextSlide}>
           &#9654;
