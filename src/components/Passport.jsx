@@ -75,6 +75,11 @@ function PassportModal({ isOpen, onClose }) {
                   <h1 className="page-header">PROFILE</h1>
                   <div className="left-page-content">
                     <div className="profile-detail">
+                      <div className="profile-label">NAME</div>
+                      <div className="profile-answer">{user?.fullName || 'Not provided'}</div>
+                      <hr className="divider" />
+                    </div>
+                    <div className="profile-detail">
                       <div className="profile-label">EMAIL</div>
                       <div className="profile-answer">{user?.email || 'Not provided'}</div>
                       <hr className="divider" />
