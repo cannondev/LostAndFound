@@ -223,7 +223,6 @@ h1 {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-bottom: 20px;
   display: block;
   text-align: center;
 }
@@ -432,7 +431,7 @@ svg g[style*="pointer: pointer"]:hover {
   align-items: stretch;
   height: 600px;
   margin: 5px;
-  border: 5px solid black;
+  border: 8px solid black;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -443,6 +442,7 @@ svg g[style*="pointer: pointer"]:hover {
   padding: 20px;
   border-right: 1px dashed #ccc;
   display: flex;
+  row-gap: 60px;
   flex-direction: column;
   justify-content: flex-start;
   overflow-y: auto;
@@ -486,8 +486,6 @@ svg g[style*="pointer: pointer"]:hover {
 }
 
 
-
-/* Right Page: Unlocked Countries List */
 /* Right Page: Unlocked Countries List */
 .profile-right-page {
   flex: 1;
@@ -560,7 +558,10 @@ svg g[style*="pointer: pointer"]:hover {
 
 .country-header {
   margin: 0;
+  font-size: 3rem;
+  padding-top: 50px;
 }
+
 
 .left-header {
   text-align: center;
@@ -584,8 +585,9 @@ svg g[style*="pointer: pointer"]:hover {
 }
 
 .country-description {
-  text-align: center;
+  text-align: left;
   margin-bottom: 16px;
+  font-size: 1.25rem;
 }
 
 button.passportButton {
@@ -999,4 +1001,9 @@ button.close-btn {
 
 button.close-btn:hover {
   background-color: transparent;
+}
+
+.logout {
+  font-family: 'Oswald';
+  font-size: 3rem;
 }
