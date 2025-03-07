@@ -72,21 +72,30 @@ function PassportModal({ isOpen, onClose }) {
 
                 {/* Left Page */}
                 <div className="profile-left-page">
-                  <h1 className="page-header">Profile</h1>
-                  <div className="profile-email">
-                    <p>Email: {user?.email || 'Not provided'}</p>
+                  <h1 className="page-header">PROFILE</h1>
+                  <div className="left-page-content">
+                    <div className="profile-detail">
+                      <div className="profile-label">EMAIL</div>
+                      <div className="profile-answer">{user?.email || 'Not provided'}</div>
+                      <hr className="divider" />
+                    </div>
+                    <div className="profile-detail">
+                      <div className="profile-label">HOME COUNTRY</div>
+                      <div className="profile-answer">{user?.homeCountry || 'Not set'}</div>
+                      <hr className="divider" />
+                    </div>
+                    <div className="profile-detail">
+                      <div className="profile-label">COUNTRIES VISITED</div>
+                      <div className="profile-answer">{countriesVisited.length}</div>
+                      <hr className="divider" />
+                    </div>
                   </div>
-                  <div className="profile-home-country">
-                    <p>Home Country: {user?.homeCountry || 'Not set'}</p>
-                  </div>
-                  <div className="countries-visited">
-                    <p>Countries Visited: {countriesVisited.length}</p>
-                  </div>
+
                 </div>
 
                 {/* Right Page */}
                 <div className="profile-right-page">
-                  <h1 className="page-header">Countries Unlocked!</h1>
+                  <h1 className="page-header">UNLOCKED COUNTRIES</h1>
                   <div className="countries-unlocked-list">
                     <ul>
                       {countriesVisited.length > 0 ? (
