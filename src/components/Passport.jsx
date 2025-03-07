@@ -129,33 +129,40 @@ function PassportModal({ isOpen, onClose }) {
                   <>
                     {/* Left Page */}
                     <div className="profile-left-page">
+
                       <div className="left-header">
                         <h1 className="country-header">{countryDetails.countryName}</h1>
                       </div>
+
+                      <div className="fun-facts-section">
+                        <h3>Fun Facts</h3>
+                        <FunFactsCarousel countryDetails={countryDetails} />
+                      </div>
+                      {/*
                       <div className="flag-container">
                         <img
                           className="country-flag"
                           src={countryDetails.flagUrl || '/default-flag.png'}
                           alt={`${countryDetails.countryName} Flag`}
                         />
-                      </div>
-                      <div className="fun-facts-section">
-                        <h3>Fun Facts</h3>
-                        <FunFactsCarousel countryDetails={countryDetails} />
-                      </div>
+                      </div> */}
+
                     </div>
 
                     {/* Right Page */}
                     <div className="profile-right-page">
+
                       <div className="right-description">
                         <p className="country-description">
                           {countryDetails.description || 'No description available.'}
                         </p>
                       </div>
+
                       <div className="thoughts-section">
                         <h3>Thoughts Found in {countryDetails.countryName}</h3>
                         <ThoughtsCarousel countryDetails={countryDetails} />
                       </div>
+
                     </div>
                   </>
                 ) : (
