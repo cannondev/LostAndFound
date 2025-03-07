@@ -6,6 +6,8 @@ import { getName } from 'country-list';
 import useStore from '../store';
 import countryNameToISO from '../utils/countryNameToISO';
 
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
+
 const getRandomColor = () => {
   const pastelColors = [
     '#FFC0CB',
@@ -60,7 +62,7 @@ function WorldMapComponent() {
       // Navigate to the country detail page (using the lowercase iso code)
       navigate(`/country/${countryCode.toLowerCase()}`);
       const generateResponse = await axios.post(
-        `http://localhost:9090/api/countries/${countryName}/generate-data`,
+        `${ROOT_URL}/countries/${countryName}/generate-data`,
         {},
         getAuthHeaders(),
       );

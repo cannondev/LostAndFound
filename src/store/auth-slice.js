@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const ROOT_URL = 'http://localhost:9090/api';
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
 
 export default function createAuthSlice(set, get) {
   return {
