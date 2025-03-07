@@ -40,7 +40,8 @@ function NewThought({ closePopup }) {
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Write your thought..."
+            placeholder="Share your thoughts here..."
+            maxLength="200"
           />
           {user && <p className="signature">~ {user.fullName}</p>}
           <button className="submit" type="button" onClick={handleSubmit}>

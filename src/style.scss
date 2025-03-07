@@ -54,7 +54,7 @@ h1 {
   font-weight: 900;
   position: relative;
   top: 0;
-  z-index: 1000;
+  z-index: 5;
   text-align: center;
   width: 100%;
   margin-bottom: 100px;
@@ -148,7 +148,6 @@ h1 {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #3f51b5;
   color: white;
   border: none;
   cursor: pointer;
@@ -269,7 +268,6 @@ h1 {
   justify-content: center;
   width: 100%;
   height: 100vh;
-  margin-bottom: 200px;
 }
 
 .scratch-container {
@@ -412,7 +410,7 @@ svg g[style*="pointer: pointer"]:hover {
   bottom: 0;
   z-index: 10;
   padding: 5px 0;
-  background: rgba(89, 64, 203, 1);
+  background: black;
 }
 
 /******* Profile Page (within Opening Page) *******/
@@ -788,12 +786,14 @@ button.logout:hover {
   position: relative;
 }
 
-.close-btn {
+.closeModal {
   color: white;
   cursor: pointer;
+  ;
 }
 
-.unlock-btn {
+.unlock-btn,
+.submit {
   position: relative;
   padding: 10px 22px;
   border-radius: 6px;
@@ -804,12 +804,15 @@ button.logout:hover {
   transition: all 0.2s ease;
 }
 
-.unlock-btn:active {
+.unlock-btn:active,
+.submit:active {
   transform: scale(0.96);
 }
 
 .unlock-btn:before,
-.unlock-btn:after {
+.unlock-btn:after,
+.submit:before,
+.submit:after {
   position: absolute;
   content: "";
   width: 150%;
@@ -820,7 +823,8 @@ button.logout:hover {
   background-repeat: no-repeat;
 }
 
-.unlock-btn:hover:before {
+.unlock-btn:hover:before,
+.submit:hover:before {
   top: -70%;
   background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
     radial-gradient(circle, transparent 20%, #7d2ae8 20%, transparent 30%),
@@ -855,7 +859,8 @@ button.logout:hover {
   }
 }
 
-.unlock-btn:hover::after {
+.unlock-btn:hover::after,
+.submit:hover::after {
   bottom: -70%;
   background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
     radial-gradient(circle, #7d2ae8 20%, transparent 20%),
@@ -885,4 +890,13 @@ button.logout:hover {
       110% 10%;
     background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
   }
+}
+
+
+button.close-btn {
+  background-color: transparent;
+}
+
+button.close-btn:hover {
+  background-color: transparent;
 }
