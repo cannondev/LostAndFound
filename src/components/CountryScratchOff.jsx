@@ -6,6 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import useStore from '../store';
 import Scratch from '../images/Scratch.jpeg';
+import showToast from '../utils/toastUtils';
 
 // Helper for auth headers.
 const getAuthHeaders = () => ({
@@ -153,7 +154,7 @@ function CountryScratchOff() {
   const handleUnlockClick = async () => {
     console.log('Unlocking country with name:', countryName);
     if (!authenticated) {
-      alert('You must sign in to unlock countries!');
+      showToast('You must sign in to unlock countries!', 'error');
       return;
     }
     try {
