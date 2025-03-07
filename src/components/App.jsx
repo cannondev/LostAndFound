@@ -36,26 +36,6 @@ function Home() {
   const signoutUser = useStore(({ authSlice }) => authSlice.signoutUser);
   const user = useStore(({ authSlice }) => authSlice.user);
 
-  // const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
-
-  // const authenticated  useStore(({ authSlice }) => authSlice.authenticated);
-  // document.querySelector('.world-map-container figure').style.background = '#fdf9ff';
-  // document.querySelectorAll('.worldmap__figure-container path').forEach((path) => {
-  //   path.style.strokeWidth = '1.5';
-  //   path.style.cursor = 'pointer';
-  // });
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     console.log('Running loadUser after delay...');
-  //     loadUser();
-  //   }, 500);
-  // }, []);
-  // useEffect(() => {
-  //   document.querySelector('.world-map-container figure').style.background = '#fdf9ff';
-  //   console.log('Loading user on app start...');
-  //   loadUser();
-  // }, []);
-
   useEffect(() => {
     if (user && user.unlockedCountries) {
       console.log('unlocked', user.unlockedCountries);
@@ -70,13 +50,6 @@ function Home() {
     }
     loadUser();
   }, []);
-
-  // useEffect(() => {
-  //   if (authenticated) {
-  //     console.log('User authenticated, reloading user data...');
-  //     loadUser(); // Ensure user data is fetched again after login
-  //   }
-  // }, [authenticated]); // Reload user when authentication state changes
 
   // toggle visiibility
   const handlePassportOpen = () => {
@@ -107,9 +80,6 @@ function Home() {
     setShowPopup(!showPopup);
   };
 
-  // const handleLogout = () => {
-  //   signoutUser(navigate);
-  // };
   // Handle country click using the 'id' property from world-map-country-shapes
   const handleCountryClick = (countryData) => {
     if (countryData && countryData.countryCode) {

@@ -274,7 +274,7 @@ function CountryDetail() {
   }
 
   return (
-    <>
+    <div className="individualCountry">
       <div
         className="header"
         style={{
@@ -357,7 +357,7 @@ function CountryDetail() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
 import showToast from '../utils/toastUtils';
+import countryNameToISO from '../utils/countryNameToISO'; // Import the country validation utility
 
 function SignUp() {
   const [email, setEmail] = useState('');
@@ -10,12 +11,34 @@ function SignUp() {
   const [fullName, setFullName] = useState('');
   const navigate = useNavigate();
   const signUpUser = useStore(({ authSlice }) => authSlice.signUpUser);
+  const setUserHomeCountry = useStore(({ authSlice }) => authSlice.setUserHomeCountry);
+
+  const countrySynonyms = {
+    usa: 'United States',
+    us: 'United States',
+    america: 'United States',
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const normalizedCountry = countrySynonyms[homeCountry.trim().toLowerCase()] || homeCountry.trim();
+    const isoCode = countryNameToISO(normalizedCountry);
+
+    if (!isoCode) {
+      showToast('Country is invalid', 'error');
+      return;
+    }
+
+    const finalCountry = normalizedCountry === 'United States' ? 'United States' : normalizedCountry;
+    setUserHomeCountry(finalCountry);
+
     const success = await signUpUser({
-      email, password, homeCountry, fullName,
+      email,
+      password,
+      homeCountry: finalCountry,
+      fullName,
     });
+
     if (success) {
       navigate('/home');
     } else {
