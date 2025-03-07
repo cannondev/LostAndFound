@@ -15,11 +15,6 @@ const showToast = (message, type = 'error') => {
       border: '2px solid #C8A2C8',
       width: '400px',
     },
-    //     closeButton: true,
-    //     progressStyle: {
-    //       background: 'linear-gradient(90deg, #E6C1F9, #D8BFD8)',
-    //     },
-    //     className: 'toast-enchanting',
   };
 
   if (type === 'error') {
