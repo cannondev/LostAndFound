@@ -85,22 +85,36 @@ function CountryDetail() {
   }, [countryId]);
 
   const openModal = async (icon) => {
-    let details = countryDetails;
-    if (icon.type === 'funFact') {
+    // For thought icons, fetch user info if not already populated
+    if (icon.type === 'thought') {
+      if (!icon.user || !icon.user.fullName) {
+        try {
+          // icon.user is assumed to be the user id
+          const response = await axios.get(
+            `http://localhost:9090/api/users/${icon.user}/info`,
+            { headers: { authorization: localStorage.getItem('token') } },
+          );
+          // Update the icon's user field with fetched user info
+          icon.user = response.data.user;
+        } catch (error) {
+          console.error('Error fetching user info for thought:', error);
+        }
+      }
+    } else if (icon.type === 'funFact') {
+      // For fun fact icons, ensure country details are refreshed
       try {
         const countryName = getName(countryId) || countryId;
         const response = await axios.get(
           `http://localhost:9090/api/countries/${countryName}`,
           { headers: { authorization: localStorage.getItem('token') } },
         );
-        details = response.data.country;
-        setCountryDetails(details);
+        setCountryDetails(response.data.country);
       } catch (error) {
         console.error('Error fetching country details on modal open:', error);
       }
     }
-    // Attach the details (fetched or already in state) to the selected icon
-    setSelectedContent({ ...icon, details });
+    // Attach (or override) selectedContent with updated icon data
+    setSelectedContent({ ...icon });
     setModalOpen(true);
   };
 
@@ -239,19 +253,19 @@ function CountryDetail() {
   let modalContent = 'No details available.';
   if (selectedContent) {
     if (selectedContent.type === 'thought') {
-      modalContent = selectedContent.content;
+      const userFullName = selectedContent.user?.fullName || 'Unknown User';
+      const userHomeCountry = selectedContent.user?.homeCountry || 'Unknown Country';
+      modalContent = `${selectedContent.content}\n\n~ ${userFullName}, ${userHomeCountry}`;
     } else if (selectedContent.type === 'funFact') {
-    // Map fun fact category to the actual property key.
       const funFactKeyMapping = {
         food: 'foodFunFact',
         culture: 'cultureFunFact',
-        politics: 'politicsFunFact', // if your politics fun fact is stored as personFunFact
+        politics: 'politicsFunFact', // Adjust if needed
         language: 'languageFunFact',
         landmark: 'landmarkFunFact',
         history: 'historyFunFact',
       };
       const key = funFactKeyMapping[selectedContent.category];
-      // Use the details attached to the selected icon if available, otherwise fallback to global countryDetails.
       const details = selectedContent.details || countryDetails;
       modalContent = details && details[key]
         ? details[key]
@@ -335,7 +349,7 @@ function CountryDetail() {
               aria-modal="true"
               onClick={(e) => e.stopPropagation()}
             >
-              <p>{modalContent}</p>
+              <p style={{ whiteSpace: 'pre-line' }}>{modalContent}</p>
               <button type="button" onClick={closeModal} className="close-btn">
                 Close
               </button>
