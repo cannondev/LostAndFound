@@ -269,7 +269,7 @@ function CountryDetail() {
       const details = selectedContent.details || countryDetails;
       modalContent = details && details[key]
         ? details[key]
-        : `No ${selectedContent.category} fun fact available.`;
+        : 'Fun fact still loading... come back later!';
     }
   }
 
