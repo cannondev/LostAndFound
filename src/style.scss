@@ -5,6 +5,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Missing';
+  src: url('../src/components/font/MissingLovely-Yz1Xj.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 div.App {
   background: #fdf9ff;
 }
@@ -26,8 +33,8 @@ p {
 }
 
 h1 {
-  font-family: "Fleur De Leah", cursive;
-  font-size: 90px;
+  font-family: "Missing";
+  font-size: 7rem;
   font-weight: 100;
   margin-top: 30px;
   margin-bottom: 0px;
@@ -56,7 +63,7 @@ h1 {
 //   padding: 10px; /* Optional: makes it look better */
 // }
 .info {
-  font-family: "Poiret One", sans-serif;
+  font-family: "Missing";
   font-size: 20px;
   font-weight: 900;
   position: relative;
@@ -343,6 +350,7 @@ svg g[style*="pointer: pointer"]:hover {
 /******* Passport Modal Wrapper (Overlay) *******/
 .passport-modal-wrapper {
   position: fixed;
+  z-index: 10;
   top: 0;
   left: 0;
   width: 100vw;
