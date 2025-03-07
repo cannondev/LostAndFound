@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 
 export default function createThoughtSlice(set, get) {
   const ROOT_URL = 'http://localhost:9090/api/thought';
@@ -17,7 +17,7 @@ export default function createThoughtSlice(set, get) {
         const response = await axios.get(ROOT_URL);
         set(({ thoughtSlice }) => { thoughtSlice.all = response.data; }, false, 'thought/fetchAllThoughts');
       } catch (error) {
-        toast.error(`Failed to fetch thoughts: ${error.message}`);
+        console.error(`Failed to fetch thoughts: ${error.message}`);
       }
     },
 
@@ -27,7 +27,7 @@ export default function createThoughtSlice(set, get) {
         const response = await axios.get(`${ROOT_URL}/${id}`);
         set(({ thoughtSlice }) => { thoughtSlice.current = response.data; }, false, 'thought/fetchThought');
       } catch (error) {
-        toast.error(`Failed to fetch thought: ${error.message}`);
+        console.error(`Failed to fetch thought: ${error.message}`);
       }
     },
 
@@ -36,7 +36,7 @@ export default function createThoughtSlice(set, get) {
         const response = await axios.get(`${ROOT_URL}/my-thoughts`, getAuthHeaders());
         set(({ thoughtSlice }) => { thoughtSlice.userThoughts = response.data; }, false, 'thought/fetchUserThoughts');
       } catch (error) {
-        toast.error(`Failed to fetch your thoughts: ${error.response?.data?.error || error.message}`);
+        console.error(`Failed to fetch your thoughts: ${error.response?.data?.error || error.message}`);
       }
     },
 
@@ -46,7 +46,7 @@ export default function createThoughtSlice(set, get) {
         const response = await axios.post(ROOT_URL, thought, getAuthHeaders());
         set(({ thoughtSlice }) => { thoughtSlice.all = [...thoughtSlice.all, response.data.thought]; }, false, 'thought/createThought');
       } catch (error) {
-        toast.error(`Failed to create thought: ${error.message}`);
+        console.error(`Failed to create thought: ${error.message}`);
       }
     },
   };

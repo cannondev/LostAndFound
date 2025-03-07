@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getName } from 'country-list';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import useStore from '../store';
 import Scratch from '../images/Scratch.jpeg';
 import showToast from '../utils/toastUtils';
@@ -139,7 +139,7 @@ function CountryScratchOff() {
         );
         console.log('Scratch path saved:', response.data);
       } catch (error) {
-        toast.error(`Failed to save scratch path: ${error.response?.data?.error || error.message}`);
+        console.error(`Failed to save scratch path: ${error.response?.data?.error || error.message}`);
         console.error('Error saving scratch path:', error);
       }
     }
@@ -189,7 +189,7 @@ function CountryScratchOff() {
         window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlockMaskCleared: true } }));
         navigate(`/country/${countryId}`, { state: { unlockMaskCleared: true } });
       } else {
-        toast.error(`Failed to unlock country: ${error.response?.data?.error || error.message}`);
+        console.error(`Failed to unlock country: ${error.response?.data?.error || error.message}`);
         console.error('Unlock error:', error);
       }
     }
