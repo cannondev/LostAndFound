@@ -291,7 +291,7 @@ function CountryDetail() {
           className="go-home-btn"
           onClick={() => navigate('/home')}
         >
-          Go Back to Home
+          Back to World Map
         </button>
       </div>
       <div
@@ -352,9 +352,9 @@ function CountryDetail() {
               onClick={(e) => e.stopPropagation()}
             >
               <p style={{ whiteSpace: 'pre-line' }}>{modalContent}</p>
-              <button type="button" onClick={closeModal} className="close-btn">
+              {/* <button type="button" onClick={closeModal} className="close-btn">
                 Close
-              </button>
+              </button> */}
             </div>
           </div>
         )}

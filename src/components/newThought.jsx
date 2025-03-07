@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
 import './Thought.css';
 import flyingGif from '../images/FLY.gif';
+import showToast from '../utils/toastUtils';
 
 function NewThought({ closePopup }) {
   const [content, setContent] = useState('');
@@ -15,7 +16,7 @@ function NewThought({ closePopup }) {
 
   const handleSubmit = () => {
     if (!authenticated) {
-      alert('You must be signed in to send a thought.');
+      showToast('You must signed in to send a thought', 'error');
       return;
     }
 
@@ -41,7 +42,8 @@ function NewThought({ closePopup }) {
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Write your thought..."
+            placeholder="Share your thoughts here..."
+            maxLength="200"
           />
           {user && <p className="signature">~ {user.fullName}</p>}
           <button className="submit" type="button" onClick={handleSubmit}>

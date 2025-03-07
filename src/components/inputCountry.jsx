@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
+import countryNameToISO from '../utils/countryNameToISO'; // Adjust the path as needed
+import showToast from '../utils/toastUtils';
 
 function InputCountry() {
   const [homeCountry, setHomeCountry] = useState('');
+  const [isValid, setIsValid] = useState(true);
   const navigate = useNavigate();
   const setUserHomeCountry = useStore((state) => state.authSlice.setUserHomeCountry);
+
+  const countrySynonyms = {
+    usa: 'United States',
+    us: 'United States',
+    america: 'United States',
+  };
 
   const handleSignUpNavigation = () => {
     navigate('/signup');
@@ -17,9 +26,15 @@ function InputCountry() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (homeCountry) {
-      setUserHomeCountry(homeCountry);
+    const normalizedCountry = countrySynonyms[homeCountry.trim().toLowerCase()] || homeCountry.trim();
+
+    const isoCode = countryNameToISO(normalizedCountry);
+
+    if (isoCode) {
+      setUserHomeCountry(normalizedCountry);
       navigate('/home');
+    } else {
+      setIsValid(false);
     }
   };
 
@@ -31,9 +46,13 @@ function InputCountry() {
           type="text"
           placeholder="Home Country"
           value={homeCountry}
-          onChange={(e) => setHomeCountry(e.target.value)}
+          onChange={(e) => {
+            setHomeCountry(e.target.value);
+            setIsValid(true);
+          }}
           required
         />
+        {!isValid && showToast('Country is invalid', 'error')}
         <button type="submit">Continue</button>
       </form>
       <button className="custom-button" onClick={handleSignInNavigation} type="button">

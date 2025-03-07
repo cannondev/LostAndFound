@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Routes, Route, useNavigate, useLocation,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+// import { showToast } from '../utils/toastUtils';
 import pass from '../images/pass.png';
 import plane from '../images/plane.png';
 import WorldMapComponent from './WorldMap';
@@ -19,7 +21,8 @@ import SignIn from './SignIn';
 import SignUp from './Signup';
 import InputCountry from './inputCountry';
 import Loading from './Loading';
-
+import 'react-toastify/dist/ReactToastify.css';
+import showToast from '../utils/toastUtils';
 // import newThought from '../components/newThought';
 
 function Home() {
@@ -79,7 +82,7 @@ function Home() {
   // toggle visiibility
   const handlePassportOpen = () => {
     if (!authenticated) {
-      alert('You must sign in to open the passport!');
+      showToast('Must log in to access passport!', 'error');
       return;
     }
     setIsPassportOpen(true);
@@ -99,7 +102,7 @@ function Home() {
 
   const handlePopupToggle = () => {
     if (!authenticated) {
-      alert('You must sign in to send a thought!');
+      showToast('Must sign in to send a thought!', 'error');
       return;
     }
     setShowPopup(!showPopup);
@@ -129,7 +132,7 @@ function Home() {
     <div className="overlay">
       <div className="App">
         <div className="top-bar">
-          <button className="logout" onClick={() => signoutUser(navigate)}> X </button>
+          <button className="logout" onClick={() => signoutUser(navigate)}> Sign Out </button>
           {/* Auth Buttons */}
           <div className="auth">
             {!authenticated && (
@@ -199,7 +202,18 @@ function App() {
       </Routes>
       {currentLocation?.pathname.startsWith('/country/') && (
         <CountryScratchOff />
+
       )}
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        closeOnClick
+        pauseOnHover
+        draggable={false}
+        theme="light"
+      />
+
     </>
   );
 }

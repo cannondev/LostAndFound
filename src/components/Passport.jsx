@@ -64,9 +64,9 @@ function PassportModal({ isOpen, onClose }) {
   return (
     <div className="passport-modal-wrapper">
       <div className="passport-modal">
-        <div className="my-passport-header">
+        {/* <div className="my-passport-header">
           <h2>My Passport</h2>
-        </div>
+        </div> */}
         <div className="passport-body">
           {activeView === 'profile' ? (
             <div className="opening-page">
@@ -74,21 +74,35 @@ function PassportModal({ isOpen, onClose }) {
 
                 {/* Left Page */}
                 <div className="profile-left-page">
-                  <h1 className="page-header">Profile</h1>
-                  <div className="profile-email">
-                    <p>Email: {user?.email || 'Not provided'}</p>
+                  <h1 className="page-header">PROFILE</h1>
+                  <div className="left-page-content">
+                    <div className="profile-detail">
+                      <div className="profile-label">NAME</div>
+                      <div className="profile-answer">{user?.fullName || 'Not provided'}</div>
+                      <hr className="divider" />
+                    </div>
+                    <div className="profile-detail">
+                      <div className="profile-label">EMAIL</div>
+                      <div className="profile-answer">{user?.email || 'Not provided'}</div>
+                      <hr className="divider" />
+                    </div>
+                    <div className="profile-detail">
+                      <div className="profile-label">HOME COUNTRY</div>
+                      <div className="profile-answer">{user?.homeCountry || 'Not set'}</div>
+                      <hr className="divider" />
+                    </div>
+                    <div className="profile-detail">
+                      <div className="profile-label">COUNTRIES VISITED</div>
+                      <div className="profile-answer">{countriesVisited.length}</div>
+                      <hr className="divider" />
+                    </div>
                   </div>
-                  <div className="profile-home-country">
-                    <p>Home Country: {user?.homeCountry || 'Not set'}</p>
-                  </div>
-                  <div className="countries-visited">
-                    <p>Countries Visited: {countriesVisited.length}</p>
-                  </div>
+
                 </div>
 
                 {/* Right Page */}
                 <div className="profile-right-page">
-                  <h1 className="page-header">Countries Unlocked!</h1>
+                  <h1 className="page-header">UNLOCKED COUNTRIES</h1>
                   <div className="countries-unlocked-list">
                     <ul>
                       {countriesVisited.length > 0 ? (
@@ -122,33 +136,40 @@ function PassportModal({ isOpen, onClose }) {
                   <>
                     {/* Left Page */}
                     <div className="profile-left-page">
+
                       <div className="left-header">
                         <h1 className="country-header">{countryDetails.countryName}</h1>
                       </div>
+
+                      <div className="fun-facts-section">
+                        <h3>Fun Facts</h3>
+                        <FunFactsCarousel countryDetails={countryDetails} />
+                      </div>
+                      {/*
                       <div className="flag-container">
                         <img
                           className="country-flag"
                           src={countryDetails.flagUrl || '/default-flag.png'}
                           alt={`${countryDetails.countryName} Flag`}
                         />
-                      </div>
-                      <div className="fun-facts-section">
-                        <h3>Fun Facts</h3>
-                        <FunFactsCarousel countryDetails={countryDetails} />
-                      </div>
+                      </div> */}
+
                     </div>
 
                     {/* Right Page */}
                     <div className="profile-right-page">
+
                       <div className="right-description">
                         <p className="country-description">
                           {countryDetails.description || 'No description available.'}
                         </p>
                       </div>
+
                       <div className="thoughts-section">
                         <h3>Thoughts Found in {countryDetails.countryName}</h3>
                         <ThoughtsCarousel countryDetails={countryDetails} />
                       </div>
+
                     </div>
                   </>
                 ) : (

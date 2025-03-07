@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
 import './SignIn.css';
+import showToast from '../utils/toastUtils';
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -23,7 +24,7 @@ function SignIn() {
         console.log('Navigating to home...');
         navigate('/home');
       } else {
-        alert('Email or password is incorrect.');
+        showToast('Email or password is incorrect.', 'error');
       }
     } catch (error) {
       console.error('Error signing in:', error);
