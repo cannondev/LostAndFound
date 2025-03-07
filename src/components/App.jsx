@@ -131,7 +131,7 @@ function Home() {
     <div className="overlay">
       <div className="App">
         <div className="top-bar">
-          <button className="logout" onClick={() => signoutUser(navigate)}> X </button>
+          <button className="logout" onClick={() => signoutUser(navigate)}> Sign Out </button>
           {/* Auth Buttons */}
           <div className="auth">
             {!authenticated && (
