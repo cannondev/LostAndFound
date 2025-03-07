@@ -5,7 +5,10 @@ function FunFactsCarousel({ countryDetails }) {
   const facts = [
     countryDetails.cultureFunFact || 'No culture fun fact available.',
     countryDetails.foodFunFact || 'No food fun fact available.',
-    countryDetails.personFunFact || 'No person fun fact available.',
+    countryDetails.politicsFunFact || 'No politics fun fact available.',
+    countryDetails.languageFunFact || 'No language fun fact available.',
+    countryDetails.landmarkFunFact || 'No landmark fun fact available.',
+    countryDetails.historyFunFact || 'No history fun fact available.',
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

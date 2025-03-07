@@ -51,25 +51,62 @@ function CountryDetail() {
   const { countryId } = useParams();
   const navigate = useNavigate();
   const [thoughts, setThoughts] = useState([]);
+  const [countryDetails, setCountryDetails] = useState(null);
   const [svgError, setSvgError] = useState(false);
   const routerLocation = useLocation();
-  const [unlockMaskCleared, setUnlockMaskCleared] = useState(routerLocation.state?.unlockMaskCleared || false);
+  const [unlockMaskCleared, setUnlockMaskCleared] = useState(
+    routerLocation.state?.unlockMaskCleared || false,
+  );
   const lowercaseCountryId = countryId.toLowerCase();
   const countrySvgUrl = `https://raw.githubusercontent.com/djaiss/mapsicon/master/all/${lowercaseCountryId}/vector.svg`;
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedThought, setSelectedThought] = useState(null);
+  // Use selectedContent to store either a thought or fun fact icon
+  const [selectedContent, setSelectedContent] = useState(null);
   const [funFactCoords, setFunFactCoords] = useState([]);
-  // New state: forces AnimatedIcons to remount and reanimate
   const [animationKey, setAnimationKey] = useState(Date.now());
 
-  const openModal = (thought) => {
-    setSelectedThought(thought);
+  // Fetch full country details including fun fact properties
+  useEffect(() => {
+    async function fetchCountryDetails() {
+      try {
+        const countryName = getName(countryId) || countryId;
+        const response = await axios.get(
+          `http://localhost:9090/api/countries/${countryName}`,
+          {
+            headers: { authorization: localStorage.getItem('token') },
+          },
+        );
+        setCountryDetails(response.data.country);
+      } catch (error) {
+        console.error('Error fetching country details:', error);
+      }
+    }
+    fetchCountryDetails();
+  }, [countryId]);
+
+  const openModal = async (icon) => {
+    let details = countryDetails;
+    if (icon.type === 'funFact') {
+      try {
+        const countryName = getName(countryId) || countryId;
+        const response = await axios.get(
+          `http://localhost:9090/api/countries/${countryName}`,
+          { headers: { authorization: localStorage.getItem('token') } },
+        );
+        details = response.data.country;
+        setCountryDetails(details);
+      } catch (error) {
+        console.error('Error fetching country details on modal open:', error);
+      }
+    }
+    // Attach the details (fetched or already in state) to the selected icon
+    setSelectedContent({ ...icon, details });
     setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalOpen(false);
-    setSelectedThought(null);
+    setSelectedContent(null);
   };
 
   useEffect(() => {
@@ -84,9 +121,12 @@ function CountryDetail() {
     const fetchUnlockedCountries = async () => {
       try {
         const countryName = getName(countryId) || countryId;
-        const response = await axios.get('http://localhost:9090/api/countries/unlocked/all', {
-          headers: { authorization: localStorage.getItem('token') },
-        });
+        const response = await axios.get(
+          'http://localhost:9090/api/countries/unlocked/all',
+          {
+            headers: { authorization: localStorage.getItem('token') },
+          },
+        );
         const unlockedCountries = response.data.unlockedCountries || [];
         if (unlockedCountries.includes(countryName)) {
           setUnlockMaskCleared(true);
@@ -102,7 +142,9 @@ function CountryDetail() {
     const fetchThoughts = async () => {
       try {
         const countryName = getName(countryId) || countryId;
-        const response = await fetch(`http://localhost:9090/api/countries/${countryName}/thoughts`);
+        const response = await fetch(
+          `http://localhost:9090/api/countries/${countryName}/thoughts`,
+        );
         if (!response.ok) throw new Error('Failed to fetch thoughts');
         const data = await response.json();
         setThoughts(data);
@@ -133,20 +175,27 @@ function CountryDetail() {
         canvas.width = 768;
         canvas.height = 768;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const categories = ['food', 'culture', 'politics', 'language', 'landmark', 'history'];
+        const categories = [
+          'food',
+          'culture',
+          'politics',
+          'language',
+          'landmark',
+          'history',
+        ];
         existingCoordinates.length = 0;
         thoughts.forEach(({ xCoordinate, yCoordinate }) => {
           existingCoordinates.push({ x: xCoordinate, y: yCoordinate });
         });
         const coordinatePromises = categories.map(() => getValidCoordinate());
         const coords = await Promise.all(coordinatePromises);
-        const funFacts = categories.map((category, index) => ({
+        const funFactsData = categories.map((category, index) => ({
           category,
           xCoordinate: coords[index].x,
           yCoordinate: coords[index].y,
+          type: 'funFact',
         }));
-        setFunFactCoords(funFacts);
-        // Update key to force AnimatedIcons to remount and reanimate
+        setFunFactCoords(funFactsData);
         setAnimationKey(Date.now());
       } catch (error) {
         console.error('Error generating fun fact coordinates:', error);
@@ -162,33 +211,73 @@ function CountryDetail() {
       case 'food':
         return <img src={foodIcon} alt="Food Icon" width="50" height="50" />;
       case 'culture':
-        return <img src={cultureIcon} alt="Culture Icon" width="50" height="50" />;
+        return (
+          <img src={cultureIcon} alt="Culture Icon" width="50" height="50" />
+        );
       case 'politics':
-        return <img src={politicsIcon} alt="Politics Icon" width="50" height="50" />;
+        return (
+          <img src={politicsIcon} alt="Politics Icon" width="50" height="50" />
+        );
       case 'language':
-        return <img src={languageIcon} alt="Language Icon" width="50" height="50" />;
+        return (
+          <img src={languageIcon} alt="Language Icon" width="50" height="50" />
+        );
       case 'landmark':
-        return <img src={landmarkIcon} alt="Landmark Icon" width="50" height="50" />;
+        return (
+          <img src={landmarkIcon} alt="Landmark Icon" width="50" height="50" />
+        );
       case 'history':
-        return <img src={historyIcon} alt="History Icon" width="50" height="50" />;
+        return (
+          <img src={historyIcon} alt="History Icon" width="50" height="50" />
+        );
       default:
         return null;
     }
   }, []);
 
+  // This modalContent if structure was provided by ChatGPT to work around an eslint preference to avoid nested ternary expressions (to decide if thoguht or fun fact)
+  let modalContent = 'No details available.';
+  if (selectedContent) {
+    if (selectedContent.type === 'thought') {
+      modalContent = selectedContent.content;
+    } else if (selectedContent.type === 'funFact') {
+    // Map fun fact category to the actual property key.
+      const funFactKeyMapping = {
+        food: 'foodFunFact',
+        culture: 'cultureFunFact',
+        politics: 'politicsFunFact', // if your politics fun fact is stored as personFunFact
+        language: 'languageFunFact',
+        landmark: 'landmarkFunFact',
+        history: 'historyFunFact',
+      };
+      const key = funFactKeyMapping[selectedContent.category];
+      // Use the details attached to the selected icon if available, otherwise fallback to global countryDetails.
+      const details = selectedContent.details || countryDetails;
+      modalContent = details && details[key]
+        ? details[key]
+        : `No ${selectedContent.category} fun fact available.`;
+    }
+  }
+
   return (
     <>
-      {/* Header with the Back to Home button */}
-      <div className="header"
+      <div
+        className="header"
         style={{
-          position: 'absolute', top: 10, left: 10, zIndex: 10,
+          position: 'absolute',
+          top: 10,
+          left: 10,
+          zIndex: 10,
         }}
       >
-        <button type="button" className="go-home-btn" onClick={() => navigate('/home')}>
+        <button
+          type="button"
+          className="go-home-btn"
+          onClick={() => navigate('/home')}
+        >
           Go Back to Home
         </button>
       </div>
-      {/* Flex container to center the SVG */}
       <div
         className="country-detail-display"
         style={{
@@ -221,7 +310,7 @@ function CountryDetail() {
           </svg>
           {unlockMaskCleared && (
             <AnimatedIcons
-              key={animationKey} // forces remount & reanimation each time the key changes
+              key={animationKey}
               thoughts={thoughts}
               funFactCoords={funFactCoords}
               unlockMaskCleared={unlockMaskCleared}
@@ -246,7 +335,7 @@ function CountryDetail() {
               aria-modal="true"
               onClick={(e) => e.stopPropagation()}
             >
-              <p>{selectedThought?.content || 'No details available.'}</p>
+              <p>{modalContent}</p>
               <button type="button" onClick={closeModal} className="close-btn">
                 Close
               </button>
