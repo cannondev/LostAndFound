@@ -43,6 +43,7 @@ function AnimatedIcons({
       {unlockMaskCleared && allIcons.map((icon) => (
         <motion.div
           key={icon._id || icon.category}
+          data-id={icon._id || icon.category} // Add this for positioning reference
           role="button"
           tabIndex="0"
           style={{
@@ -55,7 +56,7 @@ function AnimatedIcons({
           }}
           variants={item}
           onAnimationComplete={() => {
-            // Create a new audio instance and play the pop sound when the animation completes
+            // Play pop sound when animation completes
             const audio = new Audio(popSound);
             audio.play();
           }}

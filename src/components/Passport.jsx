@@ -62,9 +62,9 @@ function PassportModal({ isOpen, onClose }) {
   return (
     <div className="passport-modal-wrapper">
       <div className="passport-modal">
-        <div className="my-passport-header">
+        {/* <div className="my-passport-header">
           <h2>My Passport</h2>
-        </div>
+        </div> */}
         <div className="passport-body">
           {activeView === 'profile' ? (
             <div className="opening-page">
