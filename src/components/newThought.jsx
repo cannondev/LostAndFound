@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
 import './Thought.css';
 import flyingGif from '../images/FLY.gif';
+import showToast from '../utils/toastUtils';
 
 function NewThought({ closePopup }) {
   const [content, setContent] = useState('');
@@ -14,7 +15,7 @@ function NewThought({ closePopup }) {
 
   const handleSubmit = () => {
     if (!authenticated) {
-      alert('You must be signed in to send a thought.');
+      showToast('You must signed in to send a thought', 'error');
       return;
     }
 

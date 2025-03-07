@@ -886,3 +886,25 @@ button.logout:hover {
     background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
   }
 }
+
+@keyframes shimmer {
+  0% { opacity: 0.9; filter: drop-shadow(0px 0px 5px #D8BFD8); }
+  50% { opacity: 1; filter: drop-shadow(0px 0px 10px #E6C1F9); }
+  100% { opacity: 0.9; filter: drop-shadow(0px 0px 5px #D8BFD8); }
+}
+
+@keyframes floating {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(1.5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0px 6px 18px rgba(150, 100, 200, 0.25); }
+  50% { box-shadow: 0px 8px 22px rgba(200, 150, 250, 0.35); }
+  100% { box-shadow: 0px 6px 18px rgba(150, 100, 200, 0.25); }
+}
+
+.toast-enchanting {
+  animation: shimmer 3s infinite alternate, floating 6s infinite ease-in-out, glowPulse 4s infinite ease-in-out;
+}
