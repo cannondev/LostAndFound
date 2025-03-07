@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation, useNavigate } from 'react-router-dom';
