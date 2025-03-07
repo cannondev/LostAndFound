@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
+import showToast from '../utils/toastUtils';
 
 function SignUp() {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ function SignUp() {
     if (success) {
       navigate('/home');
     } else {
-      alert('Email is already in use!');
+      showToast('Email is already in use', 'error');
     }
   };
   const handleSignInNavigation = () => {
