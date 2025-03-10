@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import { toast } from 'react-toastify';
 
-const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api/countries/unlocked';
 
 export default function PassportSlice(set, get) {
   // NEED TO FETCH UNLOCKED COUNTRIES BY USERID? This will require a change to country routing.
