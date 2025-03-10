@@ -1,6 +1,6 @@
 # Lost & Found
 
-![Team Photo](Insert a Team Photo URL here)
+![TeamLF](https://github.com/user-attachments/assets/daef5cf5-138d-436e-be21-17746ae01968)
 [*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
 
 ## Project Description:
