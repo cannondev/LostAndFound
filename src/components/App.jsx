@@ -1,3 +1,5 @@
+/* Utilized "react-svg-worldmap" (https://github.com/yanivam/react-svg-worldmap) for the world map visualization and customized it for our needs. */
+
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/button-has-type */
