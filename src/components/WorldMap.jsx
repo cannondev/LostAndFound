@@ -57,13 +57,13 @@ function WorldMapComponent() {
   // New async handler for when a country is clicked
   const handleCountryClick = async ({ countryCode }) => {
     // Convert the ISO code to a full country name using getName (if needed by the API)
-    const countryName = getName(countryCode.toUpperCase());
+    // const countryName = getName(countryCode.toUpperCase());
     try {
       console.log('try country click');
       // Navigate to the country detail page (using the lowercase iso code)
       navigate(`/country/${countryCode.toLowerCase()}`);
       const generateResponse = await axios.post(
-        `${ROOT_URL}/countries/${countryName}/generate-data`,
+        `${ROOT_URL}/countries/Brazil/generate-data`,
         {},
         getAuthHeaders(),
       );
