@@ -72,6 +72,7 @@ function CountryDetail() {
     async function fetchCountryDetails() {
       try {
         const countryName = getName(countryId) || countryId;
+        console.log('inside country details');
         const response = await axios.get(
           `${ROOT_URL}/countries/${countryName}`,
           {
