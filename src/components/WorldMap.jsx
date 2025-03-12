@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import WorldMap from 'react-svg-worldmap';
-import { getName } from 'country-list';
+// import { getName } from 'country-list';
 import useStore from '../store';
 import countryNameToISO from '../utils/countryNameToISO';
 
