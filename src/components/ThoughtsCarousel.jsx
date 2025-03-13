@@ -4,7 +4,6 @@ import axios from 'axios';
 const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
 
 function ThoughtsCarousel({ countryDetails }) {
-  // Convert the countryId into a proper country name if possible.
   const countryName = countryDetails?.countryName;
 
   const [thoughtsWithUser, setThoughtsWithUser] = useState([]);

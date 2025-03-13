@@ -33,7 +33,6 @@ function SignIn() {
 
   return (
     <div className="auth-container">
-      <div className="cloud-third" /> {/* Add this line */}
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <input

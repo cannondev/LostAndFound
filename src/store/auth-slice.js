@@ -19,7 +19,6 @@ export default function createAuthSlice(set, get) {
       if (token && user) {
         const parsedUser = JSON.parse(user);
 
-        // Ensure unlockedCountries is an array
         const unlockedCountries = Array.isArray(parsedUser.unlockedCountries)
           ? parsedUser.unlockedCountries
           : ['United States of America'];

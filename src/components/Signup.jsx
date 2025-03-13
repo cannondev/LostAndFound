@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
 import showToast from '../utils/toastUtils';
-import countryNameToISO from '../utils/countryNameToISO'; // Import the country validation utility
+import countryNameToISO from '../utils/countryNameToISO';
 
 function SignUp() {
   const [email, setEmail] = useState('');

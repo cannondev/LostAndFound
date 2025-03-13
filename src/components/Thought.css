@@ -34,14 +34,10 @@ textarea {
   font-size: 20px;
   font-family: 'Indie Flower', cursive;
   border: none;
-  /* Set the background image instead of white with lines */
   background-image: url('../images/note.jpg');
   background-size: cover;
-  /* Make the image cover the entire textarea */
   background-position: center;
-  /* Center the image */
   background-repeat: no-repeat;
-  /* Prevent the image from repeating */
   color: #222;
   line-height: 41.5px;
   border-radius: 8px;
@@ -51,10 +47,8 @@ textarea {
   resize: none;
 }
 
-/* Optional: Make placeholder text more visible on the image */
 textarea::placeholder {
   color: black;
-  /* Light color for contrast */
   font-style: italic;
 }
 
