@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import plane from '../images/paper-airplane.png';
-import popSound from './sounds/pop.mp3'; // Import your pop sound
+import popSound from './sounds/pop.mp3';
 
+// Animation for staggering child elements
 const staggerContainer = {
   hidden: {},
   show: {
@@ -13,6 +14,7 @@ const staggerContainer = {
   },
 };
 
+// Animation for individual icons
 const item = {
   hidden: { opacity: 0, scale: 0.8 },
   show: {
@@ -40,10 +42,11 @@ function AnimatedIcons({
       initial="hidden"
       animate="show"
     >
+      {/* Render icons only when unlockMaskCleared is true */}
       {unlockMaskCleared && allIcons.map((icon) => (
         <motion.div
           key={icon._id || icon.category}
-          data-id={icon._id || icon.category} // Add this for positioning reference
+          data-id={icon._id || icon.category}
           role="button"
           tabIndex="0"
           style={{
