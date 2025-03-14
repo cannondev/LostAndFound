@@ -11,13 +11,15 @@ import landmarkIcon from '../images/landmark.png';
 import historyIcon from '../images/history.png';
 import AnimatedIcons from './AnimatedIcons';
 
+// Create an off-screen canvas to analyze SVG pixel data
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
-const MIN_DISTANCE = 80;
+const MIN_DISTANCE = 80; // Minimum distance between icons to avoid overlap
 const existingCoordinates = [];
 
-const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
 
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
+// Generate a valid coordinate within the country's SVG map
 function getValidCoordinate() {
   return new Promise((resolve) => {
     let attempts = 0;
@@ -92,7 +94,6 @@ function CountryDetail() {
     if (icon.type === 'thought') {
       if (!icon.user || !icon.user.fullName) {
         try {
-          // icon.user is assumed to be the user id
           const response = await axios.get(
             `${ROOT_URL}/users/${icon.user}/info`,
             { headers: { authorization: localStorage.getItem('token') } },
@@ -104,7 +105,6 @@ function CountryDetail() {
         }
       }
     } else if (icon.type === 'funFact') {
-      // For fun fact icons, ensure country details are refreshed
       try {
         const countryName = getName(countryId) || countryId;
         const response = await axios.get(
@@ -116,7 +116,6 @@ function CountryDetail() {
         console.error('Error fetching country details on modal open:', error);
       }
     }
-    // Attach (or override) selectedContent with updated icon data
     setSelectedContent({ ...icon });
     setModalOpen(true);
   };

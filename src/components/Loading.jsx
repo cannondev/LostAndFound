@@ -1,3 +1,5 @@
+/* Utilized styling from https://codepen.io/_ItsJonQ/pen/jOVwoJ and edited for our purposes */
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
