@@ -27,7 +27,9 @@ You can jump in with just your home country, but your functions will be very lim
 
 For best user experience, sign up at the beginning, then you will see you home country already unlocked. Explore other countries and watch as they reveal themselves and generate data when scratching. Visit them again in the passport. Upon visiting your homecountry, you will not need to unlock it, but may need to visit again to let the openAI API generate data.
 
-Create thoughts and send them to a mystery location! To view an example thought sent from someone else, unlock the bahamas and discover the 'Thought heard 'round the world!"
+Create thoughts and send them to a mystery location! To view an example thought sent from someone else, unlock the bahamas and discover the 'Thought heard 'round the world!". View it later in the passport!
+
+Watch the demo video to see an example world with lots of thoughts from a local database! The new deployed version uses a newly created database instead to host multiple users.
 
 ### Clone the repository:  
 ```sh
