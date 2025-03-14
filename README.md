@@ -9,7 +9,7 @@
 
 
 ## URL
-https://project-lost-and-found.onrender.com
+[https://project-lost-and-found-muix.onrender.com](https://project-lost-and-found-muix.onrender.com)
 
 ## Architecture
 - **Frontend:** React (v19), React Router (v7)  
@@ -21,6 +21,13 @@ https://project-lost-and-found.onrender.com
 - **Tooling & Dev Dependencies:** Babel, ESLint (Airbnb config), Vite Plugin PWA
 
 ## Setup
+
+### DEPLOYED FRONTEND RENDER URL IS FULLY FUNCTIONAL and INCLUDES ALL NEEDED ENV VARIABLES
+You can jump in with just your home country, but your functions will be very limited (can only scratch countries/cannot unlock them).
+
+For best user experience, sign up at the beginning, then you will see you home country already unlocked. Explore other countries and watch as they reveal themselves and generate data when scratching. Visit them again in the passport. Upon visiting your homecountry, you will not need to unlock it, but may need to visit again to let the openAI API generate data.
+
+Create thoughts and send them to a mystery location! To view an example thought sent from someone else, unlock the bahamas and discover the 'Thought heard 'round the world!"
 
 ### Clone the repository:  
 ```sh
