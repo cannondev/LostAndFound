@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
+
 function ThoughtsCarousel({ countryDetails }) {
-  // Convert the countryId into a proper country name if possible.
   const countryName = countryDetails?.countryName;
 
   const [thoughtsWithUser, setThoughtsWithUser] = useState([]);
@@ -13,7 +14,7 @@ function ThoughtsCarousel({ countryDetails }) {
     async function fetchThoughts() {
       try {
         const response = await axios.get(
-          `http://localhost:9090/api/countries/${countryName}/thoughts`,
+          `${ROOT_URL}/countries/${countryName}/thoughts`,
           { headers: { authorization: localStorage.getItem('token') } },
         );
         console.log('Fetched thoughts:', response.data);
@@ -31,7 +32,7 @@ function ThoughtsCarousel({ countryDetails }) {
           try {
             // Always fetch complete user info for each thought.
             const userResponse = await axios.get(
-              `http://localhost:9090/api/users/${thought.user}/info`,
+              `${ROOT_URL}/users/${thought.user}/info`,
               { headers: { authorization: localStorage.getItem('token') } },
             );
             return { ...thought, user: userResponse.data.user };

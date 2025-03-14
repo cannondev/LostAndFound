@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const ROOT_URL = 'http://localhost:9090/api';
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
 
 export default function createAuthSlice(set, get) {
   return {
@@ -19,7 +19,6 @@ export default function createAuthSlice(set, get) {
       if (token && user) {
         const parsedUser = JSON.parse(user);
 
-        // Ensure unlockedCountries is an array
         const unlockedCountries = Array.isArray(parsedUser.unlockedCountries)
           ? parsedUser.unlockedCountries
           : ['United States of America'];

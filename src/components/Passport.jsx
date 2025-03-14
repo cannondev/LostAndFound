@@ -5,6 +5,8 @@ import '../style.scss';
 import FunFactsCarousel from './FunFactsCarousel';
 import ThoughtsCarousel from './ThoughtsCarousel';
 
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
+
 function PassportModal({ isOpen, onClose }) {
   // Toggle the active view: "profile" for the list, "countryDetail" for details
   const [activeView, setActiveView] = useState('profile');
@@ -33,7 +35,7 @@ function PassportModal({ isOpen, onClose }) {
   const fetchCountryDetail = async (country) => {
     try {
       const res = await axios.get(
-        `http://localhost:9090/api/countries/${country}`,
+        `${ROOT_URL}/countries/${country}`,
         getAuthHeaders(),
       );
       setCountryDetails(res.data.country);

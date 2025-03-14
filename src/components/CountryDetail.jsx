@@ -17,6 +17,8 @@ const ctx = canvas.getContext('2d');
 const MIN_DISTANCE = 80; // Minimum distance between icons to avoid overlap
 const existingCoordinates = [];
 
+
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
 // Generate a valid coordinate within the country's SVG map
 function getValidCoordinate() {
   return new Promise((resolve) => {
@@ -72,8 +74,9 @@ function CountryDetail() {
     async function fetchCountryDetails() {
       try {
         const countryName = getName(countryId) || countryId;
+        console.log('inside country details');
         const response = await axios.get(
-          `http://localhost:9090/api/countries/${countryName}`,
+          `${ROOT_URL}/countries/${countryName}`,
           {
             headers: { authorization: localStorage.getItem('token') },
           },
@@ -92,7 +95,7 @@ function CountryDetail() {
       if (!icon.user || !icon.user.fullName) {
         try {
           const response = await axios.get(
-            `http://localhost:9090/api/users/${icon.user}/info`,
+            `${ROOT_URL}/users/${icon.user}/info`,
             { headers: { authorization: localStorage.getItem('token') } },
           );
           // Update the icon's user field with fetched user info
@@ -105,7 +108,7 @@ function CountryDetail() {
       try {
         const countryName = getName(countryId) || countryId;
         const response = await axios.get(
-          `http://localhost:9090/api/countries/${countryName}`,
+          `${ROOT_URL}/countries/${countryName}`,
           { headers: { authorization: localStorage.getItem('token') } },
         );
         setCountryDetails(response.data.country);
@@ -135,7 +138,7 @@ function CountryDetail() {
       try {
         const countryName = getName(countryId) || countryId;
         const response = await axios.get(
-          'http://localhost:9090/api/countries/unlocked/all',
+          `${ROOT_URL}/countries/unlocked/all`,
           {
             headers: { authorization: localStorage.getItem('token') },
           },
@@ -156,7 +159,7 @@ function CountryDetail() {
       try {
         const countryName = getName(countryId) || countryId;
         const response = await fetch(
-          `http://localhost:9090/api/countries/${countryName}/thoughts`,
+          `${ROOT_URL}/countries/${countryName}/thoughts`,
         );
         if (!response.ok) throw new Error('Failed to fetch thoughts');
         const data = await response.json();

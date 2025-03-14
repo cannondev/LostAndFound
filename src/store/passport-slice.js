@@ -1,9 +1,11 @@
 import axios from 'axios';
 // import { toast } from 'react-toastify';
 
-export default function PassportSlice(set, get) {
-  const ROOT_URL = 'http://localhost:9090/api/countries/unlocked';
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api/countries/unlocked';
 
+export default function PassportSlice(set, get) {
+  // NEED TO FETCH UNLOCKED COUNTRIES BY USERID? This will require a change to country routing.
+  // For now I am ignoring user distinction
   return {
     countriesVisited: [], // stores all fetched unlocked countries
     fetchAllUnlockedCountries: async () => {
