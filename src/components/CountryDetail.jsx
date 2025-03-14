@@ -17,7 +17,6 @@ const ctx = canvas.getContext('2d');
 const MIN_DISTANCE = 80; // Minimum distance between icons to avoid overlap
 const existingCoordinates = [];
 
-
 const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
 // Generate a valid coordinate within the country's SVG map
 function getValidCoordinate() {
