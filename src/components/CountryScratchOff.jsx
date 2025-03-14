@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -7,6 +8,8 @@ import axios from 'axios';
 import useStore from '../store';
 import Scratch from '../images/Scratch.jpeg';
 import showToast from '../utils/toastUtils';
+
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api';
 
 // Helper for auth headers.
 const getAuthHeaders = () => ({
@@ -40,7 +43,7 @@ function CountryScratchOff() {
 
   // On mount, check backend if country is already unlocked.
   useEffect(() => {
-    axios.get('http://localhost:9090/api/countries/unlocked/all', getAuthHeaders())
+    axios.get(`${ROOT_URL}/countries/unlocked/all`, getAuthHeaders())
       .then((response) => {
         const unlockedCountries = response.data.unlockedCountries || [];
         if (unlockedCountries.includes(countryName)) {
@@ -54,7 +57,7 @@ function CountryScratchOff() {
 
   // Load scratch paths from backend.
   useEffect(() => {
-    axios.get(`http://localhost:9090/api/countries/${countryName}/scratch`, getAuthHeaders())
+    axios.get(`${ROOT_URL}/countries/${countryName}/scratch`, getAuthHeaders())
       .then((response) => {
         if (response.data && response.data.paths) {
           setPaths(response.data.paths);
@@ -133,7 +136,7 @@ function CountryScratchOff() {
       setCurrentPath([]);
       try {
         const response = await axios.post(
-          `http://localhost:9090/api/countries/${countryName}/scratch`,
+          `${ROOT_URL}/countries/${countryName}/scratch`,
           newPath,
           getAuthHeaders(),
         );
@@ -159,7 +162,7 @@ function CountryScratchOff() {
     }
     try {
       const unlockResponse = await axios.post(
-        `http://localhost:9090/api/countries/${countryName}/unlock`,
+        `${ROOT_URL}/countries/${countryName}/unlock`,
         {},
         getAuthHeaders(),
       );

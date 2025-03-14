@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* Utilized "react-svg-worldmap" (https://github.com/yanivam/react-svg-worldmap) for the world map visualization and customized it for our needs. */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/button-has-type */
@@ -22,13 +24,10 @@ import InputCountry from './inputCountry';
 import Loading from './Loading';
 import 'react-toastify/dist/ReactToastify.css';
 import showToast from '../utils/toastUtils';
-// import newThought from '../components/newThought';
 
 function Home() {
-  // const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const loadUser = useStore((state) => state.authSlice?.loadUser);
-  // const [data] = useState([]);
   const authenticated = useStore(({ authSlice }) => authSlice.authenticated);
   const [isPassportOpen, setIsPassportOpen] = useState(false); // state for passport visibility
   const homeCountry = useStore(({ authSlice }) => authSlice.user?.homeCountry);
@@ -123,9 +122,6 @@ function Home() {
           {authenticated ? <p className="cta">Click a country to get started!</p> : <p>Sign in to access all countries!</p>}
           <p>Home Country: {homeCountry || 'Not set'}</p>
         </div>
-        {/* <WorldMapComponent highlightedCountries={highlightedCountries} /> */}
-
-        {/* <WorldMapComponent onCountryClick={handleCountryClick} /> */}
 
         <WorldMapComponent onCountryClick={handleCountryClick} highlightedCountries={highlightedCountries} />
 

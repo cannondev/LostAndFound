@@ -1,9 +1,9 @@
 import axios from 'axios';
 // import { toast } from 'react-toastify';
 
-export default function createThoughtSlice(set, get) {
-  const ROOT_URL = 'http://localhost:9090/api/thought';
+const ROOT_URL = 'https://project-api-lost-and-found-9lyg.onrender.com/api/thought';
 
+export default function createThoughtSlice(set, get) {
   const getAuthHeaders = () => ({
     headers: { authorization: localStorage.getItem('token') },
   });
