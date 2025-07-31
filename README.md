@@ -5,6 +5,7 @@ Lost and Found is a web app that I, alongside Cinay Dilibal, Peipei Soeung, and 
 
 ## Deployed Application
 https://project-lost-and-found-muix.onrender.com
+
 NOTE: Go straight to sign up button and input information there. If from the US, use 'United States'.
 
 ## Video Demo
