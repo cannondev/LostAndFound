@@ -1,74 +1,39 @@
-# Lost & Found
+# LostAndFound
 
-![TeamLF](https://github.com/user-attachments/assets/daef5cf5-138d-436e-be21-17746ae01968)
-[*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
+## Description
+Lost and Found is a web app that I, alongside Cinay Dilibal, Peipei Soeung, and Yasmeen Hussein, created where you send anonymous messages as paper airplanes that land on random spots across a world map for others to discover. Each day, unlock a new country to scratch off, explore fun facts, and uncover hidden messages. Collect unique stamps for your virtual passport as you complete countries and unlock achievements, creating a personalized journey of global stories and connections.
 
-## Project Description:
+## Deployed Application
+https://project-lost-and-found-muix.onrender.com
 
-"Lost and Found" is a web app where you send anonymous messages as paper airplanes that land on random spots across a world map for others to discover. Each day, unlock a new country to scratch off, explore fun facts, and uncover hidden messages. Collect unique stamps for your virtual passport as you complete countries and unlock achievements, creating a personalized journey of global stories and connections.
+## Video Demo
+https://github.com/user-attachments/assets/96ea9dc5-63c1-43a7-9b8f-4096627b6266
 
+##  Setup Instructions
+Follow these steps to run the project locally:
 
-## DEPLOYED URL
-[https://project-lost-and-found-muix.onrender.com](https://project-lost-and-found-muix.onrender.com)
+```bash
+# 1. Clone the repository
+git clone git@github.com:cannondev/LostAndFound.git
 
-## Architecture
-- **Frontend:** React (v19), React Router (v7)  
-- **UI Library:** MUI, Framer Motion, Remix Icons, Font Awesome  
-- **State Management:** Zustand  
-- **Mapping:** React-SVG-Worldmap  
-- **Networking:** Axios  
-- **Data Handling:** Mongo (for interactions with the backend)  
-- **Tooling & Dev Dependencies:** Babel, ESLint (Airbnb config), Vite Plugin PWA
+# 2. Navigate into the project folder
+cd path/to/LostAndFound
 
-## Setup
-
-### DEPLOYED FRONTEND RENDER URL IS FULLY FUNCTIONAL and INCLUDES ALL NEEDED ENV VARIABLES
-You can jump in with just your home country, but your functions will be very limited (can only scratch countries/cannot unlock them).
-
-For best user experience, sign up at the beginning, then you will see you home country already unlocked. Explore other countries and watch as they reveal themselves and generate data when scratching. Visit them again in the passport. Upon visiting your homecountry, you will not need to unlock it, but may need to visit again to let the openAI API generate data.
-
-Create thoughts and send them to a mystery location! To view an example thought sent from someone else, unlock the bahamas and discover the 'Thought heard 'round the world!". View it later in the passport!
-
-Watch the demo video to see an example world with lots of thoughts from a local database! The new deployed version uses a newly created database instead to host multiple users.
-
-### Clone the repository:  
-```sh
-git clone https://github.com/your-repo/lost-and-found-frontend.git
-cd lost-and-found-frontend
-```
-
-### Install dependencies:
-```
+# 3. Install dependencies
 npm install
+
+# 4. Run the development server
+npm run dev
 ```
 
-### Create a `.env` file in the root directory and add:  
-```ini
-AUTH_SECRET=your_auth_secret
-AI_API_KEY=your_ai_api_key
-```
+## Learning Journey:
+This project was a team effort and our final, open-ended project for COSC 52 Full-Stack Web Development. My contributions to this project that I wanted to highlight for the code snippet portion of the Dali Lab Application are the integration of OpenAI's API Platform to generate cultural, historical, and fun facts about countries discovered, and consolidating them, along with user's thoughts sent out across the map, in a responsive passport modal with original styling with carousels and multiple pages. This functionality can be seen in the video demo and deployed site.
 
-### Start the development server:
-```
-npm start
-```
+Relevant frontend source code files include:
+1 . src/components/Passport.jsx // dynamic Passport modal component with state management and axios functionality
+2 . src/controllers/ThoughtsCarousel.jsx // ground-up thoughts carousel component
+3 . src/components/FunFactsCarousel.jsx // ground-up carousel component
 
-## Deployment
+This was my first time taking on the challenge of integrating a professional third-party API completely unguided, so I enjoyed the process of reading through the documentation and tweaking my implementation as I progressed. The in-house CSS, flex, etc. styling of the modal was a challenge as well and a fun design process that I enjoyed collaborating on with my group members.
 
-### Push changes to github:
-```
-git add .
-git commit -m "Your commit message"
-git push origin main
-```
-
-### Manual Deployment:
-Go to your Render dashboard.
-Select the project.
-Click "Redeploy latest commit" or trigger a build manually.
-
-## Authors
-- Yasmeen Hussein
-- Peipei Soeung
-- Cinay Dilibal
-- Thomas Clark
+Additional note: this is a cloned repo from the private Dartmouth CS 52 25W org. I cloned it to be public so that I could use it for the DALI application. If need be, I will be more than willing to make any visibility changes necessary to this repo before, during, or after the application process.
